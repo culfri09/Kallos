@@ -1,12 +1,12 @@
 import logging
-from flask import Flask, request
+from flask import Flask, request, render_template
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='./template')
 
-# Define a route 
+# Defines index.html as the root of the URL
 @app.route('/')
-def init():
-    return 'This is an HTTPS site'
+def index():
+    return render_template('register.html')
 
 # Run Flask application
 if __name__ == '__main__':
