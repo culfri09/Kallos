@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Home{% endblock %}</title>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav>
+        <div class="collpase navbar-collapse" id="navbar">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" id="login" href="/login">Login</a>
+                <a class="nav-item nav-link" id="signUp" href="/sign-up">Signup</a>
+                <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+                <a class="nav-item nav-link" id="home" href="/">Home</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {%  if messages %}
+        {%  for category, message in messages %}
+        <!-- Display error messages -->
+        {% if category=='error' %}
+        <div style="color:red" role="alert">
+            {{ message }}
+            <!-- Close button for the message -->
+            <button type="button" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% else %}
+        <!-- Display success messages -->
+        <div style="color:green" role="alert">
+            {{ message }}
+            <button type="button" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endif %}
+        {% endfor %}
+    {%  endif %}
+    {% endwith %}
+    <!-- Main content container -->
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <script
+    type="text/javascript"
+    src="{{ url_for('static', filename='index.js') }}"></script>
+</body>
+</html>
