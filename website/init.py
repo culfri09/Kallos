@@ -1,6 +1,7 @@
 from flask import Flask
 import secrets
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from os import path
 from flask_login import LoginManager
 
@@ -14,6 +15,7 @@ secret_key = secrets.token_hex(32)
 def create_app():
     # Creates a Flask application instance
     app = Flask(__name__, template_folder='./template')
+    
 
     # Sets the secret key
     app.config['SECRET_KEY'] = secret_key
@@ -21,6 +23,8 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
 
+    migrate = Migrate(app, db)
+    
     # Imports blueprints
     from .views import views
     from .auth import auth

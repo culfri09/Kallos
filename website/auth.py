@@ -67,7 +67,7 @@ def sign_up():
             new_user = models.User(email=email, first_name=first_name, company_name = company_name, job_title = job_title, department = department, password=generate_password_hash(password1, method='pbkdf2:sha256'))
             init.db.session.add(new_user)
             init.db.session.commit()
-            login_user(user, remember=True)
+            login_user(new_user, remember=True)
             flash('Account created!', category='success')
             # Loads homepage
             return redirect(url_for('views.home'))
