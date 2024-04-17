@@ -7,4 +7,7 @@ class User(init.db.Model, UserMixin):
     email = init.db.Column(init.db.String(150), unique=True)
     password = init.db.Column(init.db.String(150))
     first_name = init.db.Column(init.db.String(150))
+    company_name = init.db.Column(init.db.String(150))
+    job_title = init.db.Column(init.db.String(150))
+    department = init.db.Column(init.db.String(150))
     
