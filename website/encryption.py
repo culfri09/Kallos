@@ -1,7 +1,7 @@
 import nacl.secret
 import nacl.utils
 from nacl.encoding import Base64Encoder
-
+# Encryption methods
 
 def encrypt(message, key):
     box = nacl.secret.SecretBox(key)
