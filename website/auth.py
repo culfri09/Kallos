@@ -10,11 +10,13 @@ from flask import Flask, jsonify
 import psycopg2
 from psycopg2 import OperationalError
 from flask_sqlalchemy import SQLAlchemy
-
+import json
 
 
 auth = Blueprint('auth', __name__)
 key = encryption.generate_key()
+
+file_path = 'encryption_keys.txt'
 
 # Route for user login
 @auth.route('/login', methods=['GET', 'POST'])
@@ -80,7 +82,6 @@ def sign_up():
                 'job_title': job_title,
                 'department': department
             }
-
             
             # Performs data checks
             if models.User.query.filter_by(email=email).first():
@@ -125,40 +126,16 @@ def sign_up():
                 # Commit the session to save the changes to the database
                 init.db.session.commit()
 
+                 # Save user ID and encryption key to file
+                with open(file_path, 'a') as file:  
+                    user_data = {'user_id': new_user.id, 'encryption_key': key.hex()}
+                    json.dump(user_data, file)
+                    file.write('\n') 
+
                 login_user(new_user, remember=True)
                 flash('Account created!', category='success')
                 return redirect(url_for('views.home'))
                 
-
-            '''
-                # If all data is OK, create a new user
-                new_user = models.User(email=email, first_name=first_name, company_name=company_name,
-                                        job_title=job_title, department=department,
-                                        password=generate_password_hash(password1, method='pbkdf2:sha256'))            
-
-                init.db.session.add(new_user)
-                init.db.session.commit()
-
-                # Logs in user and loads homepage
-                login_user(new_user, remember=True)
-                flash('Account created!', category='success')
-                return redirect(url_for('views.home'))
-            
-
-            # Data to be inserted into the table
-            data = {
-                3,  # id
-                email,  # email
-                password1,  # password
-                first_name,  # first_name
-                company_name,  # company_name
-                job_title,  # job_title
-                department  # department
-            }
-            print(data)'''
-
-            
-
         # Loads sign up page
         return render_template("sign_up.html", form_data=form_data) 
     
