@@ -1,1 +1,0 @@
-{"user_id": 48, "encryption_key": "92d7cd8cf4b584510a31235a15c01618831c839e54f22fb417bc985413ccf2c5"}
