@@ -24,6 +24,7 @@ The following types of testing will be conducted:
 - **System Testing**: Testing the entire system as a whole to ensure it meets the specified requirements.
 - **Performance Testing**: Assessing the performance, scalability, and reliability of the platform under various load conditions.
 - **Security Testing**: Identifying and mitigating potential security vulnerabilities.
+//Monitoring
 
 ### 2.3 Testing Tools
 The following testing tools will be utilized:
