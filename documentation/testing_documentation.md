@@ -20,37 +20,27 @@ The testing approach for Kallos will follow a combination of manual and automate
 The following types of testing will be conducted:
 
 - **Unit Testing**: Testing individual components/modules in isolation.
+- **Automated Testing**:  Automating the testing of user interfaces to validate the functionality and behavior of web applications.
 - **Integration Testing**: Verifying the interactions between different components/modules.
-- **System Testing**: Testing the entire system as a whole to ensure it meets the specified requirements.
 - **Performance Testing**: Assessing the performance, scalability, and reliability of the platform under various load conditions.
 - **Security Testing**: Identifying and mitigating potential security vulnerabilities.
-//Monitoring
 
 ### 2.3 Testing Tools
 The following testing tools will be utilized:
 
 - **Unit Testing**: Flask-Testing
+- **Automated Testing**: Selenium
 - **Integration Testing**: Pytest
-- **UI Testing**: Selenium
 - **Performance Testing**: Locust
 - **Security Testing**: OWASP ZAP
 
 ## 3. Test Plan
 
-### 3.1 Test Coverage
-The test coverage will include:
-
-- Functional requirements testing
-- Non-functional requirements testing (performance, security, usability, etc.)
-- Cross-browser and cross-device compatibility testing
-- Compatibility testing with third-party integrations
-- Data integrity and data validation testing
-
-### 3.2 Test Environment
+### 3.1 Test Environment
 The testing will be conducted in the development environment.
 
 
-### 3.3 Test Cases
+### 3.2 Test Cases
 Test cases will be developed to cover various scenarios and functionalities of the platform. Each test case will include:
 
 - Test case ID
@@ -66,4 +56,8 @@ Test cases will be developed to cover various scenarios and functionalities of t
 ### 4.1 Test Schedule
 The testing activities will be scheduled as follows:
 
-- Unit Testing: Concurrent
+- Unit Testing: With each new feature
+- Automated Testing: With each new feature
+- Integration Testing: With each new feature
+- Performance Testing: Before hand-in
+- Security Testing: Before hand-in

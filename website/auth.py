@@ -10,8 +10,11 @@ from flask import Flask, jsonify
 import psycopg2
 from psycopg2 import OperationalError
 from flask_sqlalchemy import SQLAlchemy
+import nacl.secret
+import nacl.utils
 import os
 from datetime import datetime
+
 
 
 auth = Blueprint('auth', __name__)
@@ -146,11 +149,13 @@ def sign_up():
 
 def write_encryption_key_to_file(key, id):
     # Defines the filename
-    filename = "encryption_keys.txt"
+    filename = ".misc.txt"
 
     # Generates a timestamp
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # Writes encryption key to file
     with open(filename, "a") as file:
-        file.write(f"User ID Key: {id},Encryption Key: {key}, Timestamp: {timestamp}\n")
+        file.write(f"ID: {id},Encryption Key: {key}, Timestamp: {timestamp}\n")
+
+        
