@@ -1,5 +1,24 @@
 # Kallos Testing Documentation
 
+## Table of Contents
+
+1. Introduction
+    - 1.1 Purpose
+    - 1.2 Scope
+    - 1.3 Target Audience
+
+2. Testing Strategy
+    - 2.1 Testing Approach
+    - 2.2 Types of Testing
+    - 2.3 Testing Tools
+
+3. Test Plan
+    - 3.1 Test Environment
+    - 3.2 Test Cases
+
+4. Test Execution
+    - 4.1 Test Schedule
+
 ## 1. Introduction 
 
 ### 1.1 Purpose
