@@ -10,12 +10,12 @@ from flask import Flask, jsonify
 import psycopg2
 from psycopg2 import OperationalError
 from flask_sqlalchemy import SQLAlchemy
-
+import os
+from datetime import datetime
 
 
 auth = Blueprint('auth', __name__)
 key = encryption.generate_key()
-
 
 # Route for user login
 @auth.route('/login', methods=['GET', 'POST'])
@@ -104,6 +104,9 @@ def sign_up():
                 encrypted_company_name = encryption.encrypt(company_name, key)
                 encrypted_job_title = encryption.encrypt(job_title, key)
                 encrypted_department = encryption.encrypt(department, key)
+
+                
+
                 # If all data is OK, create a new user
                 data = {
                     'email': email,
@@ -113,15 +116,19 @@ def sign_up():
                     'job_title': encrypted_job_title,
                     'department': encrypted_department
                 }
-                print('encryption key', key)
+
                 # Create a new KallosUser object with the provided data
                 new_user = models.User(**data)
+
+                # Write encryption key to file
 
                 # Add the new_user to the database session
                 init.db.session.add(new_user)
 
                 # Commit the session to save the changes to the database
                 init.db.session.commit()
+
+                write_encryption_key_to_file(key, new_user.id)
 
                 login_user(new_user, remember=True)
                 flash('Account created!', category='success')
@@ -135,3 +142,15 @@ def sign_up():
         # Exception handling: display error
         error_message = "An error occurred while processing your request: {}".format(str(e))
         return jsonify({"error": error_message}), 500
+    
+
+def write_encryption_key_to_file(key, id):
+    # Defines the filename
+    filename = "encryption_keys.txt"
+
+    # Generates a timestamp
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Writes encryption key to file
+    with open(filename, "a") as file:
+        file.write(f"User ID Key: {id},Encryption Key: {key}, Timestamp: {timestamp}\n")
