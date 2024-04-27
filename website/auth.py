@@ -16,6 +16,7 @@ from flask_sqlalchemy import SQLAlchemy
 auth = Blueprint('auth', __name__)
 key = encryption.generate_key()
 
+
 # Route for user login
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -29,9 +30,7 @@ def login():
         # Retrieve all users from the database
         users = models.User.query.all()
         for user in users:
-            # Decrypt the email retrieved from the database
-            decrypted_email = encryption.decrypt(user.email, key)  # Replace 'key' with your decryption key
-            if decrypted_email == email_input:
+            if user.email == email_input:
                 # If decrypted email matches the email provided by the user, proceed with authentication
                 if check_password_hash(user.password, password):
                     flash('Logged in successfully!', category='success')
@@ -100,7 +99,6 @@ def sign_up():
             elif not re.search(r'[!@#$%^&*()_+={}\[\]:;"\'|<,>.?/~`]$', password1):
                 flash('Password must contain at least 1 special character', category='error')            
             else:
-                encrypted_email = encryption.encrypt(email, key)
                 hashed_password = generate_password_hash(password1)
                 encrypted_first_name = encryption.encrypt(first_name, key)
                 encrypted_company_name = encryption.encrypt(company_name, key)
@@ -108,14 +106,14 @@ def sign_up():
                 encrypted_department = encryption.encrypt(department, key)
                 # If all data is OK, create a new user
                 data = {
-                    'email': encrypted_email,
+                    'email': email,
                     'password': hashed_password,
                     'first_name': encrypted_first_name,
                     'company_name': encrypted_company_name,
                     'job_title': encrypted_job_title,
                     'department': encrypted_department
                 }
-
+                print('encryption key', key)
                 # Create a new KallosUser object with the provided data
                 new_user = models.User(**data)
 
@@ -128,36 +126,7 @@ def sign_up():
                 login_user(new_user, remember=True)
                 flash('Account created!', category='success')
                 return redirect(url_for('views.home'))
-                
-
-            '''
-                # If all data is OK, create a new user
-                new_user = models.User(email=email, first_name=first_name, company_name=company_name,
-                                        job_title=job_title, department=department,
-                                        password=generate_password_hash(password1, method='pbkdf2:sha256'))            
-
-                init.db.session.add(new_user)
-                init.db.session.commit()
-
-                # Logs in user and loads homepage
-                login_user(new_user, remember=True)
-                flash('Account created!', category='success')
-                return redirect(url_for('views.home'))
-            
-
-            # Data to be inserted into the table
-            data = {
-                3,  # id
-                email,  # email
-                password1,  # password
-                first_name,  # first_name
-                company_name,  # company_name
-                job_title,  # job_title
-                department  # department
-            }
-            print(data)'''
-
-            
+         
 
         # Loads sign up page
         return render_template("sign_up.html", form_data=form_data) 

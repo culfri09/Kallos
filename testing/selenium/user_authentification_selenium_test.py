@@ -99,6 +99,6 @@ driver.find_element(By.ID, "password").send_keys(password1)
 # Clicks submit button
 driver.find_element(By.CSS_SELECTOR, 'button[type="submit"]').click()
 
-time.sleep(2)
+time.sleep(1)
 
 driver.close()
