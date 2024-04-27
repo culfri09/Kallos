@@ -40,6 +40,8 @@ continue_link = WebDriverWait(driver, 10).until(
 # Click the "Continue to localhost" link
 continue_link.click()
 
+'''Signs up user'''
+
 time.sleep(1)
 
 # Waits for the signup link to be clickable
@@ -52,21 +54,51 @@ signup_link.click()
 
 time.sleep(1)
 
-# Fills in form with synthetic data
-driver.find_element(By.ID, "email").send_keys(fake.email())
-driver.find_element(By.ID, "firstName").send_keys(fake.first_name())
-driver.find_element(By.ID, "password1").send_keys("Contraseña123&")
-driver.find_element(By.ID, "password2").send_keys("Contraseña123&")
-driver.find_element(By.ID, "companyName").send_keys(fake.company())
-driver.find_element(By.ID, "jobTitle").send_keys(fake.job())
-driver.find_element(By.ID, "department").send_keys(fake.word())
+email = fake.email()
+first_name = fake.first_name()
+password1= "Contraseña123&"
+password2 = "Contraseña123&"
+company = fake.company()
+job= fake.job()
+department = fake.word()
 
-time.sleep(2)
+# Fills in sigunup form with synthetic data
+driver.find_element(By.ID, "email").send_keys(email)
+driver.find_element(By.ID, "firstName").send_keys(first_name)
+driver.find_element(By.ID, "password1").send_keys(password1)
+driver.find_element(By.ID, "password2").send_keys(password2)
+driver.find_element(By.ID, "companyName").send_keys(company)
+driver.find_element(By.ID, "jobTitle").send_keys(job)
+driver.find_element(By.ID, "department").send_keys(department)
+
+time.sleep(1)
 
 # Clicks submit button
 driver.find_element(By.XPATH, "//button[text()='Submit']").click()
 
+time.sleep(1)
+
+'''Logs out user'''
+
+# Waits for the signup link to be clickable
+logout_link = WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.ID, "logout"))
+)
+
+# Clicks the logout link
+logout_link.click()
+
+time.sleep(0.5)
+
+'''Logs in user'''
+
+# Fills in login form with synthetic user details
+driver.find_element(By.ID, "email").send_keys(email)
+driver.find_element(By.ID, "password").send_keys(password1)
+
+# Clicks submit button
+driver.find_element(By.CSS_SELECTOR, 'button[type="submit"]').click()
+
 time.sleep(2)
 
-# Close the browser window
-driver.quit()
+driver.close()
