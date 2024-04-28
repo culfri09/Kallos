@@ -28,3 +28,12 @@ def hero_page():
 def questions_page():
     return render_template('base_questions.html')
 
+@views.route('/privacy_policy')
+def privacy_policy_page():
+    return render_template('privacy_policy.html')
+
+@views.route('/tutorial')
+@login_required
+def tutorial_page():
+    return render_template('tutorial.html')
+

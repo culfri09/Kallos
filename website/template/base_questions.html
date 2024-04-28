@@ -6,14 +6,14 @@
     <title>Questions</title>
 </head>
 <body>
-    <form method="POST">
+    <form method="POST" action="/answers_submission">
         <h3 align="center">Questions Bank</h3>      
         <div>
-            <label for="benchmark">Which companies do you regularly benchmark against in terms of products/services
+            <label for="benchmarkCompanies">Which companies do you regularly benchmark against in terms of products/services
                 and market position?
             </label>
             <br>
-            <input type="text" id="benchmark" name="benchmark" style="width: 70%;">
+            <input type="text" id="benchmarkCompanies" name="benchmarkCompanies" style="width: 70%;">
             <br>
             <br>
             <label for="timeToFill">How long does it normally take to fill a job position from the time it was opened until 
@@ -23,33 +23,34 @@
             <input type="text" id="timeToFill" name="timeToFill" style="width: 70%;">
             <br>
             <br>
-            <label for="demographic">Please provide the demographic breakdown of your workforce including gender, ethnicity, 
+            <label for="demographicBreakdown">Please provide the demographic breakdown of your workforce including gender, ethnicity, 
                 and age groups.              
             </label>
             <br>
-            <input type="text" id="demographic" name="demographic" style="width: 70%;">
+            <input type="text" id="demographicBreakdown" name="demographicBreakdown" style="width: 70%;">
             <br>
             <br>
-            <label for="leadership">What percentage of your leadership positions are occupied by individuals from 
+            <label for="leadershipDiversity">What percentage of your leadership positions are occupied by individuals from 
                 underrepresented groups?          
             </label>
             <br>
-            <input type="text" id="leadership" name="leadership" style="width: 70%;">
+            <input type="text" id="leadershipDiversity" name="leadershipDiversity" style="width: 70%;">
             <br>
             <br>
             <label for="NPS">How likely are your customers to recommend your products/services to others? (Net Promoter 
                 Score)      
             </label>
             <br>
-            <input type="text" id="NPS" name="NPS" style="width: 70%;">
+            <input type="number" id="NPS" name="NPS" style="width: 70%;">
             <br>
             <br>
-            <label for="familiarity">How familiar are potential candidates with your company's employer brand?
+            <label for="brandFamiliarity">How familiar are potential candidates with your company's employer brand?
             </label>
             <br>
-            <input type="text" id="familiarity" name="familiarity" style="width: 70%;">
+            <input type="text" id="brandFamiliarity" name="brandFamiliarity" style="width: 70%;">
             <br>
-            <a href="/home">Submit</a>
+            <button type="submit">Submit</button>
     </form>  
+<p>For information on why we collect this data, please refer to our <a href="/privacy_policy">Privacy Policy.</a></p>
 </body>
 </html>
