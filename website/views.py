@@ -24,6 +24,7 @@ def hero_page():
     return render_template('hero.html')
 
 @views.route('/questions')
+@login_required
 def questions_page():
     return render_template('base_questions.html')
 
