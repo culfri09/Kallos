@@ -22,3 +22,8 @@ def home():
 @views.route('/hero')
 def hero_page():
     return render_template('hero.html')
+
+@views.route('/questions')
+def questions_page():
+    return render_template('base_questions.html')
+
