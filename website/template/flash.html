@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <!-- Flash messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {%  if messages %}
+      {%  for category, message in messages %}
+      <!-- Display error messages -->
+      {% if category=='error' %}
+      <div id="error-alert" style="color:red" role="alert">
+          {{ message }}
+          <!-- Close button for the message -->
+          <button type="button" class="close-btn" onclick="closeAlert('error-alert')">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      {% else %}
+      <!-- Display success messages -->
+      <div id="success-alert" style="color:green" role="alert">
+          {{ message }}
+          <button type="button" class="close-btn" onclick="closeAlert('success-alert')">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      {% endif %}
+      {% endfor %}
+  {%  endif %}
+  {% endwith %}   
+  <!-- Main content container -->
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+<script
+type="text/javascript"
+src="{{ url_for('static', filename='index.js') }}"></script>
+</body>
+</html>

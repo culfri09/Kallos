@@ -34,7 +34,6 @@ def login():
             if user.email == email_input:
                 # If decrypted email matches the email provided by the user, proceed with authentication
                 if check_password_hash(user.password, password):
-                    flash('Logged in successfully!', category='success')
                     login_user(user, remember=True)
                     return redirect(url_for('views.home'))
                 else:
@@ -128,8 +127,7 @@ def sign_up():
                 write_encryption_key_to_file(key, new_user.id)
 
                 login_user(new_user, remember=True)
-                flash('Account created!', category='success')
-                return redirect(url_for('views.home'))
+                return render_template("tutorial.html")
          
         # Loads sign up page
         return render_template("sign_up.html", form_data=form_data) 
