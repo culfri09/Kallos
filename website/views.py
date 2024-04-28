@@ -28,6 +28,11 @@ def hero_page():
 def questions_page():
     return render_template('base_questions.html')
 
+@views.route('/bank_questions')
+@login_required
+def bank_questions_page():
+    return render_template('questions.html')
+
 @views.route('/privacy_policy')
 def privacy_policy_page():
     return render_template('privacy_policy.html')
