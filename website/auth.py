@@ -15,8 +15,6 @@ import nacl.utils
 import os
 from datetime import datetime
 
-
-
 auth = Blueprint('auth', __name__)
 key = encryption.generate_key()
 
@@ -56,7 +54,7 @@ def login():
 def logout():
     # Logs out the user and loads login page
     logout_user()
-    return redirect(url_for('auth.login'))
+    return render_template("hero.html")
 
 # Route for user sign-up
 @auth.route('/sign-up', methods=['GET', 'POST'])
@@ -82,7 +80,6 @@ def sign_up():
                 'job_title': job_title,
                 'department': department
             }
-
             
             # Performs data checks
             if models.User.query.filter_by(email=email).first():
@@ -108,8 +105,6 @@ def sign_up():
                 encrypted_job_title = encryption.encrypt(job_title, key)
                 encrypted_department = encryption.encrypt(department, key)
 
-                
-
                 # If all data is OK, create a new user
                 data = {
                     'email': email,
@@ -120,24 +115,22 @@ def sign_up():
                     'department': encrypted_department
                 }
 
-                # Create a new KallosUser object with the provided data
+                # Creates a new Kallos User object with the provided data
                 new_user = models.User(**data)
-
-                # Write encryption key to file
-
-                # Add the new_user to the database session
+                
+                # Adds the new_user to the database session
                 init.db.session.add(new_user)
 
-                # Commit the session to save the changes to the database
+                # Commits the session to save the changes to the database
                 init.db.session.commit()
 
+                # Writes encryption key to file
                 write_encryption_key_to_file(key, new_user.id)
 
                 login_user(new_user, remember=True)
                 flash('Account created!', category='success')
                 return redirect(url_for('views.home'))
          
-
         # Loads sign up page
         return render_template("sign_up.html", form_data=form_data) 
     

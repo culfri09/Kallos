@@ -1,0 +1,10 @@
+.topnav {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  
+  .nav-item {
+    display: inline-block;
+    margin-right: 10px; /* Adjust this value to add spacing between links */
+  }

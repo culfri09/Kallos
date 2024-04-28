@@ -22,11 +22,6 @@ def create_app():
     # Creates a Flask application instance
     
     
-    
-   
-
-    
-
     # Imports blueprints
     from .views import views
     from .auth import auth
