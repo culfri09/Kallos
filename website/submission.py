@@ -1,12 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from .import init
 from datetime import datetime
 from .import models
 from flask import Blueprint
 from flask_login import login_required, current_user
+from werkzeug.utils import secure_filename
+import os
 
 submissions = Blueprint('submissions', __name__)
 
+'''ANSWERS SUBMISSION'''
 @submissions.route('/answers_submission', methods=['POST'])
 def submit_answers():
     # Extracts form data
@@ -79,3 +82,41 @@ def display_questions():
 
     # Renders the questions.html template and pass the user's answers
     return render_template("questions.html", answers=user_answers)
+
+
+'''SURVEYS SUBMISSIONS'''
+@submissions.route('/surveys_upload', methods=['POST'])
+def upload_file():
+    if request.method == 'POST':
+        # Flag to track if any file upload fails
+        upload_failed = False
+
+        # Loop through each survey
+        for survey_name, file_field_names in init.ALLOWED_EXTENSIONS.items():
+            # Loop through each file upload field for the current survey
+            for file_field_name in file_field_names:
+                file = request.files[file_field_name]
+                if file.filename == '':
+                    # No file was selected for this survey, skip it
+                    continue
+                # Extract the file extension
+                file_extension = file.filename.rsplit('.', 1)[1].lower()
+                print(file_extension)
+                if file_extension == 'pdf':
+                    # The file is allowed, save it to the UPLOAD_FOLDER
+                    filename = secure_filename(file.filename)
+                    file.save(os.path.join(init.app.config['UPLOAD_FOLDER'], filename))
+                else:
+                    # The file has an invalid extension or format
+                    flash(f'Invalid file for {survey_name}. Please upload a PDF file.', 'error')
+                    upload_failed = True
+
+        # If any file upload fails, render the same page with an error message
+        if upload_failed:
+            return render_template("base_surveys.html", error="File upload failed. Please try again.")
+
+        # Redirect to the home page after successful upload of all files
+        return redirect(url_for('views.home'))
+
+    # If GET request, render the form page for file upload
+    return render_template("base_surveys.html")

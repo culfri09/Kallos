@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surveys</title>
-</head>
-<body>
+{% extends "flash.html" %}
+{% block title %}Surveys{% endblock %}
+
+{% block content %}
    <h1>Surveys</h1> 
-   <form action="/upload" method="post" enctype="multipart/form-data">
+   <form action="/surveys_upload" method="post" enctype="multipart/form-data">
     <p>Upload eNPS Survey:</p>
     <input type="file" name="npsSurvey">
     <p>Upload Candidate Experience Rating:</p>
@@ -20,8 +16,9 @@
     <input type="file" name="careerDevelopmentSurvey">
     <p>Workplace Environment Survey:</p>
     <input type="file" name="workplaceEnviornmentSurvey">
+    <br>
     <input type="submit" value="Upload">
     </form>
-   <a href="/home">Submit</a>
-</body>
-</html>
+    <!-- 
+   <a href="/home">Submit</a>-->
+{% endblock %}

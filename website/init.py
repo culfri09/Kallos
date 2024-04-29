@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 from os import path
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-
+from werkzeug.utils import secure_filename
 
 # Generates a random key with 32 bytes (256 bits)
 secret_key = secrets.token_hex(32)
@@ -17,6 +17,15 @@ app.config['SECRET_KEY'] = secret_key
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://docker:docker@localhost:5432/postgres'
 db = SQLAlchemy(app)
+
+# Defines the allowed file extensions for each survey
+ALLOWED_EXTENSIONS = {
+    'pdf': ['npsSurvey', 'candidateExperienceRating', 'employeeReferalSurvey', 'retentionSurvey', 'careerDevelopmentSurvey', 'workplaceEnviornmentSurvey']
+}
+
+# Set the folder where uploaded files will be saved
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def create_app():     
     # Imports blueprints
