@@ -27,11 +27,11 @@ def hero_page():
 @login_required
 def questions_page():
     return render_template('base_questions.html')
-'''
-@views.route('/bank_questions')
+
+@views.route('/surveys')
 @login_required
-def bank_questions_page():
-    return render_template('questions.html')'''
+def surveys_page():
+    return render_template('base_surveys.html')
 
 @views.route('/privacy_policy')
 def privacy_policy_page():

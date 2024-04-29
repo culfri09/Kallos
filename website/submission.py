@@ -9,7 +9,7 @@ submissions = Blueprint('submissions', __name__)
 
 @submissions.route('/answers_submission', methods=['POST'])
 def submit_answers():
-    # Extract form data
+    # Extracts form data
     benchmark_companies = request.form.get('benchmarkCompanies') or None
     time_to_fill = request.form.get('timeToFill') or None
     demographic_breakdown = request.form.get('demographicBreakdown') or None
@@ -38,11 +38,11 @@ def submit_answers():
     # Commits the session to save the changes to the database
     init.db.session.commit()
 
-    return render_template("home.html")
+    return render_template("base_surveys.html")
 
 @submissions.route('/changed_answers_submission', methods=['POST'])
 def submit_changed_answers():
-# Extract form data
+# Extracts form data
         benchmark_companies = request.form['benchmarkCompanies']
         time_to_fill = request.form['timeToFill']
         demographic_breakdown = request.form['demographicBreakdown']
@@ -53,11 +53,11 @@ def submit_changed_answers():
         # Gets the ID of the currently logged-in user
         user_id = current_user.id
 
-        # Query existing answer record for the current user
+        # Querys existing answer record for the current user
         existing_answer = models.Answers.query.filter_by(kallosusers_id=user_id).first()
 
         if existing_answer:
-            # Update existing record with new values
+            # Updates existing record with new values
             existing_answer.benchmark_companies = benchmark_companies if benchmark_companies else existing_answer.benchmark_companies
             existing_answer.time_to_fill = time_to_fill if time_to_fill else existing_answer.time_to_fill
             existing_answer.demographic_breakdown = demographic_breakdown if demographic_breakdown else existing_answer.demographic_breakdown
@@ -65,7 +65,7 @@ def submit_changed_answers():
             existing_answer.net_promoter_score = net_promoter_score if net_promoter_score else existing_answer.net_promoter_score
             existing_answer.employer_brand_familiarity = employer_brand_familiarity if employer_brand_familiarity else existing_answer.employer_brand_familiarity
 
-        # Commit the session to save the changes to the database
+        # Commits the session to save the changes to the database
         init.db.session.commit()
 
         return redirect(url_for('submissions.display_questions'))
@@ -74,8 +74,8 @@ def submit_changed_answers():
 @submissions.route('/bank_questions')
 @login_required
 def display_questions():
-    # Fetch the user's answers from the database
+    # Fetches the user's answers from the database
     user_answers = models.Answers.query.filter_by(kallosusers_id=current_user.id).all()
 
-    # Render the questions.html template and pass the user's answers
+    # Renders the questions.html template and pass the user's answers
     return render_template("questions.html", answers=user_answers)
