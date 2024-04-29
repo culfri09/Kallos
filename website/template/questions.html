@@ -1,8 +1,53 @@
 {%  extends "base.html" %} {% block title %}Questions Bank{% endblock %}
-
 <!-- Main content container -->
 {% block content %}
 <div class="main">
-    <h1>Questions Bank</h1>
+    <form method="POST" action="/changed_answers_submission">
+        <h3 align="center">Questions Bank</h3>      
+        <div>
+            {% for answer in answers %}       
+            <label for="benchmarkCompanies">Which companies do you regularly benchmark against in terms of products/services
+                and market position?
+            </label>
+            <br>
+            <input style="width: 70%;" type="text" name="benchmarkCompanies" value={{ answer.benchmark_companies }}>
+            <br>
+            <br>
+            <label for="timeToFill">How long does it normally take to fill a job position from the time it was opened until 
+                the candidate accepts the offer?
+            </label>
+            <br>
+            <input style="width: 70%;" type="text" name="timeToFill" value={{ answer.time_to_fill }}>
+            <br>
+            <br>
+            <label for="demographicBreakdown">Please provide the demographic breakdown of your workforce including gender, ethnicity, 
+                and age groups.              
+            </label>
+            <br>
+            <input style="width: 70%;" type="text" name="demographicBreakdown" value={{ answer.demographic_breakdown }}>
+            <br>
+            <br>
+            <label for="leadershipDiversity">What percentage of your leadership positions are occupied by individuals from 
+                underrepresented groups?          
+            </label>
+            <br>
+            <input style="width: 70%;" type="text" name="leadershipDiversity" value={{ answer.leadership_diversity }}>
+            <br>
+            <br>
+            <label for="NPS">How likely are your customers to recommend your products/services to others? (Net Promoter 
+                Score)      
+            </label>
+            <br>
+            <input style="width: 70%;" type="number" name="NPS" value={{ answer.net_promoter_score }}>
+            <br>
+            <br>
+            <label for="brandFamiliarity">How familiar are potential candidates with your company's employer brand?
+            </label>
+            <br>
+            <input style="width: 70%;" type="text" name="brandFamiliarity" value={{ answer.employer_brand_familiarity }}>
+            <br>
+            <button type="submit">Submit</button>
+            {% endfor %}
+    </form>       
 </div>
 {% endblock %}

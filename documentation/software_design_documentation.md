@@ -60,6 +60,6 @@ The purpose of this document is to provide an overview of the Kallos software sy
 ### 1.2 Scope
 The scope of this document encompasses the entire Kallos software system, including its core functionalities, modules, and components. It delineates the boundaries of the system and defines what is included and excluded from its scope.
 
-###1.3 Target Audience
+##1.3 Target Audience
 The intended audience for this document includes developers, testers, project managers, and stakeholders involved in the future development and deployment of Kallos.
 
