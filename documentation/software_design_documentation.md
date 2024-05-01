@@ -21,25 +21,16 @@
     - 4.2 Authorization
     - 4.3 Data Encryption
 
-5. Error Handling
-    - 6.1 Error Codes
-    - 6.2 Exception Handling
-    - 6.3 Logging
+5. Functionality Overview
+    - 5.1 Key Features
+    - 5.2 Workflow
 
-6. Integration Points
-    - 7.1 External APIs
-    - 7.2 Third-Party Services
-    - 7.3 Data Integration
+6. Deployment Architecture
+    - 6.1 Deployment Environment
 
-7. Deployment Architecture
-    - 8.1 Deployment Environment
-    - 8.2 Continuous Integration/Continuous Deployment (CI/CD) Pipeline
-    - 8.3 Infrastructure as Code (IaC) Configuration
-
-8. Maintenance and Support
-    - 9.1 Version Control
-    - 9.2 Bug Tracking
-    - 9.3 Software Updates
+7. Maintenance and Support
+    - 7.1 Version Control
+    - 7.2 Bug Tracking
 
 
 ## 1. Introduction
@@ -120,3 +111,65 @@ PyNaCl (Python bindings to the Networking and Cryptography library) is employed 
 
 - **Decryption:** When retrieving encrypted data from the database, decrypt it using PyNaCl's `nacl.secret.SecretBox.decrypt` method. Only authorized users with access to the encryption key can decrypt the data, ensuring confidentiality.
 
+
+## 5. Functionality Overview
+
+### 5.1 Key Features
+
+Kallos platform offers a range of key features designed to empower HR professionals in small to medium-sized companies to enhance their employer brand efficiently. These features include:
+
+1. **Holistic Analysis:** The platform provides a comprehensive evaluation of the employer brand, considering all aspects rather than just fragments, enabling HR professionals to gain a complete understanding of their brand's strengths and areas for improvement.
+
+2. **Diverse Data Collection:** Data is gathered from various sources including surveys, web sources, and an internal bank of questions, ensuring a comprehensive and diverse dataset for analysis.
+
+3. **Advanced Data Processing:** Leveraging cutting-edge techniques such as web scraping, sentiment analysis, and Natural Language Processing (NLP), the platform preprocesses and analyzes data effectively to extract meaningful insights.
+
+4. **Innovative Technologies:** The platform utilizes the latest advancements like Large Language Models (LLMs) for NLP and AI analysis, ensuring accuracy and efficiency in the analysis process.
+
+5. **Benchmarking Capabilities:** HR professionals can compare their employer brand performance against industry standards and competitors, gaining valuable insights into their competitive position and areas for improvement.
+
+### 5.2 Workflow
+
+The workflow of the Kallos platform is designed to streamline the process of conducting a comprehensive analysis of the employer brand and implementing actionable recommendations. The workflow includes the following steps:
+
+1. **Registration:** HR professionals sign up for an account on the platform, providing necessary details such as name, email, company name, and job title.
+
+2. **Onboarding Tutorial:** Upon logging in for the first time, users are guided through a tutorial explaining the platform's features and functionalities, ensuring a smooth onboarding experience.
+
+3. **Data Collection:** Users upload surveys and answer questions from the platform's bank of questions, providing essential data for analysis.
+
+4. **Main Dashboard:** Users access the main dashboard featuring interactive visualizations and charts displaying HR metrics, performance indicators, and recommendations tailored to their company's needs.
+
+5. **Benchmarking:** Users compare their company's HR metrics with industry benchmarks and competitors, gaining insights into areas for improvement and best practices.
+
+6. **Recommendations:** Users receive personalized recommendations based on the analysis results, organized into actionable steps to enhance the employer brand effectively.
+
+7. **Profile Settings:** Users have control over their account settings, including personal information, notification preferences, and data management options.
+
+
+## 6. Deployment Architecture
+
+### 6.1 Deployment Environment
+
+The deployment environment for Kallosinvolves the local system where the application will be deployed and tested. Key components of the deployment environment include:
+
+- **Local Machine:** The application is deployed and tested on a local machine, typically a developer's workstation or a designated testing environment.
+
+- **Development Server:** Flask's built-in development server is used to host the application locally during development and testing phases.
+
+- **Local Database:** For local testing purposes, a PostgreSQL database instance will also be set up on the local machine to simulate the production database environment.
+
+
+## 7. Maintenance and Support
+
+### 7.1 Version Control
+
+- **Repository Management:** Kallos  maintains a centralized GitHub repository where all source code files, configurations, and documentation are stored. This repository serves as the single source of truth for the application codebase.
+
+- **Branching Strategy:** A branching strategy, Git Flow, is adopted to organize and manage development branches, feature branches, release branches, and hotfix branches. 
+
+### 7.2 Bug Tracking
+
+- **Bug Report Template:** A standardized bug report template is maintained in Excel, including fields for issue description, steps to reproduce, expected behavior, actual behavior, severity, priority, and status. This template ensures consistency and completeness in bug reports.
+
+- **Progress Tracking:** The progress of bug fixes is tracked in Excel, updating the status of each bug report as it moves through the resolution process. This allows for monitoring the status of ongoing bug fixes, identifying bottlenecks, and ensuring timely resolution of issues.
