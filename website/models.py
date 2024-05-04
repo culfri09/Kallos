@@ -1,9 +1,14 @@
-from .import init
+"""
+Module defining the database models for the application.
+"""
 from flask_login import UserMixin
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
+from .import init
 
 class User(init.db.Model, UserMixin):
+    """Model representing a user in the application."""
+
     __tablename__ = 'kallosusers'
     # Defines Users table in db
     id = init.db.Column(init.db.Integer, primary_key=True)
@@ -18,6 +23,8 @@ class User(init.db.Model, UserMixin):
     answers = relationship('Answers', backref='user')
 
 class Answers(init.db.Model):
+    """Model representing answers provided by users."""
+
     __tablename__ = 'usersanswers'
     # Defines Answers table in db
     id = init.db.Column(init.db.Integer, primary_key=True)
