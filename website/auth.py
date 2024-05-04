@@ -1,27 +1,21 @@
-# Defines routes related to user authentication
-from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .import models
-from .import init
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, login_required, logout_user, current_user
+"""
+This module handles user authentication
+"""
 import re
-from .import encryption 
-from flask import Flask, jsonify
-import psycopg2
-from psycopg2 import OperationalError
-from flask_sqlalchemy import SQLAlchemy
-import nacl.secret
-import nacl.utils
-import os
 from datetime import datetime
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user, login_required, logout_user
+from . import models, init, encryption
+
 
 auth = Blueprint('auth', __name__)
 key = encryption.generate_key()
 
-# Route for user login
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    form_data = {'email': ''}  
+    """Handle user login."""
+    form_data = {'email': ''}
     if request.method == 'POST':
         email_input = request.form.get('email')
         password = request.form.get('password')
@@ -32,7 +26,7 @@ def login():
         users = models.User.query.all()
         for user in users:
             if user.email == email_input:
-                # If decrypted email matches the email provided by the user, proceed with authentication
+                # If emails match proceed with authentication
                 if check_password_hash(user.password, password):
                     login_user(user, remember=True)
                     return redirect(url_for('views.home'))
@@ -47,17 +41,17 @@ def login():
     # Loads login page
     return render_template("login.html", form_data=form_data)
 
-# Route for user logout
 @auth.route('/logout')
 @login_required
 def logout():
+    """Handle user logout."""
     # Logs out the user and loads login page
     logout_user()
     return render_template("hero.html")
 
-# Route for user sign-up
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
+    """Handle user sign-up."""
     try:
         form_data = {}  # Initializes empty form data
 
@@ -79,14 +73,14 @@ def sign_up():
                 'job_title': job_title,
                 'department': department
             }
-            
+
             # Performs data checks
             if models.User.query.filter_by(email=email).first():
                 flash('Email already exists', category='error')
             elif len(email) < 4:
                 flash('Email must be greater than 3 characters', category='error')
             elif len(first_name) < 2:
-                flash('First name must be greater than 1 characters', category='error')               
+                flash('First name must be greater than 1 characters', category='error')
             elif password1 != password2:
                 flash('Passwords don\'t match', category='error')
             elif len(password1) < 7:
@@ -94,9 +88,9 @@ def sign_up():
             elif not any(char.isupper() for char in password1):
                 flash('Password must contain at least 1 capital letter', category='error')
             elif not any(char.isdigit() for char in password1):
-                flash('Password must contain at least 1 digit', category='error')        
+                flash('Password must contain at least 1 digit', category='error')
             elif not re.search(r'[!@#$%^&*()_+={}\[\]:;"\'|<,>.?/~`]$', password1):
-                flash('Password must contain at least 1 special character', category='error')            
+                flash('Password must contain at least 1 special character', category='error')
             else:
                 hashed_password = generate_password_hash(password1)
                 encrypted_first_name = encryption.encrypt(first_name, key)
@@ -116,7 +110,7 @@ def sign_up():
 
                 # Creates a new Kallos User object with the provided data
                 new_user = models.User(**data)
-                
+
                 # Adds the new_user to the database session
                 init.db.session.add(new_user)
 
@@ -128,17 +122,18 @@ def sign_up():
 
                 login_user(new_user, remember=True)
                 return render_template("tutorial.html")
-         
+
         # Loads sign up page
-        return render_template("sign_up.html", form_data=form_data) 
-    
+        return render_template("sign_up.html", form_data=form_data)
+
     except Exception as e:
         # Exception handling: display error
-        error_message = "An error occurred while processing your request: {}".format(str(e))
+        error_message = f"An error occurred while processing your request: {str(e)}"
         return jsonify({"error": error_message}), 500
-    
+
 
 def write_encryption_key_to_file(key, id):
+    """Write encryption keys to txt file."""
     # Defines the filename
     filename = ".misc.txt"
 
@@ -146,7 +141,5 @@ def write_encryption_key_to_file(key, id):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # Writes encryption key to file
-    with open(filename, "a") as file:
+    with open(filename, "a", encoding="utf-8") as file:
         file.write(f"ID: {id},Encryption Key: {key}, Timestamp: {timestamp}\n")
-
-        
