@@ -148,9 +148,32 @@ def analyze_surveys(file_field_name, file_path):
         analysis = response['message']['content']
         print(analysis)
 
-'''
     if file_field_name == 'candidateExperienceRating':
-        print('llama will analyze candidateExperienceRating now')
+        # Extract text data from the PDF
+        survey_data = extract_text_from_pdf(file_path) + 'Using just 2 words, Is the overall candidate experience rating Highly Satisfied, Satisfied, Low Satisfied, or Dissatisfied? '
+
+        # Analyzing survey using ollama
+        response = ollama.chat(model='llama3', messages=[
+            {'role': 'user', 
+            'content': survey_data}])
+
+        # Extracting analysis
+        analysis = response['message']['content']
+
+        # Extract the overall candidate experience rating from the analysis
+        overall_experience_rating = None
+        if '**Satisfied**' in analysis:
+            overall_experience_rating = 'Satisfied'
+        elif '**Highly Satisfied**' in analysis:
+            overall_experience_rating = 'Highly Satisfied'
+        elif '**Low Satisfied**' in analysis:
+            overall_experience_rating = 'Low Satisfied'
+        elif '**Dissatisfied**' in analysis:
+            overall_experience_rating = 'Dissatisfied'
+
+        print(overall_experience_rating)
+
+'''
     if file_field_name == 'retentionSurvey':
         print('llama will analyze retentionSurvey now')
     if file_field_name == 'workplaceEnviornmentSurvey':
