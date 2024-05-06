@@ -6,6 +6,9 @@ from flask import Blueprint
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 import os
+import ollama
+import PyPDF2
+
 
 submissions = Blueprint('submissions', __name__)
 
@@ -101,11 +104,11 @@ def upload_file():
                     continue
                 # Extract the file extension
                 file_extension = file.filename.rsplit('.', 1)[1].lower()
-                print(file_extension)
                 if file_extension == 'pdf':
                     # The file is allowed, save it to the UPLOAD_FOLDER
                     filename = secure_filename(file.filename)
                     file.save(os.path.join(init.app.config['UPLOAD_FOLDER'], filename))
+                    analyze_surveys(file_field_name)
                 else:
                     # The file has an invalid extension or format
                     flash(f'Invalid file for {survey_name}. Please upload a PDF file.', 'error')
@@ -120,3 +123,35 @@ def upload_file():
 
     # If GET request, render the form page for file upload
     return render_template("base_surveys.html")
+
+def extract_text_from_pdf(pdf_file):
+    with open(pdf_file, 'rb') as f:
+        reader = PyPDF2.PdfReader(f)
+        text = ''
+        for page_num in range(len(reader.pages)):
+            text += reader.pages[page_num].extract_text()
+    return text.strip()
+
+def analyze_surveys(file_field_name):
+    if file_field_name == 'npsSurvey':
+        print('llama will analyze npsSurvey now')
+        # Function to extract text from PDF file
+        # Path to your PDF file containing the survey
+        pdf_file_path = r'D:\OneDrive\Compartir\PrideCom_Graduation\Prototyping\Surveys\eNPS_Survey.pdf'
+        # Extract text data from the PDF
+        survey_data = extract_text_from_pdf(pdf_file_path) + 'Calculate average eNPS. Only write number as response. Dont write whole process'
+        # Analyzing survey using ollama
+        response = ollama.chat(model='llama3', messages=[
+            {'role': 'user', 
+             'content': survey_data}])
+        # Extracting analysis
+        analysis = response['message']['content']
+        print(analysis)
+
+'''
+    if file_field_name == 'candidateExperienceRating':
+        print('llama will analyze candidateExperienceRating now')
+    if file_field_name == 'retentionSurvey':
+        print('llama will analyze retentionSurvey now')
+    if file_field_name == 'workplaceEnviornmentSurvey':
+        print('llama will analyze workplaceEnviornmentSurvey now')'''

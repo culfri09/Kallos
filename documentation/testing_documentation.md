@@ -38,7 +38,7 @@ The testing approach for Kallos will follow a combination of manual and automate
 ### 2.2 Types of Testing
 The following types of testing will be conducted:
 
-- **Unit Testing**: Testing individual components/modules in isolation.
+- **Pylint Testing**: Analyzing Python code using pylint to identify errors, enforce coding standards, and detect code smells.
 - **Automated Testing**:  Automating the testing of user interfaces to validate the functionality and behavior of web applications.
 - **Integration Testing**: Verifying the interactions between different components/modules.
 - **Performance Testing**: Assessing the performance, scalability, and reliability of the platform under various load conditions.
@@ -47,7 +47,7 @@ The following types of testing will be conducted:
 ### 2.3 Testing Tools
 The following testing tools will be utilized:
 
-- **Unit Testing**: Flask-Testing
+- **Pylint Testing**: Pylint
 - **Automated Testing**: Selenium
 - **Integration Testing**: Pytest
 - **Performance Testing**: Locust
@@ -75,7 +75,7 @@ Test cases will be developed to cover various scenarios and functionalities of t
 ### 4.1 Test Schedule
 The testing activities will be scheduled as follows:
 
-- Unit Testing: With each new feature
+- Pylint Testing: With each new module
 - Automated Testing: With each new feature
 - Integration Testing: With each new feature
 - Performance Testing: Before hand-in

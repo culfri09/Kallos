@@ -20,7 +20,7 @@ db = SQLAlchemy(app)
 
 # Defines the allowed file extensions for each survey
 ALLOWED_EXTENSIONS = {
-    'pdf': ['npsSurvey', 'candidateExperienceRating', 'employeeReferalSurvey', 'retentionSurvey', 'careerDevelopmentSurvey', 'workplaceEnviornmentSurvey']
+    'pdf': ['npsSurvey', 'candidateExperienceRating', 'retentionSurvey', 'workplaceEnviornmentSurvey']
 }
 
 # Set the folder where uploaded files will be saved

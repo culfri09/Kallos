@@ -39,6 +39,12 @@
 |     |                                               |                                                | 13. Verify successful login by checking for expected elements or messages on the dashboard    |
 |     |                                               |                                                | 14. Complete the onboarding process by filling out necessary information and submitting the form|
 
+### Pylint Test
+
+| ID  | Description                                  | Preconditions                                  | Test Steps                                                                                  |
+| --- | -------------------------------------------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------|
+| 3   | Pylint test for code quality (main.py)               | - Code files are available                     | 1. Run pylint tests on the codebase                                                         |
+
 ## Test Execution Results
 
 ### Automated Selenium Test for Signing Up a User
@@ -53,16 +59,33 @@
 | --- | -------------------------------------------- | --------------------------------------------- | --------- | ----------------------------------------------|
 | 2   | User should be able to complete onboarding  | Onboarding process completed successfully     | Pass      | N/A                                            |
 
+
+### Pylint Test
+
+| ID  | Expected Results                             | Actual Results                               | Pass/Fail | Comments                                       |
+| --- | -------------------------------------------- | --------------------------------------------- | --------- | ----------------------------------------------|
+| 3   | Code should pass pylint tests                | Code passed pylint tests successfully        | Pass (5.0)     | 2 Issues found                        |
+
+
 ## Summary
-- Total Test Cases: 2
-- Passed: 2
+- Total Test Cases: 3
+- Passed: 3
 - Failed: 0
 - Pass Rate: 100%
 - Fail Rate: 0%
-- No notable findings or issues.
+
 
 ## Detailed Logs
 No detailed logs provided as the tests passed successfully.
 
+### Main.py Test Pylint
+```Module main
+main.py:9:0: C0305: Trailing newlines (trailing-newlines)
+main.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+
+Your code has been rated at 5.00/10 (previous run: 5.00/10, +0.00)
+```
+
 ## Conclusion
-Both the automated selenium tests for signing up a user and onboarding passed successfully. The tests covered all the necessary steps, and the users were able to complete the processes without any issues. The pass rate is 100%, indicating successful test executions. No notable findings or issues were encountered during the tests.
+
+
