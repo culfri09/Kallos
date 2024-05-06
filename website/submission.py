@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 import os
 import ollama
 import PyPDF2
-
+from flask import current_app
 
 submissions = Blueprint('submissions', __name__)
 
@@ -107,8 +107,10 @@ def upload_file():
                 if file_extension == 'pdf':
                     # The file is allowed, save it to the UPLOAD_FOLDER
                     filename = secure_filename(file.filename)
-                    file.save(os.path.join(init.app.config['UPLOAD_FOLDER'], filename))
-                    analyze_surveys(file_field_name)
+                    #file.save(os.path.join(init.app.config['UPLOAD_FOLDER'], filename))
+                    file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+                    file.save(file_path)
+                    analyze_surveys(file_field_name, file_path)  # Pass the file path
                 else:
                     # The file has an invalid extension or format
                     flash(f'Invalid file for {survey_name}. Please upload a PDF file.', 'error')
@@ -132,14 +134,12 @@ def extract_text_from_pdf(pdf_file):
             text += reader.pages[page_num].extract_text()
     return text.strip()
 
-def analyze_surveys(file_field_name):
+def analyze_surveys(file_field_name, file_path):
     if file_field_name == 'npsSurvey':
         print('llama will analyze npsSurvey now')
         # Function to extract text from PDF file
-        # Path to your PDF file containing the survey
-        pdf_file_path = r'D:\OneDrive\Compartir\PrideCom_Graduation\Prototyping\Surveys\eNPS_Survey.pdf'
         # Extract text data from the PDF
-        survey_data = extract_text_from_pdf(pdf_file_path) + 'Calculate average eNPS. Only write number as response. Dont write whole process'
+        survey_data = extract_text_from_pdf(file_path) + 'Calculate average eNPS. Only write number as response. Dont write whole process'
         # Analyzing survey using ollama
         response = ollama.chat(model='llama3', messages=[
             {'role': 'user', 
