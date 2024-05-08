@@ -136,7 +136,6 @@ def extract_text_from_pdf(pdf_file):
 
 def analyze_surveys(file_field_name, file_path):
     if file_field_name == 'npsSurvey':
-        print('llama will analyze npsSurvey now')
         # Function to extract text from PDF file
         # Extract text data from the PDF
         survey_data = extract_text_from_pdf(file_path) + 'Calculate average eNPS. Only write number as response. Dont write whole process'
@@ -145,8 +144,8 @@ def analyze_surveys(file_field_name, file_path):
             {'role': 'user', 
              'content': survey_data}])
         # Extracting analysis
-        analysis = response['message']['content']
-        print(analysis)
+        eNPS = response['message']['content']
+        print(eNPS)
 
     if file_field_name == 'candidateExperienceRating':
         # Extract text data from the PDF
@@ -173,8 +172,18 @@ def analyze_surveys(file_field_name, file_path):
 
         print(overall_experience_rating)
 
-'''
+
     if file_field_name == 'retentionSurvey':
-        print('llama will analyze retentionSurvey now')
+        # Function to extract text from PDF file
+        # Extract text data from the PDF
+        survey_data = extract_text_from_pdf(file_path) + 'Calculate average retention rate. Only write number as response. Dont write whole process'
+        # Analyzing survey using ollama
+        response = ollama.chat(model='llama3', messages=[
+            {'role': 'user', 
+             'content': survey_data}])
+        # Extracting analysis
+        rentention_rate = response['message']['content']
+        print(rentention_rate)
+    '''
     if file_field_name == 'workplaceEnviornmentSurvey':
         print('llama will analyze workplaceEnviornmentSurvey now')'''
