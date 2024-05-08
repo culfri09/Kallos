@@ -184,6 +184,15 @@ def analyze_surveys(file_field_name, file_path):
         # Extracting analysis
         rentention_rate = response['message']['content']
         print(rentention_rate)
-    '''
+    
     if file_field_name == 'workplaceEnviornmentSurvey':
-        print('llama will analyze workplaceEnviornmentSurvey now')'''
+        # Function to extract text from PDF file
+        # Extract text data from the PDF
+        survey_data = extract_text_from_pdf(file_path) + 'Calculate average workplace environment satisfaction rate. Only write number as response. Dont write whole process'
+        # Analyzing survey using ollama
+        response = ollama.chat(model='llama3', messages=[
+            {'role': 'user', 
+             'content': survey_data}])
+        # Extracting analysis
+        workplace_rate = response['message']['content']
+        print(workplace_rate)
