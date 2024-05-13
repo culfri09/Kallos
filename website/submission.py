@@ -106,6 +106,9 @@ def upload_file():
         # Flag to track if any file upload fails
         upload_failed = False
 
+        # Dictionary to store survey data for each file field name
+        survey_data = {}
+
         # Loop through each survey
         for survey_name, file_field_names in init.ALLOWED_EXTENSIONS.items():
             # Loop through each file upload field for the current survey
@@ -122,7 +125,10 @@ def upload_file():
                     #file.save(os.path.join(init.app.config['UPLOAD_FOLDER'], filename))
                     file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
                     file.save(file_path)
-                    analyze_surveys(file_field_name, file_path)  # Pass the file path
+                    # Extract text data from PDF
+                    text_data = extract_text_from_pdf(file_path)
+                    # Add survey data to the dictionary
+                    survey_data[file_field_name] = text_data
                 else:
                     # The file has an invalid extension or format
                     flash(f'Invalid file for {survey_name}. Please upload a PDF file.', 'error')
@@ -131,6 +137,9 @@ def upload_file():
         # If any file upload fails, render the same page with an error message
         if upload_failed:
             return render_template("base_surveys.html", error="File upload failed. Please try again.")
+
+        # Call analyze_surveys function with all survey data
+        analyze_surveys(survey_data)
 
         # Redirect to the home page after successful upload of all files
         return redirect(url_for('views.home'))
@@ -146,65 +155,74 @@ def extract_text_from_pdf(pdf_file):
             text += reader.pages[page_num].extract_text()
     return text.strip()
 
-def analyze_surveys(file_field_name, file_path):
-    if file_field_name == 'npsSurvey':
-        # Function to extract text from PDF file
-        # Extract text data from the PDF
-        survey_data = extract_text_from_pdf(file_path) + 'Calculate average nps. Only write number from 0 to 10. No more text. Only 1 word with number of result.'
-        client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
-        completion = client.chat.completions.create(
-        model="QuantFactory/Meta-Llama-3-8B-Instruct-GGUF",
-        messages=[
-            {"role": "system", "content": "You are an intelligent assistant. You always provide numbers as answers."},
-            {"role": "user", "content": survey_data}
-        ],
-        temperature=0.7,
-        )
-        print(completion.choices[0].message.content)
+def analyze_surveys(survey_data):
+    # Point to the local server
+    client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
 
-    if file_field_name == 'candidateExperienceRating':
-        # Extract text data from the PDF
-        survey_data = extract_text_from_pdf(file_path) + 'Calculate average candidate experience rating. Calculate average candidate experience rating. Only write number from 0 to 100. No more text. Only 1 word with number of result.'
-        client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
-        completion = client.chat.completions.create(
-        model="QuantFactory/Meta-Llama-3-8B-Instruct-GGUF",
-        messages=[
-            {"role": "system", "content": "You are an intelligent assistant. You always provide numbers as answers."},
-            {"role": "user", "content": survey_data}
-        ],
-        temperature=0.7,
-        )
-        print(completion.choices[0].message.content)
+    # Initialize variables to store survey results
+    enps = candidate_rate = retention_rate = workplace_rate = None
 
+    # Loop through each survey data
+    for file_field_name, text_data in survey_data.items():
+        # Process surveys based on file field name
+        if file_field_name == 'npsSurvey':
+            text_data += 'Calculate average nps. Only write number from 0 to 10. No more text. Only 1 word with number of result.'
+            completion = client.chat.completions.create(
+                model="QuantFactory/Meta-Llama-3-8B-Instruct-GGUF",
+                messages=[
+                    {"role": "system", "content": "You are an intelligent assistant. You always provide numbers as answers."},
+                    {"role": "user", "content": text_data}
+                ],
+                temperature=0.7,
+            )
+            enps = completion.choices[0].message.content
+        elif file_field_name == 'candidateExperienceRating':
+            text_data += 'Calculate average candidate experience rating. Calculate average candidate experience rating. Only write number from 0 to 100. No more text. Only 1 word with number of result.'
+            completion = client.chat.completions.create(
+                model="QuantFactory/Meta-Llama-3-8B-Instruct-GGUF",
+                messages=[
+                    {"role": "system", "content": "You are an intelligent assistant. You always provide numbers as answers."},
+                    {"role": "user", "content": text_data}
+                ],
+                temperature=0.7,
+            )
+            candidate_rate = completion.choices[0].message.content
+        elif file_field_name == 'retentionSurvey':
+            text_data += 'Calculate average retention rate. Only write number from 0 to 100. No more text. Only 1 word with number of result.'
+            completion = client.chat.completions.create(
+                model="QuantFactory/Meta-Llama-3-8B-Instruct-GGUF",
+                messages=[
+                    {"role": "system", "content": "You are an intelligent assistant. You always provide numbers as answers."},
+                    {"role": "user", "content": text_data}
+                ],
+                temperature=0.7,
+            )
+            retention_rate = completion.choices[0].message.content
+        elif file_field_name == 'workplaceEnviornmentSurvey':
+            text_data += 'Calculate average workplace environment rate. Only write number from 0 to 100. No more text. Only 1 word with number of result.'
+            completion = client.chat.completions.create(
+                model="QuantFactory/Meta-Llama-3-8B-Instruct-GGUF",
+                messages=[
+                    {"role": "system", "content": "You are an intelligent assistant. You always provide numbers as answers."},
+                    {"role": "user", "content": text_data}
+                ],
+                temperature=0.7,
+            )
+            workplace_rate = completion.choices[0].message.content
+    
+    # Gets the ID of the currently logged-in user
+    user_id = current_user.id
 
-    if file_field_name == 'retentionSurvey':
-        # Function to extract text from PDF file
-        # Extract text data from the PDF
-        survey_data = extract_text_from_pdf(file_path) + 'Calculate average retention rate. Only write number from 0 to 100. No more text. Only 1 word with number of result.'
-        client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
-        completion = client.chat.completions.create(
-        model="QuantFactory/Meta-Llama-3-8B-Instruct-GGUF",
-        messages=[
-            {"role": "system", "content": "You are an intelligent assistant. You always provide numbers as answers."},
-            {"role": "user", "content": survey_data}
-        ],
-        temperature=0.7,
-        )
-        print(completion.choices[0].message.content)
-
-    if file_field_name == 'workplaceEnviornmentSurvey':
-        # Function to extract text from PDF file
-        # Extract text data from the PDF
-        survey_data = extract_text_from_pdf(file_path) + 'Calculate average workplace enviornment rate. Only write number from 0 to 100. No more text. Only 1 word with number of result.'
-        # Point to the local server
-        client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
-
-        completion = client.chat.completions.create(
-        model="QuantFactory/Meta-Llama-3-8B-Instruct-GGUF",
-        messages=[
-            {"role": "system", "content": "You are an intelligent assistant. You always provide numbers as answers."},
-            {"role": "user", "content": survey_data}
-        ],
-        temperature=0.7,
-        )
-        print(completion.choices[0].message.content)
+    # Create a new instance of Surveys model with the analyzed data
+    new_surveys = models.Surveys(
+        kallosusers_id=user_id,
+        enps=enps,
+        candidate_rate=candidate_rate,
+        retention_rate=retention_rate,
+        workplace_rate=workplace_rate,
+        timestamp=datetime.now(),
+    )
+    # Add the new_surveys to the database session
+    init.db.session.add(new_surveys)
+    # Commit changes to the database
+    init.db.session.commit()
