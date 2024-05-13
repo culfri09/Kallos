@@ -8,3 +8,14 @@
     display: inline-block;
     margin-right: 10px; /* Adjust this value to add spacing between links */
   }
+
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.footer-section {
+    width: 30%; /* Adjust the width as needed */
+}
