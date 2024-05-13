@@ -9,6 +9,7 @@ import os
 import ollama
 import PyPDF2
 from flask import current_app
+from openai import OpenAI
 
 submissions = Blueprint('submissions', __name__)
 
@@ -149,61 +150,61 @@ def analyze_surveys(file_field_name, file_path):
     if file_field_name == 'npsSurvey':
         # Function to extract text from PDF file
         # Extract text data from the PDF
-        survey_data = extract_text_from_pdf(file_path) + 'Calculate average eNPS. Only write number as response. Dont write whole process'
-        # Analyzing survey using ollama
-        response = ollama.chat(model='llama3', messages=[
-            {'role': 'user', 
-             'content': survey_data}])
-        # Extracting analysis
-        eNPS = response['message']['content']
-        print(eNPS)
+        survey_data = extract_text_from_pdf(file_path) + 'Calculate average nps. Only write number from 0 to 10. No more text. Only 1 word with number of result.'
+        client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
+        completion = client.chat.completions.create(
+        model="QuantFactory/Meta-Llama-3-8B-Instruct-GGUF",
+        messages=[
+            {"role": "system", "content": "You are an intelligent assistant. You always provide numbers as answers."},
+            {"role": "user", "content": survey_data}
+        ],
+        temperature=0.7,
+        )
+        print(completion.choices[0].message.content)
 
     if file_field_name == 'candidateExperienceRating':
         # Extract text data from the PDF
-        survey_data = extract_text_from_pdf(file_path) + 'Using just 2 words, Is the overall candidate experience rating Highly Satisfied, Satisfied, Low Satisfied, or Dissatisfied? '
-
-        # Analyzing survey using ollama
-        response = ollama.chat(model='llama3', messages=[
-            {'role': 'user', 
-            'content': survey_data}])
-
-        # Extracting analysis
-        analysis = response['message']['content']
-
-        # Extract the overall candidate experience rating from the analysis
-        overall_experience_rating = None
-        if '**Satisfied**' in analysis:
-            overall_experience_rating = 'Satisfied'
-        elif '**Highly Satisfied**' in analysis:
-            overall_experience_rating = 'Highly Satisfied'
-        elif '**Low Satisfied**' in analysis:
-            overall_experience_rating = 'Low Satisfied'
-        elif '**Dissatisfied**' in analysis:
-            overall_experience_rating = 'Dissatisfied'
-
-        print(overall_experience_rating)
+        survey_data = extract_text_from_pdf(file_path) + 'Calculate average candidate experience rating. Calculate average candidate experience rating. Only write number from 0 to 100. No more text. Only 1 word with number of result.'
+        client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
+        completion = client.chat.completions.create(
+        model="QuantFactory/Meta-Llama-3-8B-Instruct-GGUF",
+        messages=[
+            {"role": "system", "content": "You are an intelligent assistant. You always provide numbers as answers."},
+            {"role": "user", "content": survey_data}
+        ],
+        temperature=0.7,
+        )
+        print(completion.choices[0].message.content)
 
 
     if file_field_name == 'retentionSurvey':
         # Function to extract text from PDF file
         # Extract text data from the PDF
-        survey_data = extract_text_from_pdf(file_path) + 'Calculate average retention rate. Only write number as response. Dont write whole process'
-        # Analyzing survey using ollama
-        response = ollama.chat(model='llama3', messages=[
-            {'role': 'user', 
-             'content': survey_data}])
-        # Extracting analysis
-        rentention_rate = response['message']['content']
-        print(rentention_rate)
-    
+        survey_data = extract_text_from_pdf(file_path) + 'Calculate average retention rate. Only write number from 0 to 100. No more text. Only 1 word with number of result.'
+        client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
+        completion = client.chat.completions.create(
+        model="QuantFactory/Meta-Llama-3-8B-Instruct-GGUF",
+        messages=[
+            {"role": "system", "content": "You are an intelligent assistant. You always provide numbers as answers."},
+            {"role": "user", "content": survey_data}
+        ],
+        temperature=0.7,
+        )
+        print(completion.choices[0].message.content)
+
     if file_field_name == 'workplaceEnviornmentSurvey':
         # Function to extract text from PDF file
         # Extract text data from the PDF
-        survey_data = extract_text_from_pdf(file_path) + 'Calculate average workplace environment satisfaction rate. Only write number as response. Dont write whole process'
-        # Analyzing survey using ollama
-        response = ollama.chat(model='llama3', messages=[
-            {'role': 'user', 
-             'content': survey_data}])
-        # Extracting analysis
-        workplace_rate = response['message']['content']
-        print(workplace_rate)
+        survey_data = extract_text_from_pdf(file_path) + 'Calculate average workplace enviornment rate. Only write number from 0 to 100. No more text. Only 1 word with number of result.'
+        # Point to the local server
+        client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
+
+        completion = client.chat.completions.create(
+        model="QuantFactory/Meta-Llama-3-8B-Instruct-GGUF",
+        messages=[
+            {"role": "system", "content": "You are an intelligent assistant. You always provide numbers as answers."},
+            {"role": "user", "content": survey_data}
+        ],
+        temperature=0.7,
+        )
+        print(completion.choices[0].message.content)

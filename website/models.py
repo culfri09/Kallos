@@ -41,3 +41,19 @@ class Answers(init.db.Model):
     development = init.db.Column(init.db.String())
     #Defines a relationship with the User table
     user_relation = init.db.relationship('User', backref='user_answers')
+
+
+class Surveys(init.db.Model):
+    """Model representing surveys provided by users."""
+
+    __tablename__ = 'usersurveys'
+    # Defines Answers table in db
+    id = init.db.Column(init.db.Integer, primary_key=True)
+    kallosusers_id = init.db.Column(init.db.Integer, ForeignKey('kallosusers.id'))
+    enps = init.db.Column(init.db.Number())
+    candidate_rate = init.db.Column(init.db.Number())
+    retention_rate = init.db.Column(init.db.Number())
+    workplace_rate = init.db.Column(init.db.Number())
+    timestamp = init.db.Column(init.db.DateTime())
+    #Defines a relationship with the User table
+    user_relation = init.db.relationship('User', backref='user_surveys')
