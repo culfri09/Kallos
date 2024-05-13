@@ -22,7 +22,10 @@ def submit_answers():
     leadership_diversity = request.form.get('leadershipDiversity') or None
     net_promoter_score = request.form.get('NPS') or None
     employer_brand_familiarity = request.form.get('brandFamiliarity') or None
-    
+    channels = request.form.get('channels') or None
+    investment = request.form.get('investment') or None
+    development = request.form.get('development') or None
+
     # Gets the ID of the currently logged-in user
     user_id = current_user.id
 
@@ -35,7 +38,10 @@ def submit_answers():
         leadership_diversity=leadership_diversity,
         net_promoter_score=net_promoter_score,
         employer_brand_familiarity=employer_brand_familiarity,
-        timestamp=datetime.now()
+        timestamp=datetime.now(),
+        channels=channels,
+        investment=investment,
+        development=development
     )
 
     # Adds the new_answer to the database session
@@ -55,7 +61,10 @@ def submit_changed_answers():
         leadership_diversity = request.form['leadershipDiversity']
         net_promoter_score = request.form['NPS']
         employer_brand_familiarity = request.form['brandFamiliarity']
-        
+        channels = request.form['channels']
+        investment = request.form['investment']
+        development = request.form['development']
+
         # Gets the ID of the currently logged-in user
         user_id = current_user.id
 
@@ -70,7 +79,9 @@ def submit_changed_answers():
             existing_answer.leadership_diversity = leadership_diversity if leadership_diversity else existing_answer.leadership_diversity
             existing_answer.net_promoter_score = net_promoter_score if net_promoter_score else existing_answer.net_promoter_score
             existing_answer.employer_brand_familiarity = employer_brand_familiarity if employer_brand_familiarity else existing_answer.employer_brand_familiarity
-
+            existing_answer.channels = channels if channels else existing_answer.channels
+            existing_answer.investment = investment if investment else existing_answer.investment
+            existing_answer.development = development if development else existing_answer.development
         # Commits the session to save the changes to the database
         init.db.session.commit()
 

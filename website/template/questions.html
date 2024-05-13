@@ -47,6 +47,24 @@
             <br>
             <input style="width: 70%;" type="text" name="brandFamiliarity" value="{{ answer.employer_brand_familiarity }}">
             <br>
+            <br>
+            <label for="channels">What recruitment channels does your company utilize?
+            </label>
+            <br>
+            <input style="width: 70%;" type="text" name="channels" value="{{ answer.channels }}">
+            <br>
+            <br>
+            <label for="investment">Does your company invest in employer branding, and if so, what budget is allocated? 
+            </label>
+            <br>
+            <input style="width: 70%;" type="text" name="investment" value="{{ answer.investment }}">
+            <br>
+            <br>
+            <label for="development">Are there opportunities for personal growth and development?
+            </label>
+            <br>
+            <input style="width: 70%;" type="text" name="development" value="{{ answer.development }}">
+            <br>
             <button type="submit">Submit</button>
             {% endfor %}
     </form>       

@@ -36,6 +36,8 @@ class Answers(init.db.Model):
     net_promoter_score = init.db.Column(init.db.String())
     employer_brand_familiarity = init.db.Column(init.db.String())
     timestamp = init.db.Column(init.db.DateTime())
-
+    channels = init.db.Column(init.db.String())
+    investment = init.db.Column(init.db.String())
+    development = init.db.Column(init.db.String())
     #Defines a relationship with the User table
     user_relation = init.db.relationship('User', backref='user_answers')
