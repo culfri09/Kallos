@@ -37,14 +37,34 @@ def scrape(id):
 
     '''NUMBER OF POSITIONS'''
     div_elements = driver.find_elements(By.XPATH, "//div[contains(@class, 'css-181n3gf eu4oa1w0')]")
-
-    # Get the number of div elements
     positions_number = len(div_elements)
     print('positions: ' + str(positions_number))
 
 
     '''AVERAGE POSITION COVERAGE TIME'''
-    
+    # Find all paragraph elements with the specified class
+    paragraph_elements = driver.find_elements(By.XPATH, ".//p[contains(@class, 'css-ng92tm e1wnkr790')]")
+
+    # Initialize a list to store the number of days
+    days_list = []
+
+    # Iterate over each paragraph element found
+    for paragraph_element in paragraph_elements:
+        # Get the text inside the current paragraph element
+        paragraph_text = paragraph_element.text
+        
+        # Extract the number of days from the paragraph text
+        if "hace" in paragraph_text:
+            days_text = paragraph_text.split(" ")[1]  # Extract the numeric part after "hace"
+            if days_text.isdigit():
+                days = int(days_text)
+                days_list.append(days)
+
+    # Calculate the average number of days
+    if days_list:
+        average_days = sum(days_list) / len(days_list)
+        print("Average time in days:", average_days)
+
 
     '''NUMBER OF RATINGS'''
     div_element = driver.find_element(By.XPATH, "//div[contains(@class, 'css-104u4ae eu4oa1w0')]")
