@@ -57,3 +57,21 @@ class Surveys(init.db.Model):
     timestamp = init.db.Column(init.db.DateTime())
     #Defines a relationship with the User table
     user_relation = init.db.relationship('User', backref='user_surveys')
+
+
+class Scraping(init.db.Model):
+    __tablename__ = 'userscraping'
+    # Defines Answers table in db
+    id = init.db.Column(init.db.Integer, primary_key=True)
+    kallosusers_id = init.db.Column(init.db.Integer, ForeignKey('kallosusers.id'))
+    positions_number = init.db.Column(init.db.Integer())
+    average_days = init.db.Column(init.db.Integer())
+    ratings_number = init.db.Column(init.db.Integer())
+    worklife_balance_rating = init.db.Column(init.db.Integer())
+    salary_rating = init.db.Column(init.db.Integer())
+    work_stability_rating = init.db.Column(init.db.Integer())
+    management_rating = init.db.Column(init.db.Integer())
+    work_culture_rating = init.db.Column(init.db.Integer())
+    timestamp = init.db.Column(init.db.DateTime())
+    #Defines a relationship with the User table
+    user_relation = init.db.relationship('User', backref='user_scraping')

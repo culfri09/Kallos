@@ -5,7 +5,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.edge.service import Service
 import time
-from . import models
+from . import models, init
+from datetime import datetime
+
 
 def scrape(id):
     # Retrieve the user ID passed as an argument
@@ -69,10 +71,12 @@ def scrape(id):
     '''NUMBER OF RATINGS'''
     div_element = driver.find_element(By.XPATH, "//div[contains(@class, 'css-104u4ae eu4oa1w0')]")
     ratings_number = div_element.text
+    ratings_number = float(ratings_number.replace('.', '').replace(',', '.'))  # Convert to float
     print(ratings_number)
     
 
     '''BRAND SENTIMENT'''
+    ratings_dict = {}
     # Find all div elements with the specified class
     div_elements = driver.find_elements(By.XPATH, "//div[contains(@class, 'css-1gkra49 eu4oa1w0')]")
     for div_element in div_elements:
@@ -83,7 +87,34 @@ def scrape(id):
         # Extract text content from the span elements
         rating_text = rating_span.text
         topic_text = topic_span.text
-        
-        # Print the extracted text
-        print(f"Rating: {rating_text}, Topic: {topic_text}")
+        print(topic_text)
+
+        ratings_dict[topic_text] = float(rating_text)
+
+    # Explicitly assign ratings to variables based on the Spanish topic names
+    worklife_balance_rating = ratings_dict.get("Conciliación")
+    salary_rating = ratings_dict.get("Compensación y beneficios")
+    work_stability_rating = ratings_dict.get("Estabilidad laboral/Desarrollo profesional")
+    management_rating = ratings_dict.get("Gestión")
+    work_culture_rating = ratings_dict.get("Cultura")
+
+    # Create a new instance of Surveys model with the analyzed data
+    new_scrape = models.Scraping(
+        kallosusers_id=user_id,
+        positions_number=positions_number,
+        average_days=average_days,
+        ratings_number=ratings_number,
+        worklife_balance_rating=worklife_balance_rating,
+        salary_rating=salary_rating,
+        work_stability_rating=work_stability_rating,
+        management_rating=management_rating,
+        work_culture_rating=work_culture_rating,
+        timestamp=datetime.now()
+    )
+
+    # Add the new_surveys to the database session
+    init.db.session.add(new_scrape)
+    # Commit changes to the database
+    init.db.session.commit()
+
     
