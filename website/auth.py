@@ -102,10 +102,10 @@ def sign_up():
                 data = {
                     'email': email,
                     'password': hashed_password,
-                    'first_name': encrypted_first_name,
-                    'company_name': encrypted_company_name,
-                    'job_title': encrypted_job_title,
-                    'department': encrypted_department
+                    'first_name': first_name,
+                    'company_name': company_name,
+                    'job_title': job_title,
+                    'department': department
                 }
 
                 # Creates a new Kallos User object with the provided data

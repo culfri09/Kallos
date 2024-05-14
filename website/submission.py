@@ -6,10 +6,11 @@ from flask import Blueprint
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 import os
-import ollama
 import PyPDF2
 from flask import current_app
 from openai import OpenAI
+from website.web_scraping import scrape
+
 
 submissions = Blueprint('submissions', __name__)
 
@@ -140,8 +141,8 @@ def upload_file():
 
         # Call analyze_surveys function with all survey data
         analyze_surveys(survey_data)
-
-        # Redirect to the home page after successful upload of all files
+        user_id = current_user.id
+        scrape(user_id)
         return redirect(url_for('views.home'))
 
     # If GET request, render the form page for file upload
