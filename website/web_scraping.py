@@ -30,42 +30,40 @@ def scrape(id):
     driver = webdriver.Edge(service=edge_service)
 
     # Navigates to the page
-    driver.get(f'https://es.indeed.com/jobs?q={company_name}&l=Madrid+provincia')    
+    driver.get(f'https://es.indeed.com/cmp/{company_name}')    
 
     # Wait for the page to load
-    time.sleep(3)
+    time.sleep(2)
+
+    '''NUMBER OF POSITIONS'''
+    div_elements = driver.find_elements(By.XPATH, "//div[contains(@class, 'css-181n3gf eu4oa1w0')]")
+
+    # Get the number of div elements
+    positions_number = len(div_elements)
+    print('positions: ' + str(positions_number))
+
+
     '''AVERAGE POSITION COVERAGE TIME'''
-    # Find all elements with the specified data-testid attribute
-    date_elements = driver.find_elements(By.XPATH, "//span[@data-testid='myJobsStateDate']")
-    days_list = []
-    # Extract and print the text content of each date element
-    for date_element in date_elements:
-        # Get the text content of the element
-        date_text = date_element.text
-        # Remove the word "Posted" and leading/trailing whitespace
-        date_text = date_text.replace("Posted", "").strip()
-        date_text = date_text.replace("Publicado hace", "").strip()
-        # Remove the word "Publicado" and leading/trailing whitespace
-    date_text = date_text.replace("Publicado", "").strip()
     
-    # Extract the number of days
-    if "más de 30 días" in date_text:
-        days = 31  # Assuming "más de 30 días" as 31 days for simplicity
-    else:
-        days = int(date_text.replace("hace", "").replace("días", "").strip())
+
+    '''NUMBER OF RATINGS'''
+    div_element = driver.find_element(By.XPATH, "//div[contains(@class, 'css-104u4ae eu4oa1w0')]")
+    ratings_number = div_element.text
+    print(ratings_number)
     
-    # Add the number of days to the list
-    days_list.append(days)
-
-    # Calculate the average time
-    position_time = sum(days_list) / len(days_list)
-    print(position_time)
-
-    '''NUMBER OF OPEN POSITIONS'''
-    li_elements = driver.find_elements(By.XPATH, "//li[contains(@class, 'css-5lfssm eu4oa1w0')]")
-    number_of_positions = len(li_elements)
-    print(f"Number of open positions: {number_of_positions}")
-
 
     '''BRAND SENTIMENT'''
-    driver.close()
+    # Find all div elements with the specified class
+    div_elements = driver.find_elements(By.XPATH, "//div[contains(@class, 'css-1gkra49 eu4oa1w0')]")
+    for div_element in div_elements:
+        # Find the span elements within each div
+        rating_span = div_element.find_element(By.XPATH, ".//span[contains(@class, 'css-1qdoj65 e1wnkr790')]")
+        topic_span = div_element.find_element(By.XPATH, ".//span[contains(@class, 'css-1lp75au e1wnkr790')]")
+        
+        # Extract text content from the span elements
+        rating_text = rating_span.text
+        topic_text = topic_span.text
+        
+        # Print the extracted text
+        print(f"Rating: {rating_text}, Topic: {topic_text}")
+    
