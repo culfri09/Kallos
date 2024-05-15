@@ -62,17 +62,15 @@ def scrape(id):
                 days = int(days_text)
                 days_list.append(days)
 
-    # Calculate the average number of days
+    average_days = None  # Initialize average_days before the conditional block
+
     if days_list:
         average_days = sum(days_list) / len(days_list)
-        print("Average time in days:", average_days)
-
 
     '''NUMBER OF RATINGS'''
     div_element = driver.find_element(By.XPATH, "//div[contains(@class, 'css-104u4ae eu4oa1w0')]")
     ratings_number = div_element.text
     ratings_number = float(ratings_number.replace('.', '').replace(',', '.'))  # Convert to float
-    print(ratings_number)
     
 
     '''BRAND SENTIMENT'''
@@ -87,7 +85,6 @@ def scrape(id):
         # Extract text content from the span elements
         rating_text = rating_span.text
         topic_text = topic_span.text
-        print(topic_text)
 
         ratings_dict[topic_text] = float(rating_text)
 

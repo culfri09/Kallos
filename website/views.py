@@ -21,8 +21,8 @@ def landing_page():
 @views.route('/home')
 @login_required  # Ensure the user is logged in to access this page
 def home():
-    radar_chart_html = create_radar_chart()
-    return render_template("home.html", radar_chart_html=radar_chart_html)
+    radar_chart_html, ratings_number = create_radar_chart()
+    return render_template("home.html", radar_chart_html=radar_chart_html,ratings_number=ratings_number)
 
 @views.route('/hero')
 def hero_page():
