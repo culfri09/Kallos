@@ -19,7 +19,6 @@ submissions = Blueprint('submissions', __name__)
 def submit_answers():
     # Extracts form data
     benchmark_companies = request.form.get('benchmarkCompanies') or None
-    time_to_fill = request.form.get('timeToFill') or None
     demographic_breakdown = request.form.get('demographicBreakdown') or None
     leadership_diversity = request.form.get('leadershipDiversity') or None
     employer_brand_familiarity = request.form.get('brandFamiliarity') or None
@@ -47,7 +46,6 @@ def submit_answers():
     new_answer = models.Answers(
         kallosusers_id=user_id,
         benchmark_companies=benchmark_companies,
-        time_to_fill=time_to_fill,
         demographic_breakdown=demographic_breakdown,
         leadership_diversity=leadership_diversity,
         employer_brand_familiarity=employer_brand_familiarity,
@@ -86,7 +84,6 @@ def submit_changed_answers():
         if existing_answer:
             # Updates existing record with new values
             existing_answer.benchmark_companies = benchmark_companies if benchmark_companies else existing_answer.benchmark_companies
-            existing_answer.time_to_fill = time_to_fill if time_to_fill else existing_answer.time_to_fill
             existing_answer.demographic_breakdown = demographic_breakdown if demographic_breakdown else existing_answer.demographic_breakdown
             existing_answer.leadership_diversity = leadership_diversity if leadership_diversity else existing_answer.leadership_diversity
             existing_answer.employer_brand_familiarity = employer_brand_familiarity if employer_brand_familiarity else existing_answer.employer_brand_familiarity

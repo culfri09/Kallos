@@ -56,6 +56,10 @@ def create_charts():
 
                     # Create donut chart for development
                     gauge_chart_html = create_gauge_chart(development)
+                investment=user_answers.investment
+                employer_brand_familiarity=user_answers.employer_brand_familiarity
+                bar_chart_html=create_bar_chart(investment, employer_brand_familiarity)
+
 
             if user_answers and user_scrapes:
                 channels = user_answers.channels.split(', ')
@@ -63,7 +67,7 @@ def create_charts():
                 average_days=user_scrapes.average_days
                 stacked_bar_chart_html =create_stacked_bar_chart(channels, positions_number, average_days)
 
-        return radar_chart_html, line_graph_html, gauge_chart_html, stacked_bar_chart_html, ratings_number
+        return radar_chart_html, line_graph_html, gauge_chart_html, stacked_bar_chart_html,bar_chart_html, ratings_number
     
     return None, None, None, None
 
@@ -182,6 +186,32 @@ def create_stacked_bar_chart(channels,positions_number,average_days):
         width=800,
         height=500
     )
+
+    # Convert the chart to HTML
+    chart_html = pio.to_html(fig, full_html=False)
+
+    return chart_html
+
+
+def create_bar_chart(investment, employer_brand_familiarity):
+        # Data for the bar chart
+    data = [
+        go.Bar(
+            x=[employer_brand_familiarity],
+            y=[investment],
+            name='Investment in Employer Brand Initiatives'
+        )
+    ]
+
+    # Layout
+    layout = go.Layout(
+        title='Employer Branding Metrics',
+        xaxis=dict(title='Familiarity Level'),
+        yaxis=dict(title='Investment (in money)')
+    )
+
+    # Create the figure
+    fig = go.Figure(data=data, layout=layout)
 
     # Convert the chart to HTML
     chart_html = pio.to_html(fig, full_html=False)

@@ -30,7 +30,6 @@ class Answers(init.db.Model):
     id = init.db.Column(init.db.Integer, primary_key=True)
     kallosusers_id = init.db.Column(init.db.Integer, ForeignKey('kallosusers.id'))
     benchmark_companies = init.db.Column(init.db.String())
-    time_to_fill = init.db.Column(init.db.String())
     demographic_breakdown = init.db.Column(init.db.String())
     leadership_diversity = init.db.Column(init.db.String())
     employer_brand_familiarity = init.db.Column(init.db.String())
