@@ -11,8 +11,10 @@
         {{ radar_chart_html | safe }}
     </div>
     <div>
-        <!-- Display the number of ratings -->
         <p>Number of Ratings at Indeed: {{ ratings_number }}</p>
+    </div>
+    <div>
+        {{ line_graph_html | safe }}
     </div>
 </div>
 {% endblock %}

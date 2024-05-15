@@ -33,7 +33,6 @@ class Answers(init.db.Model):
     time_to_fill = init.db.Column(init.db.String())
     demographic_breakdown = init.db.Column(init.db.String())
     leadership_diversity = init.db.Column(init.db.String())
-    net_promoter_score = init.db.Column(init.db.String())
     employer_brand_familiarity = init.db.Column(init.db.String())
     timestamp = init.db.Column(init.db.DateTime())
     channels = init.db.Column(init.db.String())

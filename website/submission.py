@@ -22,7 +22,6 @@ def submit_answers():
     time_to_fill = request.form.get('timeToFill') or None
     demographic_breakdown = request.form.get('demographicBreakdown') or None
     leadership_diversity = request.form.get('leadershipDiversity') or None
-    net_promoter_score = request.form.get('NPS') or None
     employer_brand_familiarity = request.form.get('brandFamiliarity') or None
     channels = request.form.get('channels') or None
     investment = request.form.get('investment') or None
@@ -38,7 +37,6 @@ def submit_answers():
         time_to_fill=time_to_fill,
         demographic_breakdown=demographic_breakdown,
         leadership_diversity=leadership_diversity,
-        net_promoter_score=net_promoter_score,
         employer_brand_familiarity=employer_brand_familiarity,
         timestamp=datetime.now(),
         channels=channels,
@@ -61,7 +59,6 @@ def submit_changed_answers():
         time_to_fill = request.form['timeToFill']
         demographic_breakdown = request.form['demographicBreakdown']
         leadership_diversity = request.form['leadershipDiversity']
-        net_promoter_score = request.form['NPS']
         employer_brand_familiarity = request.form['brandFamiliarity']
         channels = request.form['channels']
         investment = request.form['investment']
@@ -79,7 +76,6 @@ def submit_changed_answers():
             existing_answer.time_to_fill = time_to_fill if time_to_fill else existing_answer.time_to_fill
             existing_answer.demographic_breakdown = demographic_breakdown if demographic_breakdown else existing_answer.demographic_breakdown
             existing_answer.leadership_diversity = leadership_diversity if leadership_diversity else existing_answer.leadership_diversity
-            existing_answer.net_promoter_score = net_promoter_score if net_promoter_score else existing_answer.net_promoter_score
             existing_answer.employer_brand_familiarity = employer_brand_familiarity if employer_brand_familiarity else existing_answer.employer_brand_familiarity
             existing_answer.channels = channels if channels else existing_answer.channels
             existing_answer.investment = investment if investment else existing_answer.investment
@@ -178,7 +174,7 @@ def analyze_surveys(survey_data):
             )
             enps = completion.choices[0].message.content
         elif file_field_name == 'candidateExperienceRating':
-            text_data += 'Calculate average candidate experience rating. Calculate average candidate experience rating. Only write number from 0 to 100. No more text. Only 1 word with number of result.'
+            text_data += 'Calculate average candidate experience rating. Calculate average candidate experience rating. Only write number from 0 to 10. No more text. Only 1 word with number of result.'
             completion = client.chat.completions.create(
                 model="QuantFactory/Meta-Llama-3-8B-Instruct-GGUF",
                 messages=[
@@ -189,7 +185,7 @@ def analyze_surveys(survey_data):
             )
             candidate_rate = completion.choices[0].message.content
         elif file_field_name == 'retentionSurvey':
-            text_data += 'Calculate average retention rate. Only write number from 0 to 100. No more text. Only 1 word with number of result.'
+            text_data += 'Calculate average retention rate. Only write number from 0 to 10. No more text. Only 1 word with number of result.'
             completion = client.chat.completions.create(
                 model="QuantFactory/Meta-Llama-3-8B-Instruct-GGUF",
                 messages=[
@@ -200,7 +196,7 @@ def analyze_surveys(survey_data):
             )
             retention_rate = completion.choices[0].message.content
         elif file_field_name == 'workplaceEnviornmentSurvey':
-            text_data += 'Calculate average workplace environment rate. Only write number from 0 to 100. No more text. Only 1 word with number of result.'
+            text_data += 'Calculate average workplace environment rate. Only write number from 0 to 10. No more text. Only 1 word with number of result.'
             completion = client.chat.completions.create(
                 model="QuantFactory/Meta-Llama-3-8B-Instruct-GGUF",
                 messages=[

@@ -6,6 +6,7 @@ from website.dash import create_radar_chart
 import plotly.graph_objs as go
 from plotly.offline import plot
 import chart_studio.tools as tls
+from website.dash import create_charts
 
 
 # Define route for the landing page
@@ -21,8 +22,8 @@ def landing_page():
 @views.route('/home')
 @login_required  # Ensure the user is logged in to access this page
 def home():
-    radar_chart_html, ratings_number = create_radar_chart()
-    return render_template("home.html", radar_chart_html=radar_chart_html,ratings_number=ratings_number)
+    radar_chart_html, line_graph_html, ratings_number = create_charts()
+    return render_template("home.html", radar_chart_html=radar_chart_html,line_graph_html=line_graph_html,ratings_number=ratings_number)
 
 @views.route('/hero')
 def hero_page():
