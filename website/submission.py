@@ -27,6 +27,19 @@ def submit_answers():
     investment = request.form.get('investment') or None
     development = request.form.get('development') or None
 
+    client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
+    answer = development + 'Imagine this is the answer of a company to the initiatives they have for development. How effective are their initiatives? Only write percentage. No more text. Only 1 word with percentage of result '
+    completion = client.chat.completions.create(
+        model="QuantFactory/Meta-Llama-3-8B-Instruct-GGUF",
+        messages=[
+            {"role": "system", "content": "You are an objective assistant. Please evaluate the effectiveness of the initiatives mentioned. You only provide percentages as answers"},
+            {"role": "user", "content": answer}
+        ],
+        temperature=0.7,
+    )
+
+    development_metric=completion.choices[0].message.content
+
     # Gets the ID of the currently logged-in user
     user_id = current_user.id
 
@@ -41,7 +54,7 @@ def submit_answers():
         timestamp=datetime.now(),
         channels=channels,
         investment=investment,
-        development=development
+        development=development_metric
     )
 
     # Adds the new_answer to the database session
