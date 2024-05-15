@@ -22,8 +22,8 @@ def landing_page():
 @views.route('/home')
 @login_required  # Ensure the user is logged in to access this page
 def home():
-    radar_chart_html, line_graph_html, gauge_chart_html, ratings_number = create_charts()
-    return render_template("home.html", radar_chart_html=radar_chart_html,line_graph_html=line_graph_html, gauge_chart_html=gauge_chart_html,ratings_number=ratings_number)
+    radar_chart_html, line_graph_html, gauge_chart_html, stacked_bar_chart_html, ratings_number = create_charts()
+    return render_template("home.html", radar_chart_html=radar_chart_html,line_graph_html=line_graph_html, gauge_chart_html=gauge_chart_html,stacked_bar_chart_html=stacked_bar_chart_html,ratings_number=ratings_number)
 
 @views.route('/hero')
 def hero_page():

@@ -12,7 +12,6 @@ def create_charts():
 
         radar_chart_html = None
         line_graph_html = None
-        donut_chart_html = None
         ratings_number = None
 
         if user_scrapes:
@@ -47,6 +46,7 @@ def create_charts():
             )
 
             if user_answers:
+                 
                 development = user_answers.development
                 if development is not None:
                     # Convert percentage string to float
@@ -57,9 +57,13 @@ def create_charts():
                     # Create donut chart for development
                     gauge_chart_html = create_gauge_chart(development)
 
-            
+            if user_answers and user_scrapes:
+                channels = user_answers.channels.split(', ')
+                positions_number = user_scrapes.positions_number
+                average_days=user_scrapes.average_days
+                stacked_bar_chart_html =create_stacked_bar_chart(channels, positions_number, average_days)
 
-        return radar_chart_html, line_graph_html, gauge_chart_html, ratings_number
+        return radar_chart_html, line_graph_html, gauge_chart_html, stacked_bar_chart_html, ratings_number
     
     return None, None, None, None
 
@@ -150,6 +154,33 @@ def create_gauge_chart(development):
         title='Talent Development',
         width=600,
         height=400
+    )
+
+    # Convert the chart to HTML
+    chart_html = pio.to_html(fig, full_html=False)
+
+    return chart_html
+
+def create_stacked_bar_chart(channels,positions_number,average_days):
+    # Data for the stacked bar chart
+    categories = channels
+    positions = [positions_number] * len(channels)  # Ensure positions is a list of the same length as channels
+    days_to_fill = [average_days] * len(channels)  # Ensure days_to_fill is a list of the same length as channels
+
+    # Creating the stacked bar chart
+    fig = go.Figure(data=[
+        go.Bar(name='Positions', x=categories, y=positions),
+        go.Bar(name='Average Days to Fill', x=categories, y=days_to_fill)
+    ])
+
+    # Layout
+    fig.update_layout(
+        barmode='stack',
+        title='Recruitment Metrics',
+        xaxis_title='Recruitment Channels',
+        yaxis_title='Metrics',
+        width=800,
+        height=500
     )
 
     # Convert the chart to HTML
