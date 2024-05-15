@@ -1,9 +1,15 @@
-{%  extends "base.html" %} {% block title %}Home{% endblock %}
+<!-- home.html -->
 
-<!-- Main content container -->
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
 {% block content %}
 <div class="main">
     <h1>This is the home page</h1>
     <p>This is some additional content.</p>
+    <!-- Radar chart container -->
+    <div id="radar-chart">
+        {{ radar_chart_html|safe }}
+    </div>
 </div>
 {% endblock %}

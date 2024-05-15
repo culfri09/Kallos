@@ -2,6 +2,11 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 views = Blueprint('views', __name__)
+from website.dash import create_radar_chart
+import plotly.graph_objs as go
+from plotly.offline import plot
+import chart_studio.tools as tls
+
 
 # Define route for the landing page
 @views.route('/')
@@ -16,8 +21,8 @@ def landing_page():
 @views.route('/home')
 @login_required  # Ensure the user is logged in to access this page
 def home():
-    # Render the home page template
-    return render_template("home.html")
+    radar_chart_html = create_radar_chart()
+    return render_template("home.html", radar_chart_html=radar_chart_html)
 
 @views.route('/hero')
 def hero_page():
