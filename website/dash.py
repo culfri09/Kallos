@@ -59,6 +59,9 @@ def create_charts():
                 investment=user_answers.investment
                 employer_brand_familiarity=user_answers.employer_brand_familiarity
                 bar_chart_html=create_bar_chart(investment, employer_brand_familiarity)
+                demographic_breakdown=user_answers.demographic_breakdown.split(', ')
+                leadership_diversity=user_answers.leadership_diversity
+                horizontal_bar_chart_html=create_horizontal_bar_chart(leadership_diversity, demographic_breakdown)
 
 
             if user_answers and user_scrapes:
@@ -67,7 +70,7 @@ def create_charts():
                 average_days=user_scrapes.average_days
                 stacked_bar_chart_html =create_stacked_bar_chart(channels, positions_number, average_days)
 
-        return radar_chart_html, line_graph_html, gauge_chart_html, stacked_bar_chart_html,bar_chart_html, ratings_number
+        return radar_chart_html, line_graph_html, gauge_chart_html, stacked_bar_chart_html,bar_chart_html, horizontal_bar_chart_html,ratings_number
     
     return None, None, None, None
 
@@ -212,6 +215,40 @@ def create_bar_chart(investment, employer_brand_familiarity):
 
     # Create the figure
     fig = go.Figure(data=data, layout=layout)
+
+    # Convert the chart to HTML
+    chart_html = pio.to_html(fig, full_html=False)
+
+    return chart_html
+
+def create_horizontal_bar_chart(leadership_diversity, demographic_breakdown):
+   # Create a grouped bar chart
+    fig = go.Figure()
+
+    # Add bar for leadership position percentage
+    fig.add_trace(go.Bar(
+        x=['Leadership Position'],
+        y=[leadership_diversity],
+        name='Leadership Position',
+        marker=dict(color='rgba(50, 171, 96, 0.6)'),
+    ))
+
+    # Add bars for diversity breakdown
+    fig.add_trace(go.Bar(
+        x=demographic_breakdown,
+        y=[0] * len(demographic_breakdown),  # Placeholder for proper alignment
+        name='Diversity Breakdown',
+        marker=dict(color='rgba(171, 50, 96, 0.6)'),
+    ))
+
+    # Layout
+    fig.update_layout(
+        barmode='group',
+        title='Diversity in Leadership Positions',
+        yaxis_title='Percentage (%)',
+        width=800,
+        height=500
+    )
 
     # Convert the chart to HTML
     chart_html = pio.to_html(fig, full_html=False)
