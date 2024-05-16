@@ -111,6 +111,31 @@ def display_surveys():
     # Renders the questions.html template and pass the user's answers
     return render_template("surveys.html", surveys=user_surveys)
 
+@submissions.route('/changed_surveys_submission', methods=['POST'])
+def submit_changed_surveys():
+# Extracts form data
+        npsMetric = request.form.get('npsMetric')
+        candidateMetric = request.form.get('candidateMetric')
+        retentionMetric = request.form.get('retentionMetric')
+        workplaceEnvironmentMetric = request.form.get('workplaceEnvironmentMetric')
+
+        # Gets the ID of the currently logged-in user
+        user_id = current_user.id
+
+        # Querys existing answer record for the current user
+        existing_answer = models.Surveys.query.filter_by(kallosusers_id=user_id).first()
+
+        if existing_answer:
+            # Updates existing record with new values
+            existing_answer.enps = npsMetric if npsMetric else existing_answer.enps
+            existing_answer.candidate_rate = candidateMetric if candidateMetric else existing_answer.candidate_rate
+            existing_answer.retention_rate = retentionMetric if retentionMetric else existing_answer.retention_rate
+            existing_answer.workplace_rate = workplaceEnvironmentMetric if workplaceEnvironmentMetric else existing_answer.workplace_rate
+
+        # Commits the session to save the changes to the database
+        init.db.session.commit()
+
+        return redirect(url_for('submissions.display_surveys'))
 
 '''SURVEYS SUBMISSIONS'''
 @submissions.route('/surveys_upload', methods=['POST'])
