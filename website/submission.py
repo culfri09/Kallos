@@ -11,7 +11,6 @@ from flask import current_app
 from openai import OpenAI
 from website.web_scraping import scrape
 
-
 submissions = Blueprint('submissions', __name__)
 
 '''ANSWERS SUBMISSION'''
@@ -67,7 +66,6 @@ def submit_answers():
 def submit_changed_answers():
 # Extracts form data
         benchmark_companies = request.form['benchmarkCompanies']
-        time_to_fill = request.form['timeToFill']
         demographic_breakdown = request.form['demographicBreakdown']
         leadership_diversity = request.form['leadershipDiversity']
         employer_brand_familiarity = request.form['brandFamiliarity']
@@ -113,6 +111,49 @@ def upload_file():
         # Flag to track if any file upload fails
         upload_failed = False
 
+        npsMetric = request.form.get('npsMetric')
+        candidateMetric = request.form.get('candidateMetric')
+        retentionMetric = request.form.get('retentionMetric')
+        workplaceEnvironmentMetric = request.form.get('workplaceEnvironmentMetric')
+
+        # Gets the ID of the currently logged-in user
+        user_id = current_user.id
+
+        # Validates the metrics
+        enps = npsMetric if npsMetric else None
+        candidate_rate = candidateMetric if candidateMetric else None
+        retention_rate = retentionMetric if retentionMetric else None
+        workplace_rate = workplaceEnvironmentMetric if workplaceEnvironmentMetric else None
+
+        # Create or update the Surveys model with the analyzed data
+        existing_survey = init.db.session.query(models.Surveys).filter_by(kallosusers_id=user_id).first()
+
+        if existing_survey:
+            # Update the existing survey with new data if provided
+            if enps:
+                existing_survey.enps = enps
+            if candidate_rate:
+                existing_survey.candidate_rate = candidate_rate
+            if retention_rate:
+                existing_survey.retention_rate = retention_rate
+            if workplace_rate:
+                existing_survey.workplace_rate = workplace_rate
+            existing_survey.timestamp = datetime.now()
+        else:
+            # Create a new instance of Surveys model with the analyzed data
+            new_survey = models.Surveys(
+                kallosusers_id=user_id,
+                enps=enps,
+                candidate_rate=candidate_rate,
+                retention_rate=retention_rate,
+                workplace_rate=workplace_rate,
+                timestamp=datetime.now(),
+            )
+            # Add the new_survey to the database session
+            init.db.session.add(new_survey)
+            
+            # Commit changes to the database
+            init.db.session.commit()
         # Dictionary to store survey data for each file field name
         survey_data = {}
 
@@ -220,16 +261,32 @@ def analyze_surveys(survey_data):
     # Gets the ID of the currently logged-in user
     user_id = current_user.id
 
-    # Create a new instance of Surveys model with the analyzed data
-    new_surveys = models.Surveys(
-        kallosusers_id=user_id,
-        enps=enps,
-        candidate_rate=candidate_rate,
-        retention_rate=retention_rate,
-        workplace_rate=workplace_rate,
-        timestamp=datetime.now(),
-    )
-    # Add the new_surveys to the database session
-    init.db.session.add(new_surveys)
+    # Query the database to find an existing survey for the user
+    existing_survey = init.db.session.query(models.Surveys).filter_by(kallosusers_id=user_id).first()
+
+    if existing_survey:
+        # Update the existing survey with new data
+        if enps is not None:
+            existing_survey.enps = enps
+        if candidate_rate is not None:
+            existing_survey.candidate_rate = candidate_rate
+        if retention_rate is not None:
+            existing_survey.retention_rate = retention_rate
+        if workplace_rate is not None:
+            existing_survey.workplace_rate = workplace_rate
+        existing_survey.timestamp = datetime.now()
+    else:
+        # Create a new instance of Surveys model with the analyzed data
+        new_survey = models.Surveys(
+            kallosusers_id=user_id,
+            enps=enps,
+            candidate_rate=candidate_rate,
+            retention_rate=retention_rate,
+            workplace_rate=workplace_rate,
+            timestamp=datetime.now(),
+        )
+        # Add the new_survey to the database session
+        init.db.session.add(new_survey)
+
     # Commit changes to the database
     init.db.session.commit()

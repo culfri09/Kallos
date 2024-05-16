@@ -50,7 +50,7 @@ def create_charts():
                 development = user_answers.development
                 if development is not None:
                     # Convert percentage string to float
-                    development = float(development.strip('%'))  # Remove '%' symbol and convert to float
+                    development = float(development.strip('%').rstrip('.').strip())  # Remove '%' symbol and convert to float
                     # Ensure development is within 0-100 range (assuming it's a percentage)
                     development = max(0, min(development, 100))
 
