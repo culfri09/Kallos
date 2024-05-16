@@ -103,6 +103,14 @@ def display_questions():
     # Renders the questions.html template and pass the user's answers
     return render_template("questions.html", answers=user_answers)
 
+@submissions.route('/my_surveys')
+@login_required
+def display_surveys():
+    # Fetches the user's answers from the database
+    user_surveys = models.Surveys.query.filter_by(kallosusers_id=current_user.id).all()
+    # Renders the questions.html template and pass the user's answers
+    return render_template("surveys.html", surveys=user_surveys)
+
 
 '''SURVEYS SUBMISSIONS'''
 @submissions.route('/surveys_upload', methods=['POST'])

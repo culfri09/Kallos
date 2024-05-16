@@ -1,0 +1,45 @@
+{%  extends "base.html" %} {% block title %}My Surveys{% endblock %}
+<!-- Main content container -->
+{% block content %}
+<div class="main">
+    <form method="POST" action="/changed_surveys_submission">
+        <h3 align="center">My Surveys</h3>   
+        <p>Revisit, update, or answer any questions you may have missed during your initial sign-up</p>   
+        <div>
+            {% for survey in surveys %}       
+            <p>NPS Survey</p>
+            <br>
+            <label for="npsMetric">If you don't have this survey readily available, please provide your estimated eNPS score on a scale of 1 to 10
+            </label>
+            <br>
+            <input style="width: 70%;" type="text" id="npsMetric" name="npsMetric" value="{{ survey.enps }}">
+            <br>
+            <br>
+            <p>Candidate Experience Survey</p>
+            <br>
+            <label for="candidateMetric">If you don't have this survey readily available, please provide your estimated candidate experience score on a scale of 1 to 10
+            </label>
+            <br>
+            <input style="width: 70%;" type="text" id="candidateMetric" name="candidateMetric" value="{{ survey.candidate_rate }}">
+            <br>
+            <br>
+            <p>Retention Survey</p>
+            <br>
+            <label for="retentionMetric">If you don't have this survey readily available, please provide your estimated retention score on a scale of 1 to 10
+            </label>
+            <br>
+            <input style="width: 70%;" type="text" id="retentionMetric" name="retentionMetric" value="{{ survey.retention_rate }}">
+            <br>
+            <br>
+            <p>Workplace Environment Survey</p>
+            <br>
+            <label for="workplaceEnvironmentMetric">If you don't have this survey readily available, please provide your estimated workplace enviornment score on a scale of 1 to 10
+            </label>
+            <br>
+            <input style="width: 70%;" type="text" id="workplaceEnvironmentMetric" name="workplaceEnvironmentMetric" value="{{ survey.workplace_rate }}">
+            <br>
+            <br>
+            {% endfor %}
+    </form>       
+</div>
+{% endblock %}
