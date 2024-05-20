@@ -21,39 +21,131 @@
         </div>
     </div>
   </nav>
-  <!--
-<div class="topnav">
-  <a class="nav-item nav-link" id="login" href="/login">Login</a>
-  <a class="nav-item nav-link" id="signUp" href="/sign-up">Signup</a>
-</div>-->
-<h1>Welcome to Kallos! Your expert in employer branding</h1>
-<h2>See the Full Picture of Your Employer Brand</h2>
-<p>Get a 360-degree view of your employer brand with our holistic perspective feature. By synthesizing data from diverse sources, we provide you with a comprehensive understanding of your company's reputation as an employer, empowering you to make informed decisions.</p>
-<br>
-<h2>Unlock Insights with Advanced Analysis</h2>
-<p>Utilize the cutting-edge analysis powered by Llama's LLM to delve into various data sources. Gain unparalleled insights into your company's reputation as an employer with precision and depth.</p>
-<h2>Customized Solutions for Your Needs</h2>
-<p>Receive tailor-made recommendations designed to address the unique challenges and opportunities of your organization. From enhancing workplace culture to refining recruitment strategies, our platform delivers actionable insights that propel your employer brand forward.</p>
-<h2>Compare, Compete, Excel</h2>
-<p>Gain a competitive edge by benchmarking your employer brand metrics against industry standards and competitors. With comprehensive benchmarking insights, you'll understand where you stand and how you can differentiate yourself in the market.</p>
-</body>
-<footer>
-  <div class="footer-section contact-info">
-      <h4>Contact Information</h4>
-      <p>fans@pridecom.es</p>
-      <p>+34 917 958 011</p>
-      <p>C/Fortuny, 14 - 1º izquierda 28010 Madrid</p>
-  </div>
-  <div class="footer-section social-media">
-      <h4>Follow Us</h4>
-      <a href="https://pridecom.es" target="_blank">PrideCom</a><br>
-      <a href="https://www.linkedin.com/company/pridecom/mycompany/" target="_blank">LinkedIn</a><br>
-      <a href="https://www.instagram.com/pridecom_es/" target="_blank">Instagram</a><br>
-  </div>
-  <div class="footer-section legal-links">
-      <h4>Legal Information</h4>
-      <a href="/privacy_policy">Privacy Policy</a>
-  </div>
-</footer>
+  <div class="text-center bg-light">
+      
+    <!-- Container element for the Vanta effect -->
+    <div id="vanta-container" style="width: 100vw; height:40vh;"></div>
 
+    <!-- Including necessary scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.21/vanta.net.min.js"></script>
+    
+    <!-- Initializing Vanta effect -->
+    <script>
+            VANTA.NET({
+            el: "#vanta-container",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0xff7100,
+            backgroundColor: 0xf9f9f9,
+            points: 7.00
+            })
+    </script>
+    <br>
+  <h1 class="display-5 fw-bold title"> <span class="orange-text">Kallos.</span> Your  <span class="orange-text">Expert</span> in</h1>
+  <h1 class="display-5 fw-bold title">Employer Branding!</h1>
+  <br>
+  <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4 subtitle custom-line-spacing" style="text-align: center;">Kallos delivers AI driven analysis</p>
+      <p class="lead mb-4 subtitle custom-line-spacing" style="text-align: center;">to elevate your company's brand.</p>
+      <br>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+      <a href="/sign-up"><button type="button" class="btn btn-outline-primary custom-hero-signup-btn px-4 gap-3">Sign up</button></a>
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+</div>
+<div class="container px-4 py-5" id="custom-cards">   
+  <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('unsplash-photo-1.jpg');">
+        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+          <h3 class="display-6 lh-1 fw-bold title card-number">1</h3>
+          <h3 class="display-6 lh-1 fw-bold card-title">Advanced Analysis</h3>
+          <li class="d-flex align-items-center card-subtitle">
+            <small style="font-size: 15px;">Utilize the cutting-edge analysis powered by Microsoft Llama's LLM</small>
+          </li>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('unsplash-photo-2.jpg');">
+        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+          <h3 class="display-6 lh-1 fw-bold title card-number">2</h3>
+          <h3 class="display-6 lh-1 fw-bold card-title">Customized solutions</h3>
+          <li class="d-flex align-items-center card-subtitle">
+            <small style="font-size: 15px;">Receive tailored-made recommendations designed to address unique challenges</small>
+          </li>
+        </div>
+      </div>
+    </div>  
+    <div class="col">
+      <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+        <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+          <h3 class="display-6 lh-1 fw-bold title card-number">3</h3>
+          <h3 class="display-6 lh-1 fw-bold card-title">Bench-marking</h3>
+            <li class="d-flex align-items-center card-subtitle">
+              <small style="font-size: 15px;">Gain competitive edge by receiving insights into industry standards and competitors</small>
+            </li>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="px-4 py-5 my-5 text-center bg-light">
+  <br>
+  <br>
+  <br>
+      <h1 class="display-5 fw-bold title">See the <span class="orange-text">full picture</span> of your employer brand</h1>
+      <br>
+      <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4 subtitle">Get a 360-degree view of your employer brand with our holistic perspective feature. By synthesizing data from diverse sources, we provide you with a comprehensive understanding of your company's reputation as an employer.</p>
+      <br>
+      <br>
+    </div>
+    </div>
+  </div>
+</div> 
+<div class="container">
+  <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5">
+    <div class="col mb-3">
+      <a href="index.html" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
+        <img src="{{ url_for('static', filename='images/LogoText.png') }}" alt="" width="140" height="50" class="d-inline-block align-text-top">
+      </a>
+      <p class="text-muted">© 2024</p>
+    </div>
+    <div class="col mb-3">  
+    </div>    
+    <div class="col mb-3" style="padding-right: 50px;">
+      <h5 class="title">Contact us</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2 subtitle"><a href="mailto: fans@pridecom.es" class="nav-link p-0 text-muted">fans@pridecom.es</a></li>
+        <li class="nav-item mb-2 subtitle"><a href="tel:+34917958 11" class="nav-link p-0 text-muted">+34 917 958 011</a></li>
+        <li class="nav-item mb-2 subtitle"><a href="https://maps.app.goo.gl/N1ABN59LDZ1A4cqAA" target="_blank" class="nav-link p-0 text-muted">C/Fortuny, 14 - 1º izquierda 28010 Madrid</a></li>
+      </ul>
+    </div>
+    <div class="col mb-3">
+      <h5 class="title">Follow us</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2 subtitle"><a href="https://pridecom.es" target="_blank" class="nav-link p-0 text-muted">PrideCom</a></li>
+        <li class="nav-item mb-2 subtitle"><a href="https://www.linkedin.com/company/pridecom/mycompany/" target="_blank" class="nav-link p-0 text-muted">LinkedIn</a></li>
+        <li class="nav-item mb-2 subtitle"><a href="https://www.instagram.com/pridecom_es/" target="_blank" class="nav-link p-0 text-muted">Instagram</a></li>
+      </ul>
+    </div>
+    <div class="col mb-3">
+      <h5 class="title">Legal information</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2 subtitle"><a class="nav-link p-0 text-muted">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </footer>
+</div>
+</body>
 </html>

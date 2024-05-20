@@ -48,9 +48,9 @@
     font-weight: bold;
 }
 .custom-hero-signup-btn:hover {
-    background-color: #F07837; 
-    border-color: #F07837;
-    color: #ffffff; 
+    background-color: #F07837 !important; 
+    border-color: #F07837 !important;
+    color: #ffffff !important; 
 }
 
 .custom-signup-btn:hover {
