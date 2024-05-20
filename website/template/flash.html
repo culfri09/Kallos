@@ -20,39 +20,45 @@
                 <a href="/login"><button type="button" class="btn custom-login-btn">Log in</button></a>
             </div>
         </div>
-      </nav>
-  <!-- Flash messages -->
-  {% with messages = get_flashed_messages(with_categories=true) %}
-  {%  if messages %}
-      {%  for category, message in messages %}
-      <!-- Display error messages -->
-      {% if category=='error' %}
-      <div id="error-alert" style="color:red" role="alert">
-          {{ message }}
-          <!-- Close button for the message -->
-          <button type="button" class="close-btn" onclick="closeAlert('error-alert')">
-              <span aria-hidden="true">&times;</span>
-          </button>
-      </div>
-      {% else %}
-      <!-- Display success messages -->
-      <div id="success-alert" style="color:green" role="alert">
-          {{ message }}
-          <button type="button" class="close-btn" onclick="closeAlert('success-alert')">
-              <span aria-hidden="true">&times;</span>
-          </button>
-      </div>
-      {% endif %}
-      {% endfor %}
-  {%  endif %}
-  {% endwith %}   
-  <!-- Main content container -->
-<div class="container">
-    {% block content %}
-    {% endblock %}
-</div>
-<script
-type="text/javascript"
-src="{{ url_for('static', filename='index.js') }}"></script>
+    </nav>
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <!-- Display error messages -->
+            {% if category == 'error' %}
+            <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="font-family: 'Poppins', sans-serif;">
+                {{ message }}
+                <!-- Close button for the message -->
+                <button type="button" class="close" aria-label="Close" onclick="closeAlert('error-alert')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% else %}
+            <!-- Display success messages -->
+            <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert" style="font-family: 'Poppins', sans-serif;">
+                {{ message }}
+                <button type="button" class="close" aria-label="Close" onclick="closeAlert('success-alert')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <!-- Main content container -->
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT+3QUGAK7cJmxo0l8/t5Yk7x+Gpg+hXrP5mFNtvLCPI5BKik4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybNm8zC5EZmPzZD4MUpO8WtcCeOKaIrH1z9HXQm38p7fU7QWp" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-9/aO8IOMpR0kz2RvN9IfZZVcGF8B5KZr5R5paJY6yBcX8Cv+6WpqPyKf05fF1sS3" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function closeAlert(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+    </script>
 </body>
 </html>
