@@ -13,6 +13,10 @@ def create_charts():
         radar_chart_html = None
         line_graph_html = None
         ratings_number = None
+        gauge_chart_html = None
+        stacked_bar_chart_html = None
+        bar_chart_html = None
+        horizontal_bar_chart_html = None
 
         if user_scrapes:
             worklife_balance_rating = user_scrapes.worklife_balance_rating
@@ -46,7 +50,6 @@ def create_charts():
             )
 
             if user_answers:
-                 
                 development = user_answers.development
                 if development is not None:
                     # Convert percentage string to float
@@ -56,23 +59,27 @@ def create_charts():
 
                     # Create donut chart for development
                     gauge_chart_html = create_gauge_chart(development)
-                investment=user_answers.investment
-                employer_brand_familiarity=user_answers.employer_brand_familiarity
-                bar_chart_html=create_bar_chart(investment, employer_brand_familiarity)
-                demographic_breakdown=user_answers.demographic_breakdown.split(', ')
-                leadership_diversity=user_answers.leadership_diversity
-                horizontal_bar_chart_html=create_horizontal_bar_chart(leadership_diversity, demographic_breakdown)
 
+                investment = user_answers.investment
+                employer_brand_familiarity = user_answers.employer_brand_familiarity
+                bar_chart_html = create_bar_chart(investment, employer_brand_familiarity)
 
-            if user_answers and user_scrapes:
-                channels = user_answers.channels.split(', ')
-                positions_number = user_scrapes.positions_number
-                average_days=user_scrapes.average_days
-                stacked_bar_chart_html =create_stacked_bar_chart(channels, positions_number, average_days)
+                demographic_breakdown = user_answers.demographic_breakdown
+                if demographic_breakdown is not None:
+                    demographic_breakdown = demographic_breakdown.split(', ')
+                    leadership_diversity = user_answers.leadership_diversity
+                    horizontal_bar_chart_html = create_horizontal_bar_chart(leadership_diversity, demographic_breakdown)
 
-        return radar_chart_html, line_graph_html, gauge_chart_html, stacked_bar_chart_html,bar_chart_html, horizontal_bar_chart_html,ratings_number
-    
-    return None, None, None, None
+                channels = user_answers.channels
+                if channels is not None:
+                    channels = channels.split(', ')
+                    positions_number = user_scrapes.positions_number
+                    average_days = user_scrapes.average_days
+                    stacked_bar_chart_html = create_stacked_bar_chart(channels, positions_number, average_days)
+
+        return radar_chart_html, line_graph_html, gauge_chart_html, stacked_bar_chart_html, bar_chart_html, horizontal_bar_chart_html, ratings_number
+
+    return None, None, None, None, None, None, None
 
 def create_radar_chart(worklife_balance_rating, salary_rating, work_stability_rating, management_rating, work_culture_rating):
     # Data for the radar chart

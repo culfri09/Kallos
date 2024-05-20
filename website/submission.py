@@ -25,6 +25,10 @@ def submit_answers():
     investment = request.form.get('investment') or None
     development = request.form.get('development') or None
 
+    if development is None:
+        development = "No initiatives provided."
+
+
     client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
     answer = development + 'Imagine this is the answer of a company to the initiatives they have for development. How effective are their initiatives? Only write percentage. No more text. Only 1 word with percentage of result '
     completion = client.chat.completions.create(
