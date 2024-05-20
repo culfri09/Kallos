@@ -47,14 +47,15 @@
                     <div class="col-md-2 d-flex align-items-end justify-content-end">
                         <label for="npsSurvey" class="btn btn-outline-primary custom-hero-signup-btn px-4 gap-3">
                             Upload Survey
-                            <input type="file" name="npsSurvey" id="npsSurvey" style="display: none; margin-left: 40px;"> 
+                            <input type="file" name="npsSurvey" id="npsSurvey" style="display: none; margin-left: 40px;" onchange="showFileName('npsSurvey', 'npsFileName')"> 
                         </label>
                     </div>
                 </div>
                 <br>
                 <label class="subtitle" for="npsMetric" style="margin-left: 40px;">If you don't have this survey readily available, please provide your estimated eNPS score on a scale of 1 to 10</label>
                 <br>
-                <input style="width: 70%; margin-left: 20px" class="form-control subtitle" type="text" id="npsMetric" name="npsMetric">              
+                <input style="width: 70%; margin-left: 20px" class="form-control subtitle" type="text" id="npsMetric" name="npsMetric">   
+                <span id="npsFileName"></span>           
             </div>
         </div>
         <br>
@@ -68,14 +69,15 @@
                     <div class="col-md-2 d-flex align-items-end justify-content-end">
                         <label for="candidateExperienceRating" class="btn btn-outline-primary custom-hero-signup-btn px-4 gap-3">
                             Upload Survey
-                            <input type="file" name="candidateExperienceRating" id="candidateExperienceRating" style="display: none; margin-left: 40px;"> 
+                            <input type="file" name="candidateExperienceRating" id="candidateExperienceRating" style="display: none; margin-left: 40px;" onchange="showFileName('candidateExperienceRating', 'candidateFileName')"> 
                         </label>
                     </div>
                 </div>
                 <br>
                 <label class="subtitle" for="candidateMetric" style="margin-left: 40px;">If you don't have this survey readily available, please provide your estimated candidate experience rating on a scale of 1 to 10</label>
                 <br>
-                <input style="width: 70%; margin-left: 20px" class="form-control subtitle" type="text" id="candidateMetric" name="candidateMetric">              
+                <input style="width: 70%; margin-left: 20px" class="form-control subtitle" type="text" id="candidateMetric" name="candidateMetric">   
+                <span id="candidateFileName"></span>             
             </div>
         </div>
         <br>
@@ -89,14 +91,15 @@
                     <div class="col-md-2 d-flex align-items-end justify-content-end">
                         <label for="retentionSurvey" class="btn btn-outline-primary custom-hero-signup-btn px-4 gap-3">
                             Upload Survey
-                            <input type="file" name="retentionSurvey" id="retentionSurvey" style="display: none; margin-left: 40px;"> 
+                            <input type="file" name="retentionSurvey" id="retentionSurvey" style="display: none; margin-left: 40px;" onchange="showFileName('retentionSurvey', 'retentionFileName')"> 
                         </label>
                     </div>
                 </div>
                 <br>
                 <label class="subtitle" for="retentionMetric" style="margin-left: 40px;">If you don't have this survey readily available, please provide your estimated retention rating on a scale of 1 to 10</label>
                 <br>
-                <input style="width: 70%; margin-left: 20px" class="form-control subtitle" type="text" id="retentionMetric" name="retentionMetric">              
+                <input style="width: 70%; margin-left: 20px" class="form-control subtitle" type="text" id="retentionMetric" name="retentionMetric">   
+                <span id="retentionFileName"></span>             
             </div>
         </div>
         <br>
@@ -106,33 +109,42 @@
                     <div class="col-md-10">
                         <p class="title">Upload Work Place Environment Survey</p>
                         <p class="subtitle">Assesses the culture, communication, diversity, and work-life balance within our organization for a positive working environment.</p>
-                    </div>
-                    <div class="col-md-2 d-flex align-items-end justify-content-end">
-                        <label for="workplaceEnviornmentSurvey" class="btn btn-outline-primary custom-hero-signup-btn px-4 gap-3">
-                            Upload Survey
-                            <input type="file" name="workplaceEnviornmentSurvey" id="workplaceEnviornmentSurvey" style="display: none; margin-left: 40px;"> 
-                        </label>
-                    </div>
-                </div>
-                <br>
-                <label class="subtitle" for="workplaceEnvironmentMetric" style="margin-left: 40px;">If you don't have this survey readily available, please provide your estimated workplace environment rating on a scale of 1 to 10</label>
-                <br>
-                <input style="width: 70%; margin-left: 20px" class="form-control subtitle" type="text" id="workplaceEnvironmentMetric" name="workplaceEnvironmentMetric">              
-            </div>
-        </div>
-         <br>
-         <div class="text-center">
-            <input type="submit" class="btn btn-outline-primary custom-hero-signup-btn px-4 gap-3" value="Continue">
-           <br>
-         </div>
-       </form>
-       </div>
-       <br>
-   </div>
-</div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>  
-</div>
-</body>
-</html>
+                     </div>
+                     <div class="col-md-2 d-flex align-items-end justify-content-end">
+                     <label for="workplaceEnviornmentSurvey" class="btn btn-outline-primary custom-hero-signup-btn px-4 gap-3">
+                     Upload Survey
+                     <input type="file" name="workplaceEnviornmentSurvey" id="workplaceEnviornmentSurvey" style="display: none; margin-left: 40px;" onchange="showFileName('workplaceEnviornmentSurvey', 'workplaceFileName')">
+                     </label>
+                     </div>
+                     </div>
+                     <br>
+                     <label class="subtitle" for="workplaceEnvironmentMetric" style="margin-left: 40px;">If you don't have this survey readily available, please provide your estimated workplace environment rating on a scale of 1 to 10</label>
+                     <br>
+                     <input style="width: 70%; margin-left: 20px" class="form-control subtitle" type="text" id="workplaceEnvironmentMetric" name="workplaceEnvironmentMetric">
+                     <span id="workplaceFileName"></span>
+                     </div>
+                     </div>
+                     <br>
+                     <div class="text-center">
+                     <input type="submit" class="btn btn-outline-primary custom-hero-signup-btn px-4 gap-3" value="Continue">
+                     <br>
+                     </div>
+                     </form>
+                     </div>
+                     <br>
+                     
+                        </div>
+                     </div>
+                     </div>
+                     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>  
+                     <script>
+                         function showFileName(inputId, spanId) {
+                             var input = document.getElementById(inputId);
+                             var fileName = input.files[0].name;
+                             document.getElementById(spanId).innerHTML = fileName;
+                         }
+                     </script>
+                     </body>
+                     </html>
+                     ```
