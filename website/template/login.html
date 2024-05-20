@@ -3,9 +3,21 @@
 
 {% block content %}
 <!-- Main content -->
-<a href="/hero"><img src="{{ url_for('static', filename='images/Logo_Placeholder.png') }}" alt="Logo_Placeholder" width="100" height="100"></a>
 <form method="POST">
-    <h3 align="center">Log In</h3>
+    <br>
+    <br>
+    <br>  
+    <div class="container custom-navbar" style="max-width: 800px;">
+        <br>
+        <main>
+            <form class="needs-validation custom-form" novalidate="">
+                <div class="text-center">
+                    <br>
+                    <br>
+                    <h2 class="title" style="font-size: 40px;">Log in your account</h2>
+                    <p class="subtitle" style="font-size: 20px; text-align: center;">Elevate Your Brand, Attract Top Talent.</p>
+                    <br>
+                </div>
     <div>
         <label for="email">Email Address</label>
         <input type="email" id="email" name="email" placeholder="Enter email" value="{{ form_data.email }}">
