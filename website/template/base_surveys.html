@@ -5,34 +5,57 @@
 <div class="container-fluid">
    <div class="col py-3 bg-light "  style=" box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
        <br>
-       <h2 class="title" style="margin-left: 40px;">Tutorials</h2>
-       <p class="subtitle" style="margin-left: 40px;">Welcome to our tutorials section, designed to help you maximize the benefits of our platform and understand its features and functionalities. Whether you're new to Kallos or looking to deepen your knowledge, these tutorials will guide you through the ins and outs of our platform.</p>
+       <h2 class="title" style="margin-left: 40px;">Surveys</h2>
+       <p class="subtitle" style="margin-left: 40px;">If you have conducted surveys related to our employer brand, we encourage you to upload them here. Your surveys will provide valuable insights into employee perceptions, satisfaction, and areas for improvement.
+         Don't have surveys at hand? No problem! You can still contribute by answering the questions provided below. Your responses will be just as valuable in shaping our employer brand strategy.</p>
        <br>
+       <form action="/surveys_upload" method="post" enctype="multipart/form-data">
        <div class="survey-card">
-           <h3 class="title">Getting Started:</h3>
-           <ul class="subtitle">
-               <li>Introduction to Kallos</li>
-               <li>Creating Your Account</li>
-           </ul> 
-           <h3 class="title">Platform Features:</h3>
-           <ul class="subtitle">
-               <li>Advanced Analysis with LLM</li>
-               <li>Tailored Recommendations</li>
-               <li>Benchmarking Insights</li>
-           </ul> 
-           <h3 class="title">Navigating the Dashboard:</h3>
-           <ul class="subtitle">
-               <li>Dashboard Overview</li>
-               <li>Data Input</li>
-           </ul> 
-           <h3 class="title">My Questions and Surveys:</h3>
-           <ul class="subtitle">
-               <li>Input</li>
-               <li>Access</li>
-           </ul>  
-       <div class="text-center">
-           <a href="/questions" class="btn btn-outline-primary custom-hero-signup-btn px-4 gap-3">Done</a>
+         <div class="row" style="margin-left: 10px;">
+           <p class="title">Upload eNPS Survey:</p>
+           <p class="subtitle">Measures employee loyalty and satisfaction by asking how likely they are to recommend our company as a place to work.</p>
+           <input type="file" name="npsSurvey">
            <br>
+           <label for="npsMetric">If you don't have this survey readily available, please provide your estimated eNPS score on a scale of 1 to 10
+          </label>
+          <br>
+          <input style="width: 70%;" class="form-control subtitle" type="text" id="npsMetric" name="npsMetric">
+          <br>
+          <br>
+          <p class="title">Upload Candidate Experience Rating</p>
+           <p class="subtitle">Evaluates satisfaction levels of candidates post-recruitment, focusing on communication, transparency, and overall experience.</p>
+           <input type="file" name="candidateExperienceRating">
+           <br>
+           <label for="candidateMetric">If you don't have this survey readily available, please provide your estimated candidate experience rating on a scale of 1 to 10
+          </label>
+          <br>
+          <input style="width: 70%;" class="form-control subtitle" type="text" id="candidateMetric" name="candidateMetric">
+          <br>
+          <br>
+          <p class="title">Upload Retention Survey</p>
+           <p class="subtitle">Gathers feedback from employees on job satisfaction, career development, and work-life balance to improve retention.</p>
+           <input type="file" name="retentionSurvey">
+           <br>
+           <label for="retentionMetric">If you don't have this survey readily available, please provide your estimated retention rating on a scale of 1 to 10
+          </label>
+          <br>
+          <input style="width: 70%;" class="form-control subtitle" type="text" id="retentionMetric" name="retentionMetric">
+          <br>
+          <br>
+          <p class="title">Upload Work Place Environment Survey</p>
+           <p class="subtitle">Assesses the culture, communication, diversity, and work-life balance within our organization for a positive working environment.</p>
+           <input type="file" name="workplaceEnviornmentSurvey">
+           <br>
+           <label for="workplaceEnvironmentMetric">If you don't have this survey readily available, please provide your estimated workplace enviornment rating on a scale of 1 to 10
+          </label>
+          <br>
+          <input style="width: 70%;" class="form-control subtitle" type="text" id="workplaceEnvironmentMetric" name="workplaceEnvironmentMetric">
+          <br>
+          <br>
+           <div class="text-center">
+            <input type="submit" class="btn btn-outline-primary custom-hero-signup-btn px-4 gap-3" value="Continue">
+           <br>
+         </form>
        </div>
        <br>
    </div>
