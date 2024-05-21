@@ -306,30 +306,54 @@ def create_stacked_bar_chart(channels,positions_number,average_days):
     return chart_html
 
 def create_bar_chart(investment, employer_brand_familiarity):
-        # Data for the bar chart
+ # Data for the bar chart
     data = [
         go.Bar(
-            x=[employer_brand_familiarity],
-            y=[investment],
-            name='Investment in Employer Brand Initiatives'
+            x=["Very Familiar", "Familiar", "Not Very Familiar"],
+            y=[0, employer_brand_familiarity, 0],
+            name='Familiarity',
+            marker=dict(color='#fad9c7', line=dict(color="orange", width=1)),  # Orange color with border
+            width=0.1  # Set the width of the bars
+        ),
+        go.Bar(
+            x=["Very Familiar", "Familiar", "Not Very Familiar"],
+            y=[0, investment, 0],
+            name='Investment',
+            marker=dict(color='#F07837', line=dict(color="darkorange", width=1)),  # Orange color with border
+            width=0.1  # Set the width of the bars
         )
     ]
 
     # Layout
     layout = go.Layout(
         title=dict(
-        text='Employer Branding',
+            text='Employer Branding',
+            font=dict(
+                family="'Poppins', sans-serif",  # Font family
+                size=20,  # Font size
+            ),
+            x=0.5,  # Adjust the margin left (0.5 means centered)
+            y=0.9,  # Adjust the vertical position of the title
+            xanchor='center',  # Set anchor point for x-coordinate
+            yanchor='top',  # Set anchor point for y-coordinate
+         ),
+        plot_bgcolor='white',  # Set background color to white
+        xaxis_showgrid=False,  # Hide x-axis gridlines
+        yaxis_showgrid=True,  # Show y-axis gridlines
+        yaxis_gridcolor="rgba(0,0,0,0.05)",  # Set y-axis gridline color
         font=dict(
-            family="'Poppins', sans-serif",  # Font family
-            size=20,  # Font size
+            family="'Poppins', sans-serif"  # Set the overall font family
         ),
-        x=0.5,  # Adjust the margin left (0.5 means centered)
-        y=0.9,  # Adjust the vertical position of the title
-        xanchor='center',  # Set anchor point for x-coordinate
-        yanchor='top',  # Set anchor point for y-coordinate
-     ),
-        xaxis=dict(title='Familiarity Level'),
-        yaxis=dict(title='Investment (in money)')
+        width=550, 
+        height=350,
+        legend=dict(
+            orientation='h',  # horizontal orientation
+            y=0.95,  # Adjust the vertical position of the legend (0.95 means below the chart)
+            x=0.5,   # Center the legend horizontally
+            xanchor='center',  # Set anchor point for x-coordinate
+            yanchor='bottom',  # Set anchor point for y-coordinate
+            traceorder="normal"  # Align legend items horizontally
+        )
     )
 
     # Create the figure
@@ -339,6 +363,7 @@ def create_bar_chart(investment, employer_brand_familiarity):
     chart_html = pio.to_html(fig, full_html=False)
 
     return chart_html
+
 
 def create_horizontal_bar_chart(leadership_diversity, demographic_breakdown):
    # Create a grouped bar chart
