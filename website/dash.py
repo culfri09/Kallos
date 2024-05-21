@@ -82,13 +82,13 @@ def create_charts():
     return None, None, None, None, None, None, None
 
 def create_radar_chart(worklife_balance_rating, salary_rating, work_stability_rating, management_rating, work_culture_rating):
-    # Data for the radar chart
+ # Data for the radar chart
     ratings = {
-        'worklife_balance_rating': worklife_balance_rating,
-        'salary_rating': salary_rating,
-        'work_stability_rating': work_stability_rating,
-        'management_rating': management_rating,
-        'work_culture_rating': work_culture_rating
+        'Work Stability': work_stability_rating,
+        'Salary': salary_rating,
+        'Worklife Balance': worklife_balance_rating,
+        'Work Culture': work_culture_rating,
+        'Management': management_rating
     }
 
     # Extracting category names and ratings
@@ -100,22 +100,39 @@ def create_radar_chart(worklife_balance_rating, salary_rating, work_stability_ra
         r=values,
         theta=categories,
         fill='toself',
-        name='Ratings'
+        name='Ratings',
+        marker=dict(
+            color='#F07837',  # Border and point color
+        ),
+        line=dict(
+            color='#F07837',  # Line color
+            width=1.3,  # Border width
+        ),
     ))
 
     # Layout
     fig.update_layout(
-        polar=dict(
-            radialaxis=dict(
-                visible=True,
-                range=[0, 5]  # Adjust the range as per your requirement
-            )
+    polar=dict(
+        radialaxis=dict(
+            visible=True,
+            range=[0, 5]  # Adjust the range as per your requirement
+        )
+    ),
+    title=dict(
+        text='Employee Ratings Radar Chart',
+        font=dict(
+            family="'Poppins', sans-serif",  # Font family
+            size=20,  # Font size
         ),
-        showlegend=False,
-        title='Employee Ratings Radar Chart',
-        width=600,  # Adjust width as needed
-        height=400  # Adjust height as needed
-    )
+        x=0.5,  # Adjust the margin left (0.5 means centered)
+        y=0.9,  # Adjust the vertical position of the title
+        xanchor='center',  # Set anchor point for x-coordinate
+        yanchor='top',  # Set anchor point for y-coordinate
+    ),
+    showlegend=False,
+    width=600,  # Adjust width as needed
+    height=400  # Adjust height as needed
+)
 
     # Convert the chart to HTML
     chart_html = pio.to_html(fig, full_html=False)
@@ -137,7 +154,17 @@ def create_line_graph(enps, candidate_rate, retention_rate, workplace_rate):
 
     # Layout
     fig.update_layout(
-        title='Employee Engagement Metrics',
+         title=dict(
+        text='Employee Engagemet',
+        font=dict(
+            family="'Poppins', sans-serif",  # Font family
+            size=20,  # Font size
+        ),
+        x=0.5,  # Adjust the margin left (0.5 means centered)
+        y=0.9,  # Adjust the vertical position of the title
+        xanchor='center',  # Set anchor point for x-coordinate
+        yanchor='top',  # Set anchor point for y-coordinate
+     ),
         xaxis_title='Metrics',
         yaxis_title='Values',
         width=600,  
@@ -158,14 +185,23 @@ def create_gauge_chart(development):
     fig = go.Figure(go.Indicator(
         mode="gauge+number",
         value=development,
-        title={'text': "Talent Development"},
         domain={'x': [0, 1], 'y': [0, 1]},
         gauge={'axis': {'range': [None, 100]},
                'bar': {'color': "#63A4FF"}}))
 
     # Layout
     fig.update_layout(
-        title='Talent Development',
+        title=dict(
+        text='Talent Development',
+        font=dict(
+            family="'Poppins', sans-serif",  # Font family
+            size=20,  # Font size
+        ),
+        x=0.5,  # Adjust the margin left (0.5 means centered)
+        y=0.9,  # Adjust the vertical position of the title
+        xanchor='center',  # Set anchor point for x-coordinate
+        yanchor='top',  # Set anchor point for y-coordinate
+     ),
         width=600,
         height=400
     )
@@ -189,8 +225,18 @@ def create_stacked_bar_chart(channels,positions_number,average_days):
 
     # Layout
     fig.update_layout(
+        title=dict(
+        text='Recruitment',
+        font=dict(
+            family="'Poppins', sans-serif",  # Font family
+            size=20,  # Font size
+        ),
+        x=0.5,  # Adjust the margin left (0.5 means centered)
+        y=0.9,  # Adjust the vertical position of the title
+        xanchor='center',  # Set anchor point for x-coordinate
+        yanchor='top',  # Set anchor point for y-coordinate
+     ),
         barmode='stack',
-        title='Recruitment Metrics',
         xaxis_title='Recruitment Channels',
         yaxis_title='Metrics',
         width=800,
@@ -215,7 +261,17 @@ def create_bar_chart(investment, employer_brand_familiarity):
 
     # Layout
     layout = go.Layout(
-        title='Employer Branding Metrics',
+        title=dict(
+        text='Employer Branding',
+        font=dict(
+            family="'Poppins', sans-serif",  # Font family
+            size=20,  # Font size
+        ),
+        x=0.5,  # Adjust the margin left (0.5 means centered)
+        y=0.9,  # Adjust the vertical position of the title
+        xanchor='center',  # Set anchor point for x-coordinate
+        yanchor='top',  # Set anchor point for y-coordinate
+     ),
         xaxis=dict(title='Familiarity Level'),
         yaxis=dict(title='Investment (in money)')
     )
@@ -243,15 +299,25 @@ def create_horizontal_bar_chart(leadership_diversity, demographic_breakdown):
     # Add bars for diversity breakdown
     fig.add_trace(go.Bar(
         x=demographic_breakdown,
-        y=[0] * len(demographic_breakdown),  # Placeholder for proper alignment
+        y=[0] * len(demographic_breakdown),  
         name='Diversity Breakdown',
         marker=dict(color='rgba(171, 50, 96, 0.6)'),
     ))
 
     # Layout
     fig.update_layout(
+        title=dict(
+        text='Diversity in Leadership Positions',
+        font=dict(
+            family="'Poppins', sans-serif",  # Font family
+            size=20,  # Font size
+        ),
+        x=0.5,  
+        y=0.9,  
+        xanchor='center',  
+        yanchor='top',  
+     ),
         barmode='group',
-        title='Diversity in Leadership Positions',
         yaxis_title='Percentage (%)',
         width=800,
         height=500
