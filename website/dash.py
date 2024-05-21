@@ -140,7 +140,7 @@ def create_radar_chart(worklife_balance_rating, salary_rating, work_stability_ra
     return chart_html
 
 def create_line_graph(enps, candidate_rate, retention_rate, workplace_rate):
-    # Data for the line graph
+     # Data for the line graph
     x_values = ['ENPS', 'Candidate Rate', 'Retention Rate', 'Workplace Rate']
     y_values = [enps, candidate_rate, retention_rate, workplace_rate]
 
@@ -149,26 +149,50 @@ def create_line_graph(enps, candidate_rate, retention_rate, workplace_rate):
         x=x_values,
         y=y_values,
         mode='lines+markers',
-        name='Employee Engagement'
+        name='Employee Engagement',
+        line=dict(
+            color='#F07837'  # Line color
+        ),
+        marker=dict(
+            color='#F07837'  # Marker color
+        )
     ))
 
     # Layout
     fig.update_layout(
-         title=dict(
-        text='Employee Engagemet',
-        font=dict(
-            family="'Poppins', sans-serif",  # Font family
-            size=20,  # Font size
+        title=dict(
+            text='Employee Engagement',
+            font=dict(
+                family="'Poppins', sans-serif",  # Font family
+                size=20,  # Font size
+            ),
+            x=0,  # Align title to the left
+            xanchor='left',  # Set anchor point for x-coordinate
+            y=0.9,  # Adjust the vertical position of the title
+            yanchor='top',  # Set anchor point for y-coordinate
+            pad=dict(l=170)  # Adjust left padding for margin-left effect
         ),
-        x=0.5,  # Adjust the margin left (0.5 means centered)
-        y=0.9,  # Adjust the vertical position of the title
-        xanchor='center',  # Set anchor point for x-coordinate
-        yanchor='top',  # Set anchor point for y-coordinate
-     ),
-        xaxis_title='Metrics',
-        yaxis_title='Values',
+        xaxis=dict(
+            title='Metrics',
+            showgrid=True,
+            gridcolor="rgba(0,0,0,0.05)",
+            autorange='reversed'  # Reverse the x-axis
+        ),
+        yaxis=dict(
+            title='Values',
+            showgrid=True,
+            gridcolor="rgba(0,0,0,0)",
+            zeroline=True,
+            zerolinecolor="rgba(0,0,0,0.05)",
+            zerolinewidth=2
+        ),
+        plot_bgcolor='rgba(0,0,0,0)',  # Transparent background
+        paper_bgcolor='rgba(0,0,0,0)',  # Transparent background
         width=600,  
-        height=400
+        height=400,
+        font=dict(
+            family="'Poppins', sans-serif"  # Font family
+        )
     )
 
     # Convert the graph to HTML
@@ -180,28 +204,48 @@ def create_gauge_chart(development):
     # Check if development data is available and valid
     if development is None or not isinstance(development, (int, float)):
         return None
-    
+
     # Creating Gauge chart
     fig = go.Figure(go.Indicator(
         mode="gauge+number",
         value=development,
         domain={'x': [0, 1], 'y': [0, 1]},
-        gauge={'axis': {'range': [None, 100]},
-               'bar': {'color': "#63A4FF"}}))
+        gauge={
+            'axis': {'range': [None, 100]},
+            'bar': {'color': "#fad9c7"},  # Set the bar color to light blue
+            'borderwidth': 2,
+            'bordercolor': "white",  # Set the border color to white
+            'steps': [
+                {'range': [0, 50], 'color': "rgba(99, 164, 255, 0.2)"},  # Set the range color to light blue
+                {'range': [50, 100], 'color': "rgba(99, 164, 255, 0.4)"}  # Set the range color to a slightly darker blue
+            ],
+            'threshold': {
+                'line': {'color': "red", 'width': 4},
+                'thickness': 0.75,
+                'value': development
+            }
+        },
+        number={
+            'font': {'family': "'Poppins', sans-serif"}  # Set the number font
+        }
+    ))
 
     # Layout
     fig.update_layout(
         title=dict(
-        text='Talent Development',
-        font=dict(
-            family="'Poppins', sans-serif",  # Font family
-            size=20,  # Font size
+            text='Talent Development',
+            font=dict(
+                family="'Poppins', sans-serif",  # Font family
+                size=20,  # Font size
+            ),
+            x=0.5,  # Center the title
+            y=0.9,  # Adjust the vertical position of the title
+            xanchor='center',  # Set anchor point for x-coordinate
+            yanchor='top',  # Set anchor point for y-coordinate
         ),
-        x=0.5,  # Adjust the margin left (0.5 means centered)
-        y=0.9,  # Adjust the vertical position of the title
-        xanchor='center',  # Set anchor point for x-coordinate
-        yanchor='top',  # Set anchor point for y-coordinate
-     ),
+        font=dict(
+            family="'Poppins', sans-serif"  # Set the overall font family
+        ),
         width=600,
         height=400
     )
