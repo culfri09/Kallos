@@ -1,5 +1,11 @@
-{%  extends "base.html" %} {% block title %}Questions Bank{% endblock %}
-<!-- Main content container -->
+{% extends "base.html" %}
+
+{% block title %}Questions Bank{% endblock %}
+
+{% block questions_link_class %}custom-hover{% endblock %}
+{% block questions_link_image %}{{ url_for('static', filename='images/Questions_Hover.png') }}{% endblock %}
+{% block questions_link_text_class %}orange-text{% endblock %}
+
 {% block content %}
 <div class="main">
     <form method="POST" action="/changed_answers_submission">
@@ -52,6 +58,7 @@
             <br>
             <button type="submit">Submit</button>
             {% endfor %}
-    </form>       
+        </div>       
+    </form>
 </div>
 {% endblock %}

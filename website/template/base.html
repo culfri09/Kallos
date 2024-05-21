@@ -5,25 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Home{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/sidenav.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/text.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}">
+    <style>
+        .survey-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 20px 40px;
+        }
+        .survey-card .subtitle {
+            margin-bottom: 20px;
+        }
+        .survey-card input {
+            margin-bottom: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        .navbar-brand img {
+            margin-bottom: 20px;
+        }
+        .nav-link img {
+            margin-right: 10px;
+        }
+        .title {
+            margin-left: 10px;
+        }
+        .dash-hover:hover {
+            background-color: #f8f9fa;
+        }
+        .custom-hover:hover {
+            background-color: #ffe8d6;
+        }
+        .orange-text {
+            color: #ff8800;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation bar -->
-    <div class="sidenav">
-        <a href="/home"><img src="{{ url_for('static', filename='images/Logo_Placeholder.png') }}" alt="Logo_Placeholder" width="100" height="100"></a>
-        <a href="/home">Dashboard</a>
-        <a href="/my_surveys">My Surveys</a>
-        <a href="/bank_questions">My Questions</a>
-        <a href="#">Recommendations</a>
-        <a href="#">Benchmarking</a>
-        <a href="#">Account</a>
-        <a href="{{ url_for('auth.logout') }}"style="position: absolute; bottom: 20px;">Logout</a>
-      </div>
-    <div class="main">
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                    <br>
+                    <a class="navbar-brand" href="/home">
+                        <img src="{{ url_for('static', filename='images/LogoText.png') }}" alt="Logo_Placeholder" width="120" height="43">
+                    </a>
+                    <br>
+                    <br>
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                        <li class="nav-item">
+                            <a href="/home" class="nav-link px-0 align-middle dash-hover">
+                                <img src="{{ url_for('static', filename='images/Home.png') }}" alt="" width="30" height="25">
+                                <span class="ms-1 d-none d-sm-inline title">Home</span>
+                            </a>
+                        </li>
+                        <br>
+                        <li>
+                            <a href="/my_surveys" class="nav-link px-0 align-middle dash-hover">
+                                <img src="{{ url_for('static', filename='images/Surveys_Icon.png') }}" alt="" width="20" height="25">
+                                <span class="ms-1 d-none d-sm-inline title">My Surveys</span>
+                            </a>
+                            <br>
+                            <a href="/bank_questions" class="nav-link px-0 align-middle {% block questions_link_class %}dash-hover{% endblock %}">
+                                <img src="{% block questions_link_image %}{{ url_for('static', filename='images/Questions_Icon.png') }}{% endblock %}" alt="" width="25" height="25" style="margin-right: 10px;">
+                                <span class="ms-1 d-none d-sm-inline title {% block questions_link_text_class %}{% endblock %}">My Questions</span>
+                            </a>
+                        </li>
+                        <br>
+                        <li>
+                            <a href="#" class="nav-link px-0 align-middle dash-hover">
+                                <img src="{{ url_for('static', filename='images/Recommendations_Icon.png') }}" alt="" width="25" height="25">
+                                <span class="ms-1 d-none d-sm-inline title">Recommendations</span>
+                            </a>
+                            <br>
+                            <a href="#" class="nav-link px-0 align-middle dash-hover">
+                                <img src="{{ url_for('static', filename='images/Benchmarking_Icon.png') }}" alt="" width="25" height="25">
+                                <span class="ms-1 d-none d-sm-inline title">Benchmarking</span>
+                            </a>
+                            <br>
+                            <a href="#" class="nav-link px-0 align-middle dash-hover">
+                                <img src="{{ url_for('static', filename='images/Settings_Icon.png') }}" alt="" width="25" height="25">
+                                <span class="ms-1 d-none d-sm-inline title">Account</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <div class="fixed-bottom mb-4 ml-4">
+                        <div class="dropdown pb-4">
+                            <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{{ url_for('static', filename='images/Profile_Icon.jpeg') }}" alt="Profile Icon" width="30" height="30" class="rounded-circle" style="margin-right: 10px;">
+                                <span class="d-none d-sm-inline mx-1 title">Marta Lendínez</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                                <li><a class="dropdown-item" href="#">Account</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Log out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main col">
+                <div class="container">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- Main content container -->
-    <div class="container">
-        {% block content %}
-        {% endblock %}
-    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
