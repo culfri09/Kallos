@@ -346,37 +346,57 @@ def create_horizontal_bar_chart(leadership_diversity, demographic_breakdown):
 
     # Add bar for leadership position percentage
     fig.add_trace(go.Bar(
-        x=['Leadership Position'],
-        y=[leadership_diversity],
-        name='Leadership Position',
-        marker=dict(color='rgba(50, 171, 96, 0.6)'),
+        x=[leadership_diversity],
+        y=['Leadership'],
+        name='Leadership',
+        orientation='h',  # Horizontal bar
+        marker=dict(color='#fad9c7'),
+        width=0.2
     ))
 
     # Add bars for diversity breakdown
     fig.add_trace(go.Bar(
-        x=demographic_breakdown,
-        y=[0] * len(demographic_breakdown),  
+        x=[0] * len(demographic_breakdown),
+        y=demographic_breakdown,
         name='Diversity Breakdown',
-        marker=dict(color='rgba(171, 50, 96, 0.6)'),
+        orientation='h',  # Horizontal bar
+        marker=dict(color='#F07837'),
+        width=0.2
     ))
 
     # Layout
     fig.update_layout(
         title=dict(
-        text='Diversity in Leadership Positions',
-        font=dict(
-            family="'Poppins', sans-serif",  # Font family
-            size=20,  # Font size
+            text='Diversity in Leadership Positions',
+            font=dict(
+                family="'Poppins', sans-serif",  # Font family
+                size=20,  # Font size
+            ),
+            x=0.5,  
+            y=0.9,  
+            xanchor='center',  
+            yanchor='top',  
         ),
-        x=0.5,  
-        y=0.9,  
-        xanchor='center',  
-        yanchor='top',  
-     ),
         barmode='group',
-        yaxis_title='Percentage (%)',
-        width=800,
-        height=500
+        width=600,  # Adjust the overall width
+        height=400,  # Adjust the overall height
+        font=dict(
+            family="'Poppins', sans-serif"  # Set the overall font family
+        ),
+        legend=dict(
+            orientation='h',  # horizontal orientation
+            yanchor='bottom',  # align to the bottom
+            y=1.02,  # position just above the graph
+            xanchor='center',  # center horizontally
+            x=0.5  # center of the graph
+        ),
+        plot_bgcolor='white',  # Set background color to white
+        xaxis=dict(
+            gridcolor='#f3f5f6',  # Set grid color to light grey
+        ),
+        yaxis=dict(
+            gridcolor='#f3f5f6',  # Set grid color to light grey
+        )
     )
 
     # Convert the chart to HTML
