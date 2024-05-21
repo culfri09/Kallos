@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/text.css') }}">
+    <link rel="icon" href="imgs/favicon.ico ">
+    <style>
+        @keyframes sweep-in {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.sweep-in {
+    animation: sweep-in 0.5s ease-out;
+}
+        .survey-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 20px 40px;
+        }
+        ul.timeline {
+            list-style-type: none;
+            position: relative;
+        }
+        ul.timeline:before {
+            content: ' ';
+            background: #d4d9df;
+            display: inline-block;
+            position: absolute;
+            left: 29px;
+            width: 2px;
+            height: 100%;
+            z-index: 400;
+        }
+        ul.timeline > li {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                    <br>
+                    <a class="navbar-brand" href="/home">
+                        <img src="{{ url_for('static', filename='images/LogoText.png') }}" alt="Logo_Placeholder" width="120" height="43" style="margin-right: 10px;">
+                    </a>
+                    <br>
+                    <br>
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                        <li class="nav-item">
+                            <a href="/home" class="nav-link px-0 align-middle dash-hover">
+                                <img src="{{ url_for('static', filename='images/Home.png') }}" alt="" width="30" height="25" style="margin-right: 10px;">
+                                <span class="ms-1 d-none d-sm-inline title">Home</span>
+                            </a>
+                        </li>
+                        <br>
+                        <li>
+                            <a href="/my_surveys" class="nav-link px-0 align-middle dash-hover">
+                                <img src="{{ url_for('static', filename='images/Surveys_Icon.png') }}" alt="" width="20" height="25" style="margin-right: 10px;">
+                                <span class="ms-1 d-none d-sm-inline title">My Surveys</span>
+                            </a>
+                            <br>
+                            <a href="/bank_questions" class="nav-link px-0 align-middle dash-hover">
+                                <img src="{{ url_for('static',  filename='images/Questions_Icon.png') }}" alt="" width="25" height="25" style="margin-right: 10px;">
+                                <span class="ms-1 d-none d-sm-inline title ">My Questions</span>
+                            </a>
+                        </li>
+                        <br>
+                        <li>
+                            <a href="/recommendations" class="nav-link px-0 align-middle custom-hove">
+                                <img src="{{ url_for('static', filename='images/Recommendation_Hover_Icon.png') }}" alt="" width="25" height="25" style="margin-right: 10px;">
+                                <span class="ms-1 d-none d-sm-inline title orange-text">Recommendations</span>
+                            </a>
+                            <br>
+                            <a href="#" class="nav-link px-0 align-middle dash-hover">
+                                <img src="{{ url_for('static', filename='images/Benchmarking_Icon.png') }}" alt="" width="25" height="25" style="margin-right: 10px;">
+                                <span class="ms-1 d-none d-sm-inline title">Benchmarking</span>
+                            </a>
+                            <br>
+                            <a href="#" class="nav-link px-0 align-middle dash-hover">
+                                <img src="{{ url_for('static', filename='images/Settings_Icon.png') }}" alt="" width="25" height="25" style="margin-right: 10px;">
+                                <span class="ms-1 d-none d-sm-inline title">Account</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <div class="fixed-bottom mb-4 ml-4">
+                        <div class="dropdown pb-4">
+                            <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="{{ url_for('static', filename='images/Profile_Icon.jpeg') }}" alt="Profile Icon" width="30" height="30" class="rounded-circle" style="margin-right: 10px;">
+                                <span class="d-none d-sm-inline mx-1 title">Marta Lendínez</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                                <li><a class="dropdown-item" href="#">Account</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Log out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col py-3 bg-light " style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <br>
+                <h2 class="title" style="margin-left: 40px;">Recommendations</h2>
+                <p class="subtitle" style="margin-left: 40px;">Here, you can explore your employer branding results and discover where you fit among our levels and recommendations.</p>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="survey-card" style="margin-left: 20px;"> <!-- Apply survey card styling -->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <p class="title" style="font-size: 60px; margin-left: 60px; margin-top: 40px;"><span class="title orange-text" style="font-size: 120px;">27</span>/100</p>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <p class="subtitle" style="margin-left: 60px; font-size: 13px; text-align: justify;">*The score is derived from a combination of factors, including Microsoft's Llama LLM analysis, your responses to questions and reviews, as well as data gathered from platforms like Indeed.</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="timeline" id="timeline" style="margin-left: 20px;">
+                                        <br>
+                                        <h1 class="title" style="margin-left: 40px;">Level 1</h1>
+                                        <br>
+                                        <p class="subtitle" style="margin-left: 40px;">The first step is to create an employee value proposition (EVP) and articulate it using creativity, storytelling, your own visual identity, and appropriate messaging.</p>
+                                        <li style="margin-left: 60px;">
+                                            <br>
+                                            <p class="subtitle">
+                                                <span class="title orange-text" style="font-size: 30px;">1.</span>
+                                                <span style="margin-left: 10px;">Identify the pillars of your company's employee value proposition (reasons to work).</span>
+                                            </p>
+                                        </li>
+                                        <li style="margin-left: 60px;"> 
+                                            <p class="subtitle">
+                                                <span class="title orange-text" style="font-size: 30px;">2.</span>
+                                                <span style="margin-left: 10px;">Create the rational expression of the EVP: the company's promise to employees and candidates.</span>
+                                            </p>
+                                        </li>
+                                        <li style="margin-left: 60px;">
+                                            <p class="subtitle">
+                                                <span class="title orange-text" style="font-size: 30px;">3.</span>
+                                                <span style="margin-left: 10px;">Transform this argument into a storytelling narrative that connects and give it a unique image.</span>
+                                            </p>                                         
+                                        </li>
+                                        <br>
+                                        <p class="title" style="margin-left: 40px;">Have you checked off Level 1? Move on to the next!</p>
+                                        <br>
+                                        <br>
+                                    </ul>
+                                </div>
+                                <div class="col-md-2 d-flex flex-column align-items-start">
+                                    <ul class="timeline" style="margin-left: 20px;"></ul>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <button type="button" id="uploadButton1" class="btn btn-outline-primary custom-hero-signup-btn px-4 gap-3" style="margin-left: 20px;">Level 1</button>
+                                    <br>
+                                    <br>
+                                    <button type="button" id="uploadButton2" class="btn btn-outline-primary custom-hero-signup-btn px-4 gap-3" style="margin-left: 20px;">Level 2</button>
+                                    <br>
+                                    <br>
+                                    <button type="button" id="uploadButton3" class="btn btn-outline-primary custom-hero-signup-btn px-4 gap-3" style="margin-left: 20px;">Level 3</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>               
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('uploadButton1').addEventListener('click', function() {
+            updateTimeline(1);
+        });
+        document.getElementById('uploadButton2').addEventListener('click', function() {
+            updateTimeline(2);
+        });
+        document.getElementById('uploadButton3').addEventListener('click', function() {
+            updateTimeline(3);
+        });
+
+        function updateTimeline(level) {
+            const timeline = document.getElementById('timeline');
+            let content = '';
+            if (level === 1) {
+                content = `
+                <br>
+                    <h1 class="title" style="margin-left: 40px;">Level 1</h1>
+                    <br>
+                    <p class="subtitle" style="margin-left: 40px;">The first step is to create an employee value proposition (EVP) and articulate it using creativity, storytelling, your own visual identity, and appropriate messaging.</p>
+                    <li style="margin-left: 60px;">
+                        <p class="subtitle">
+                            <span class="title orange-text" style="font-size: 30px;">1.</span>
+                            <span style="margin-left: 10px;">Identify the pillars of your company's employee value proposition (reasons to work).</span>
+                        </p>
+                    </li>
+                    <li style="margin-left: 60px;"> 
+                        <p class="subtitle">
+                            <span class="title orange-text" style="font-size: 30px;">2.</span>
+                            <span style="margin-left: 10px;">Create the rational expression of the EVP: the company's promise to employees and candidates.</span>
+                        </p>
+                    </li>
+                    <li style="margin-left: 60px;">
+                        <p class="subtitle">
+                            <span class="title orange-text" style="font-size: 30px;">3.</span>
+                            <span style="margin-left: 10px;">Transform this argument into a storytelling narrative that connects and give it a unique image.</span>
+                        </p>                                         
+                    </li>
+                    <br>
+                    <p class="title" style="margin-left: 40px;">Have you checked off Level 1? Move on to the next!</p>
+                    <br>
+                    
+                `;
+            } else if (level === 2) {
+                content = `
+                <br>
+                    <h1 class="title" style="margin-left: 40px;">Level 2</h1>
+                    <br>
+                    <p class="subtitle" style="margin-left: 40px;">Do you have a defined employee value proposition? It's time to give it visibility. If not, review the previous level first.</p>
+                    <li style="margin-left: 60px;">
+                        <p class="subtitle">
+                            <span class="title orange-text" style="font-size: 30px;">1.</span>
+                            <span style="margin-left: 10px;">Create your channel ecosystem and the spaces to be present: career site, LinkedIn page, Glassdoor / Indeed, job fairs, etc.</span>
+                        </p>
+                    </li>
+                    <li style="margin-left: 60px;"> 
+                        <p class="subtitle">
+                            <span class="title orange-text" style="font-size: 30px;">2.</span>
+                            <span style="margin-left: 10px;">Define a talent brand content strategy for the dynamization of the employee website and social profiles. Rewrite job offers based on your new employee value proposition.
+</span>
+                        </p>
+                    </li>
+                    <li style="margin-left: 60px;">
+                        <p class="subtitle">
+                            <span class="title orange-text" style="font-size: 30px;">3.</span>
+                            <span style="margin-left: 10px;">Create an employer brand kit for internal and external recruiters, so everyone is aligned.</span>
+                        </p>                                         
+                    </li>
+                    <br>
+                    <p class="title" style="margin-left: 40px;">Level 2 completed? Advance to the next level!</p>
+                    <br>
+                `;
+            } else if (level === 3) {
+                content = `
+                <br>
+                    <h1 class="title" style="margin-left: 40px;">Level 3</h1>
+                    <br>
+                    <p class="subtitle" style="margin-left: 40px;">It's time to present your employer branding strategy to your internal and external audiences. Do you think it's still too early? Review points 1 and 2.</p>
+                    <li style="margin-left: 60px;">
+                        <p class="subtitle">
+                            <span class="title orange-text" style="font-size: 30px;">1.</span>
+                            <span style="margin-left: 10px;">Start with a specific action to turn organizational leaders into allies. Share your value proposition with employees and identify ambassadors among them.</span>
+                        </p>
+                    </li>
+                    <li style="margin-left: 60px;"> 
+                        <p class="subtitle">
+                            <span class="title orange-text" style="font-size: 30px;">2.</span>
+                            <span style="margin-left: 10px;">Launch a referral campaign for professionals to recommend the company. Generate brand awareness: consider actions of paid search and paid social if necessary.
+</span>
+                        </p>
+                    </li>
+                    <li style="margin-left: 60px;">
+                        <p class="subtitle">
+                            <span class="title orange-text" style="font-size: 30px;">3.</span>
+                            <span style="margin-left: 10px;">Implement specific recruitment campaigns based on the organization's needs. And above all, never stop monitoring based on activity, conversion, and satisfaction KPIs.
+</span>
+                        </p>                                         
+                    </li>
+                    <br>
+                    <p class="title" style="margin-left: 40px;">Level 3 achieved? You're on your way to employer branding excellence!</p>
+                    <br>
+                `;
+            }
+            timeline.innerHTML = content;
+    timeline.classList.add('sweep-in');
+    setTimeout(() => {
+        timeline.classList.remove('sweep-in');
+    }, 500);
+        }
+    </script>
+</body>
+</html>

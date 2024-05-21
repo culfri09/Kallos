@@ -29,6 +29,10 @@ def home():
 def hero_page():
     return render_template('hero.html')
 
+@views.route('/recommendations')
+def recommendations_page():
+    return render_template('recommendations.html')
+
 @views.route('/questions')
 @login_required
 def questions_page():
