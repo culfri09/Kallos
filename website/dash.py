@@ -256,42 +256,54 @@ def create_gauge_chart(development):
     return chart_html
 
 def create_stacked_bar_chart(channels,positions_number,average_days):
-    # Data for the stacked bar chart
-    categories = channels
-    positions = [positions_number] * len(channels)  # Ensure positions is a list of the same length as channels
-    days_to_fill = [average_days] * len(channels)  # Ensure days_to_fill is a list of the same length as channels
-
-    # Creating the stacked bar chart
+    # Ensure positions_number and average_days are lists
+    positions = [positions_number] * len(channels)
+    
+    # Creating the grouped bar chart
     fig = go.Figure(data=[
-        go.Bar(name='Positions', x=categories, y=positions),
-        go.Bar(name='Average Days to Fill', x=categories, y=days_to_fill)
+        go.Bar(name='Number of Positions', x=channels, y=positions, marker_color='#fad9c7', width=0.05),  # Set Positions color to light orange and adjust bar width
+        go.Bar(name='Average Days to Fill', x=channels, y=average_days, marker_color='#F07837', width=0.4)  # Set Days to Fill color to orange and adjust bar width
     ])
 
     # Layout
     fig.update_layout(
         title=dict(
-        text='Recruitment',
-        font=dict(
-            family="'Poppins', sans-serif",  # Font family
-            size=20,  # Font size
+            text='Recruitment',
+            font=dict(
+                family="'Poppins', sans-serif",  # Font family
+                size=20,  # Font size
+            ),
+            x=0.5,  # Adjust the margin left (0.5 means centered)
+            y=0.9,  # Adjust the vertical position of the title
+            xanchor='center',  # Set anchor point for x-coordinate
+            yanchor='top',  # Set anchor point for y-coordinate
         ),
-        x=0.5,  # Adjust the margin left (0.5 means centered)
-        y=0.9,  # Adjust the vertical position of the title
-        xanchor='center',  # Set anchor point for x-coordinate
-        yanchor='top',  # Set anchor point for y-coordinate
-     ),
-        barmode='stack',
-        xaxis_title='Recruitment Channels',
-        yaxis_title='Metrics',
-        width=800,
-        height=500
+        barmode='group',
+        width=600,  # Adjust the overall width
+        height=400,  # Adjust the overall height
+        font=dict(
+            family="'Poppins', sans-serif"  # Set the overall font family
+        ),
+        legend=dict(
+            orientation='h',  # horizontal orientation
+            yanchor='bottom',  # align to the bottom
+            y=1.02,  # position just above the graph
+            xanchor='center',  # center horizontally
+            x=0.5  # center of the graph
+        ),
+        plot_bgcolor='white',  # Set background color to white
+        xaxis=dict(
+            gridcolor='#f3f5f6',  # Set grid color to light grey
+        ),
+        yaxis=dict(
+            gridcolor='#f3f5f6',  # Set grid color to light grey
+        )
     )
 
     # Convert the chart to HTML
     chart_html = pio.to_html(fig, full_html=False)
 
     return chart_html
-
 
 def create_bar_chart(investment, employer_brand_familiarity):
         # Data for the bar chart
