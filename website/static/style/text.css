@@ -106,21 +106,8 @@
     padding-left: 50px;
     text-align: left;
 }
-/*
-body {
-    animation: fadeInAnimation ease 4s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-    -webkit-animation: fadeInAnimation ease 4s;
-}
-@keyframes fadeInAnimation {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}*/
+
+
 .custom-navbar {
     background-color: #ffffff; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -167,12 +154,12 @@ body {
     color: #474747; 
 }
 .white-box {
-    background-color: #ffffff; /* White background color */
-    padding: 40px; /* Adjust padding as needed */
-    border-radius: 10px; /* Optional: Add rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add box shadow */
-    width: 90%; /* Adjust the width as needed */
-    margin-left: 10%; /* Center the container by adjusting the left margin */
+    background-color: #ffffff; 
+    padding: 40px; 
+    border-radius: 10px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    width: 90%;
+    margin-left: 10%; 
 }
 
 
