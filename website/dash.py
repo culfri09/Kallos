@@ -262,7 +262,8 @@ def create_stacked_bar_chart(channels,positions_number,average_days):
     # Creating the grouped bar chart
     fig = go.Figure(data=[
         go.Bar(name='Number of Positions', x=channels, y=positions, marker_color='#fad9c7', width=0.05),  # Set Positions color to light orange and adjust bar width
-        go.Bar(name='Average Days to Fill', x=channels, y=[], marker_color='#F07837', width=0.4)  # Set Days to Fill color to orange and adjust bar width
+       # go.Bar(name='Average Days to Fill', x=channels, y=[average_days], marker_color='#F07837', width=0.4)  # Set Days to Fill color to orange and adjust bar width
+        go.Bar(name='Average Days to Fill', x=channels, y=[], marker_color='#F07837', width=0.4)
     ])
 
     # Layout
