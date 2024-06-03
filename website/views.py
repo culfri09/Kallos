@@ -1,5 +1,5 @@
 # Defines routes
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, jsonify
 from flask_login import login_required, current_user
 views = Blueprint('views', __name__)
 from website.dash import create_radar_chart
@@ -7,6 +7,7 @@ import plotly.graph_objs as go
 from plotly.offline import plot
 import chart_studio.tools as tls
 from website.dash import create_charts
+from website.kpi import analyze_kpi
 
 
 # Define route for the landing page
@@ -51,4 +52,9 @@ def privacy_policy_page():
 @login_required
 def tutorial_page():
     return render_template('tutorial.html')
+
+@views.route('/analyze_kpi', methods=['GET'])
+def analyze_kpi_endpoint():
+    result = analyze_kpi()
+    return jsonify(result)
 

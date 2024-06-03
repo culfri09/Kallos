@@ -121,10 +121,10 @@
                 <br>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="survey-card" style="margin-left: 20px;"> <!-- Apply survey card styling -->
+                        <div class="survey-card" style="margin-left: 20px;"> 
                             <div class="row">
                                 <div class="col-md-4">
-                                    <p class="title" style="font-size: 60px; margin-left: 60px; margin-top: 40px;"><span class="title orange-text" style="font-size: 120px;">27</span>/100</p>
+                                    <p class="title" style="font-size: 60px; margin-left: 60px; margin-top: 40px;"><span class="title orange-text" style="font-size: 120px;" id="kpi-result"></span>/100</p>
                                     <br>
                                     <br>
                                     <br>
@@ -193,6 +193,25 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        function callAnalyzeKPI() {
+            fetch('/analyze_kpi', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); 
+                document.getElementById('kpi-result').innerText = + data.kpi;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            callAnalyzeKPI();
+        });
+
         document.getElementById('uploadButton1').addEventListener('click', function() {
             updateTimeline(1);
         });
@@ -301,6 +320,7 @@
         timeline.classList.remove('sweep-in');
     }, 500);
         }
+        
     </script>
 </body>
 </html>
