@@ -14,7 +14,8 @@
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin: 20px 40px;
+            margin: 0px 0px;
+            width: 1100px;
         }
         .survey-card .subtitle {
             margin-bottom: 20px;
@@ -67,63 +68,65 @@
         </header>
 
         <main>
-            <h2 class="title">Tutorials</h2>
-            <p class="subtitle">Welcome to our tutorials section, designed to help you maximize the benefits of our platform and understand its features and functionalities. Whether you're new to Kallos or looking to deepen your knowledge, these tutorials will guide you through the ins and outs of our platform.</p>
-            <hr class="col-3 col-md-2 mb-5"> 
-            <br>
-            <div class="row g-5">
-                <div class="col-md-6">
-                    <h2 class="title" style="font-size: 20px;">Sections</h2>
-                    <p class="subtitle">Ready to learn? Simply choose the section you're curious about and click on it to watch a helpful tutorial.</p>
-                    <br>
-                    <ul class="list-unstyled ps-0 subtitle">
-                        <li>
-                            <a href="#" class="icon-link mb-1" onclick="changeVideo('{{ url_for('static', filename='videos/Introduction_Kallos.mp4') }}')">
-                                Introduction to Kallos
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="icon-link mb-1" onclick="changeVideo('{{ url_for('static', filename='videos/Sign_Up.mp4') }}')">
-                                Creating account
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="icon-link mb-1" onclick="changeVideo('{{ url_for('static', filename='videos/Input_.mp4') }}')">
-                                Questions and Surveys Input
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="icon-link mb-1" onclick="changeVideo('{{ url_for('static', filename='videos/Dashboard.mp4') }}')">
-                                Dashboard Overview
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="icon-link mb-1" onclick="changeVideo('{{ url_for('static', filename='videos/Recommendations.mp4') }}')">
-                                Tailored Recommendations
-                            </a>
-                        </li> 
-                        <li>
-                            <a href="#" class="icon-link mb-1" onclick="changeVideo('{{ url_for('static', filename='videos/Access.mp4') }}')">
-                                Questions and Surveys Access
-                            </a>
-                        </li> 
-                    </ul>
-                </div>
-
-                <div class="col-md-4">
-                    <video id="videoPlayer" controls style="width: 500px; height: auto;">
-                        <source src="{{ url_for('static', filename='videos/Introduction_Kallos.mp4') }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <br>
-                    <br>
-                    <br>
-                    <div>
-                        <a href="/questions" class="btn btn-outline-primary custom-hero-signup-btn px-4 gap-3">Done</a>
+            <div>
+                <h2 class="title">Tutorials</h2>
+                <p class="subtitle">Welcome to our tutorials section, designed to help you maximize the benefits of our platform and understand its features and functionalities. Whether you're new to Kallos or looking to deepen your knowledge, these tutorials will guide you through the ins and outs of our platform.</p>
+                <hr class="col-3 col-md-2 mb-5"> 
+                <br>
+                <div class="row g-5 survey-card">
+                    <div class="col-md-6">
+                        <h2 class="title" style="font-size: 20px;">Sections</h2>
+                        <p class="subtitle">Ready to learn? Simply choose the section you're curious about and click on it to watch a helpful tutorial.</p>
                         <br>
+                        <ul class="list-unstyled ps-0 subtitle">
+                            <li>
+                                <a href="#" class="icon-link mb-1" onclick="changeVideo('{{ url_for('static', filename='videos/Introduction_Kallos.mp4') }}')">
+                                    Introduction to Kallos
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="icon-link mb-1" onclick="changeVideo('{{ url_for('static', filename='videos/Sign_Up.mp4') }}')">
+                                    Creating account
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="icon-link mb-1" onclick="changeVideo('{{ url_for('static', filename='videos/Input_.mp4') }}')">
+                                    Questions and Surveys Input
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="icon-link mb-1" onclick="changeVideo('{{ url_for('static', filename='videos/Dashboard.mp4') }}')">
+                                    Dashboard Overview
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="icon-link mb-1" onclick="changeVideo('{{ url_for('static', filename='videos/Recommendations.mp4') }}')">
+                                    Tailored Recommendations
+                                </a>
+                            </li> 
+                            <li>
+                                <a href="#" class="icon-link mb-1" onclick="changeVideo('{{ url_for('static', filename='videos/Access.mp4') }}')">
+                                    Questions and Surveys Access
+                                </a>
+                            </li> 
+                        </ul>
                     </div>
-                </div>
 
+                    <div class="col-md-4">
+                        <video id="videoPlayer" controls style="width: 500px; height: auto;">
+                            <source src="{{ url_for('static', filename='videos/Introduction_Kallos.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <br>
+                        <br>
+                        <br>
+                        <div>
+                            <a href="/questions" class="btn btn-outline-primary custom-hero-signup-btn px-4 gap-3">Done</a>
+                            <br>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </main>
     </div>
