@@ -48,7 +48,18 @@
     </style>
 </head>
 <body>
-    <div class="col-lg-8 mx-auto p-4 py-md-5">
+    <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="{{ url_for('static', filename='images/LogoText.png') }}" alt="" width="140" height="50" class="d-inline-block align-text-top">
+            </a>
+            <div class="d-flex ml-auto">
+                <a href="/sign-up"><button class="btn btn-outline-primary custom-signup-btn me-2">Sign up</button></a>
+                <a href="/login"><button type="button" class="btn custom-login-btn">Log in</button></a>
+            </div>
+        </div>
+    </nav>
+    <div class="col-lg-8 mx-auto p-4">
         <header class="d-flex align-items-center pb-3 mb-5">
             <a href="/" class="d-flex align-items-center text-body-emphasis text-decoration-none">
                 <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
@@ -59,10 +70,12 @@
             <h2 class="title">Tutorials</h2>
             <p class="subtitle">Welcome to our tutorials section, designed to help you maximize the benefits of our platform and understand its features and functionalities. Whether you're new to Kallos or looking to deepen your knowledge, these tutorials will guide you through the ins and outs of our platform.</p>
             <hr class="col-3 col-md-2 mb-5"> 
+            <br>
             <div class="row g-5">
                 <div class="col-md-6">
                     <h2 class="title" style="font-size: 20px;">Sections</h2>
                     <p class="subtitle">Ready to learn? Simply choose the section you're curious about and click on it to watch a helpful tutorial.</p>
+                    <br>
                     <ul class="list-unstyled ps-0 subtitle">
                         <li>
                             <a href="#" class="icon-link mb-1" onclick="changeVideo('{{ url_for('static', filename='videos/Introduction_Kallos.mp4') }}')">
