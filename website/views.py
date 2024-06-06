@@ -1,4 +1,6 @@
-# Defines routes
+"""
+This module defines pages routes within the platform
+"""
 from flask import Blueprint, render_template, redirect, url_for, flash, jsonify
 from flask_login import login_required, current_user
 views = Blueprint('views', __name__)
@@ -10,19 +12,17 @@ from website.dash import create_charts
 from website.kpi import analyze_kpi
 from website.benchmarking import benchmarking
 
-
-# Define route for the landing page
+# Defines route for the following pages:
 @views.route('/')
 def landing_page():
-    # If the user is authenticated, redirect them to the home page
+    # If the user is authenticated, redirects them to the home page
     if current_user.is_authenticated:
         return redirect(url_for('views.home'))
-    # If the user is not authenticated, render the "hero page"
+    # If the user is not authenticated, renders the "hero page"
     return render_template("hero.html")
 
-# Define route for the home page
 @views.route('/home')
-@login_required  # Ensure the user is logged in to access this page
+@login_required  
 def home():
     radar_chart_html, line_graph_html, gauge_chart_html, stacked_bar_chart_html,bar_chart_html, horizontal_bar_chart_html,ratings_number = create_charts()
     return render_template("home.html", radar_chart_html=radar_chart_html,line_graph_html=line_graph_html, gauge_chart_html=gauge_chart_html,stacked_bar_chart_html=stacked_bar_chart_html,bar_chart_html=bar_chart_html,horizontal_bar_chart_html=horizontal_bar_chart_html,ratings_number=ratings_number)

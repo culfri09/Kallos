@@ -1,11 +1,19 @@
+"""
+This module analyzes the company's KPI.
+"""
 from flask_login import current_user
 from . import models
 from openai import OpenAI
 
 
 def analyze_kpi():
+    """
+    Function to analyze and calculate the employer brand score based data.
+    """
+
     employer_branding_metrics = {}  
 
+    #Fetches data from database
     if current_user.is_authenticated:
         user_id = current_user.id
         user_scrapes = models.Scraping.query.filter_by(kallosusers_id=user_id).first()
@@ -58,7 +66,8 @@ def analyze_kpi():
                 'Recruitment Channels': channels,
                 'Investment': investment
             })
-
+    
+    # Initializes LLM conection and performs analysis
     client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
     answer = 'I want you to calculate the employer brand score of this company based on the following metrics:' + str(employer_branding_metrics)
     
@@ -71,5 +80,6 @@ def analyze_kpi():
         temperature=0.7,
     )
 
+    # Extracts the KPI from the API response
     kpi = completion.choices[0].message.content
     return {"kpi": kpi}

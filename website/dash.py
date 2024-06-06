@@ -1,3 +1,6 @@
+"""
+This module creates the dashboard.
+"""
 import plotly.graph_objs as go
 import plotly.io as pio
 from flask_login import current_user
@@ -26,7 +29,7 @@ def create_charts():
             work_culture_rating = user_scrapes.work_culture_rating
             ratings_number = user_scrapes.ratings_number
 
-            # Create radar chart for ratings
+            # Creates radar chart for ratings
             radar_chart_html = create_radar_chart(
                 worklife_balance_rating,
                 salary_rating,
@@ -41,7 +44,7 @@ def create_charts():
             retention_rate = user_surveys.retention_rate
             workplace_rate = user_surveys.workplace_rate
 
-            # Create line graph for employee engagement
+            # Create sline graph for employee engagement
             line_graph_html = create_line_graph(
                 enps,
                 candidate_rate,
@@ -52,12 +55,12 @@ def create_charts():
             if user_answers:
                 development = user_answers.development
                 if development is not None:
-                    # Convert percentage string to float
+                    # Converts percentage string to float
                     development = float(development.strip('%').rstrip('.').strip())  # Remove '%' symbol and convert to float
-                    # Ensure development is within 0-100 range (assuming it's a percentage)
+                    # Ensures development is within 0-100 range (assuming it's a percentage)
                     development = max(0, min(development, 100))
 
-                    # Create donut chart for development
+                    # Creates donut chart for development
                     gauge_chart_html = create_gauge_chart(development)
 
                 investment = user_answers.investment
@@ -115,7 +118,7 @@ def create_radar_chart(worklife_balance_rating, salary_rating, work_stability_ra
     polar=dict(
         radialaxis=dict(
             visible=True,
-            range=[0, 5]  # Adjust the range as per your requirement
+            range=[0, 5]  # Adjusts the range as per your requirement
         )
     ),
     title=dict(
@@ -124,17 +127,17 @@ def create_radar_chart(worklife_balance_rating, salary_rating, work_stability_ra
             family="'Poppins', sans-serif",  # Font family
             size=20,  # Font size
         ),
-        x=0.5,  # Adjust the margin left (0.5 means centered)
-        y=0.9,  # Adjust the vertical position of the title
-        xanchor='center',  # Set anchor point for x-coordinate
-        yanchor='top',  # Set anchor point for y-coordinate
+        x=0.5, 
+        y=0.9,  
+        xanchor='center',  
+        yanchor='top',  
     ),
     showlegend=False,
-    width=600,  # Adjust width as needed
-    height=400  # Adjust height as needed
+    width=600, 
+    height=400  
 )
 
-    # Convert the chart to HTML
+    # Converts the chart to HTML
     chart_html = pio.to_html(fig, full_html=False)
 
     return chart_html
@@ -166,17 +169,17 @@ def create_line_graph(enps, candidate_rate, retention_rate, workplace_rate):
                 family="'Poppins', sans-serif",  # Font family
                 size=20,  # Font size
             ),
-            x=0,  # Align title to the left
-            xanchor='left',  # Set anchor point for x-coordinate
-            y=0.9,  # Adjust the vertical position of the title
-            yanchor='top',  # Set anchor point for y-coordinate
-            pad=dict(l=170)  # Adjust left padding for margin-left effect
+            x=0,  
+            xanchor='left', 
+            y=0.9,  
+            yanchor='top',  
+            pad=dict(l=170)  
         ),
         xaxis=dict(
             title='Metrics',
             showgrid=True,
             gridcolor="rgba(0,0,0,0.05)",
-            autorange='reversed'  # Reverse the x-axis
+            autorange='reversed'  
         ),
         yaxis=dict(
             title='Values',
@@ -186,22 +189,22 @@ def create_line_graph(enps, candidate_rate, retention_rate, workplace_rate):
             zerolinecolor="rgba(0,0,0,0.05)",
             zerolinewidth=2
         ),
-        plot_bgcolor='rgba(0,0,0,0)',  # Transparent background
-        paper_bgcolor='rgba(0,0,0,0)',  # Transparent background
+        plot_bgcolor='rgba(0,0,0,0)',  
+        paper_bgcolor='rgba(0,0,0,0)', 
         width=600,  
         height=400,
         font=dict(
-            family="'Poppins', sans-serif"  # Font family
+            family="'Poppins', sans-serif"  
         )
     )
 
-    # Convert the graph to HTML
+    # Converts the graph to HTML
     graph_html = pio.to_html(fig, full_html=False)
 
     return graph_html
 
 def create_gauge_chart(development):
-    # Check if development data is available and valid
+    # Check sif development data is available and valid
     if development is None or not isinstance(development, (int, float)):
         return None
 
@@ -212,12 +215,12 @@ def create_gauge_chart(development):
         domain={'x': [0, 1], 'y': [0, 1]},
         gauge={
             'axis': {'range': [None, 100]},
-            'bar': {'color': "#fad9c7"},  # Set the bar color to light blue
+            'bar': {'color': "#fad9c7"},  
             'borderwidth': 2,
-            'bordercolor': "white",  # Set the border color to white
+            'bordercolor': "white",  
             'steps': [
-                {'range': [0, 50], 'color': "rgba(99, 164, 255, 0.2)"},  # Set the range color to light blue
-                {'range': [50, 100], 'color': "rgba(99, 164, 255, 0.4)"}  # Set the range color to a slightly darker blue
+                {'range': [0, 50], 'color': "rgba(99, 164, 255, 0.2)"}, 
+                {'range': [50, 100], 'color': "rgba(99, 164, 255, 0.4)"}  
             ],
             'threshold': {
                 'line': {'color': "red", 'width': 4},
@@ -226,7 +229,7 @@ def create_gauge_chart(development):
             }
         },
         number={
-            'font': {'family': "'Poppins', sans-serif"}  # Set the number font
+            'font': {'family': "'Poppins', sans-serif"}  
         }
     ))
 
@@ -235,16 +238,16 @@ def create_gauge_chart(development):
         title=dict(
             text='Talent Development',
             font=dict(
-                family="'Poppins', sans-serif",  # Font family
-                size=20,  # Font size
+                family="'Poppins', sans-serif",  
+                size=20,  
             ),
-            x=0.5,  # Center the title
-            y=0.9,  # Adjust the vertical position of the title
-            xanchor='center',  # Set anchor point for x-coordinate
-            yanchor='top',  # Set anchor point for y-coordinate
+            x=0.5,  
+            y=0.9, 
+            xanchor='center', 
+            yanchor='top',
         ),
         font=dict(
-            family="'Poppins', sans-serif"  # Set the overall font family
+            family="'Poppins', sans-serif"  
         ),
         width=600,
         height=400

@@ -1,3 +1,6 @@
+"""
+This module scrapes company data from Indeed.
+"""
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -8,30 +11,31 @@ from . import models, init
 from datetime import datetime
 
 def scrape(id):
+    # Fetches user information from the database
     user_id = id
     user = models.User.query.get(user_id)
 
+     # Checks if user exists and retrieve company name
     if user:
         company_name = user.company_name
     else:
         print("User not found or not logged in")
 
+     # Initializes Edge WebDriver
     edge_driver_path = 'testing\msedgedriver.exe'
-
     edge_service = Service(edge_driver_path)
-
     driver = webdriver.Edge(service=edge_service)
 
+    # Navigates to the company's Indeed page
     driver.get(f'https://es.indeed.com/cmp/{company_name}')    
-
     time.sleep(2)
 
-    '''NUMBER OF POSITIONS'''
+     # Scrapes the number of positions available
     div_elements = driver.find_elements(By.XPATH, "//div[contains(@class, 'css-181n3gf eu4oa1w0')]")
     positions_number = len(div_elements)
-    print('positions: ' + str(positions_number))
 
-    '''AVERAGE POSITION COVERAGE TIME'''
+
+     # Scrapes the average position coverage time
     paragraph_elements = driver.find_elements(By.XPATH, ".//p[contains(@class, 'css-ng92tm e1wnkr790')]")
 
     days_list = []
@@ -50,12 +54,12 @@ def scrape(id):
     if days_list:
         average_days = sum(days_list) / len(days_list)
 
-    '''NUMBER OF RATINGS'''
+    # Scrapes the number of ratings
     div_element = driver.find_element(By.XPATH, "//div[contains(@class, 'css-104u4ae eu4oa1w0')]")
     ratings_number = div_element.text
     ratings_number = float(ratings_number.replace('.', '').replace(',', '.'))
 
-    '''BRAND SENTIMENT'''
+    # Scrapes the brand sentiment ratings
     ratings_dict = {}
 
     div_elements = driver.find_elements(By.XPATH, "//div[contains(@class, 'css-1gkra49 eu4oa1w0')]")
@@ -74,6 +78,8 @@ def scrape(id):
     work_stability_rating = ratings_dict.get("Estabilidad laboral/Desarrollo profesional")
     management_rating = ratings_dict.get("Gestión")
     work_culture_rating = ratings_dict.get("Cultura")
+
+     # Creates a new scraping record and saves it to the database
 
     new_scrape = models.Scraping(
         kallosusers_id=user_id,

@@ -1,3 +1,6 @@
+"""
+This module analyzes the web application.
+"""
 from flask import Flask
 import secrets
 from flask_migrate import Migrate

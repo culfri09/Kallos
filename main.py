@@ -3,7 +3,7 @@ This module initializes and runs a Flask application.
 """
 from website import init
 
-# Create Flask application
+# Creates Flask application
 app = init.create_app()
 
 # Run Flask application

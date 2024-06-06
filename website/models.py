@@ -1,5 +1,5 @@
 """
-Module defining the database models for the application.
+This module defines the database models for the application.
 """
 from flask_login import UserMixin
 from sqlalchemy import ForeignKey
@@ -58,6 +58,8 @@ class Surveys(init.db.Model):
 
 
 class Scraping(init.db.Model):
+    """Model representing web scrapes from Indeed."""
+
     __tablename__ = 'userscraping'
     # Defines Answers table in db
     id = init.db.Column(init.db.Integer, primary_key=True)

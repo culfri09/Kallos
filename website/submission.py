@@ -1,3 +1,6 @@
+"""
+This module handles the data submissions from the user
+"""
 from flask import Flask, render_template, request, redirect, url_for, flash
 from .import init
 from datetime import datetime
@@ -68,7 +71,7 @@ def submit_answers():
 
 @submissions.route('/changed_answers_submission', methods=['POST'])
 def submit_changed_answers():
-# Extracts form data
+        # Extracts form data
         benchmark_companies = request.form['benchmarkCompanies']
         demographic_breakdown = request.form['demographicBreakdown']
         leadership_diversity = request.form['leadershipDiversity']
@@ -117,7 +120,7 @@ def display_surveys():
 
 @submissions.route('/changed_surveys_submission', methods=['POST'])
 def submit_changed_surveys():
-# Extracts form data
+        # Extracts form data
         npsMetric = request.form.get('npsMetric')
         candidateMetric = request.form.get('candidateMetric')
         retentionMetric = request.form.get('retentionMetric')
@@ -162,11 +165,11 @@ def upload_file():
         retention_rate = retentionMetric if retentionMetric else None
         workplace_rate = workplaceEnvironmentMetric if workplaceEnvironmentMetric else None
 
-        # Create or update the Surveys model with the analyzed data
+        # Creates or updates the Surveys model with the analyzed data
         existing_survey = init.db.session.query(models.Surveys).filter_by(kallosusers_id=user_id).first()
 
         if existing_survey:
-            # Update the existing survey with new data if provided
+            # Updates the existing survey with new data if provided
             if enps:
                 existing_survey.enps = enps
             if candidate_rate:
@@ -177,7 +180,7 @@ def upload_file():
                 existing_survey.workplace_rate = workplace_rate
             existing_survey.timestamp = datetime.now()
         else:
-            # Create a new instance of Surveys model with the analyzed data
+            # Creates a new instance of Surveys model with the analyzed data
             new_survey = models.Surveys(
                 kallosusers_id=user_id,
                 enps=enps,
@@ -186,23 +189,23 @@ def upload_file():
                 workplace_rate=workplace_rate,
                 timestamp=datetime.now(),
             )
-            # Add the new_survey to the database session
+            # Adds the new_survey to the database session
             init.db.session.add(new_survey)
             
-            # Commit changes to the database
+            # Commits changes to the database
             init.db.session.commit()
         # Dictionary to store survey data for each file field name
         survey_data = {}
 
-        # Loop through each survey
+        # Loops through each survey
         for survey_name, file_field_names in init.ALLOWED_EXTENSIONS.items():
-            # Loop through each file upload field for the current survey
+            # Loops through each file upload field for the current survey
             for file_field_name in file_field_names:
                 file = request.files[file_field_name]
                 if file.filename == '':
                     # No file was selected for this survey, skip it
                     continue
-                # Extract the file extension
+                # Extracts the file extension
                 file_extension = file.filename.rsplit('.', 1)[1].lower()
                 if file_extension == 'pdf':
                     # The file is allowed, save it to the UPLOAD_FOLDER
@@ -210,26 +213,26 @@ def upload_file():
                     #file.save(os.path.join(init.app.config['UPLOAD_FOLDER'], filename))
                     file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
                     file.save(file_path)
-                    # Extract text data from PDF
+                    # Extracts text data from PDF
                     text_data = extract_text_from_pdf(file_path)
-                    # Add survey data to the dictionary
+                    # Adds survey data to the dictionary
                     survey_data[file_field_name] = text_data
                 else:
                     # The file has an invalid extension or format
                     flash(f'Invalid file for {survey_name}. Please upload a PDF file.', 'error')
                     upload_failed = True
 
-        # If any file upload fails, render the same page with an error message
+        # If any file upload fails, renders the same page with an error message
         if upload_failed:
             return render_template("base_surveys.html", error="File upload failed. Please try again.")
 
-        # Call analyze_surveys function with all survey data
+        # Calls analyze_surveys function with all survey data
         analyze_surveys(survey_data)
         user_id = current_user.id
         scrape(user_id)
         return redirect(url_for('views.home'))
 
-    # If GET request, render the form page for file upload
+    # If GET request, renders the form page for file upload
     return render_template("base_surveys.html")
 
 def extract_text_from_pdf(pdf_file):
@@ -241,15 +244,15 @@ def extract_text_from_pdf(pdf_file):
     return text.strip()
 
 def analyze_surveys(survey_data):
-    # Point to the local server
+    # Points to the local server
     client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
 
-    # Initialize variables to store survey results
+    # Initializes variables to store survey results
     enps = candidate_rate = retention_rate = workplace_rate = None
 
-    # Loop through each survey data
+    # Loops through each survey data
     for file_field_name, text_data in survey_data.items():
-        # Process surveys based on file field name
+        # Processes surveys based on file field name
         if file_field_name == 'npsSurvey':
             text_data += 'Calculate average nps. Only write number from 0 to 10. No more text. Only 1 word with number of result.'
             completion = client.chat.completions.create(
@@ -298,11 +301,11 @@ def analyze_surveys(survey_data):
     # Gets the ID of the currently logged-in user
     user_id = current_user.id
 
-    # Query the database to find an existing survey for the user
+    # Queries the database to find an existing survey for the user
     existing_survey = init.db.session.query(models.Surveys).filter_by(kallosusers_id=user_id).first()
 
     if existing_survey:
-        # Update the existing survey with new data
+        # Updates the existing survey with new data
         if enps is not None:
             existing_survey.enps = enps
         if candidate_rate is not None:
@@ -313,7 +316,7 @@ def analyze_surveys(survey_data):
             existing_survey.workplace_rate = workplace_rate
         existing_survey.timestamp = datetime.now()
     else:
-        # Create a new instance of Surveys model with the analyzed data
+        # Creates a new instance of Surveys model with the analyzed data
         new_survey = models.Surveys(
             kallosusers_id=user_id,
             enps=enps,
@@ -322,8 +325,8 @@ def analyze_surveys(survey_data):
             workplace_rate=workplace_rate,
             timestamp=datetime.now(),
         )
-        # Add the new_survey to the database session
+        # Adds the new_survey to the database session
         init.db.session.add(new_survey)
 
-    # Commit changes to the database
+    # Commits changes to the database
     init.db.session.commit()

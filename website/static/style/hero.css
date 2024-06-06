@@ -6,7 +6,7 @@
   
   .nav-item {
     display: inline-block;
-    margin-right: 10px; /* Adjust this value to add spacing between links */
+    margin-right: 10px; 
   }
 
 
@@ -17,5 +17,5 @@
 }
 
 .footer-section {
-    width: 30%; /* Adjust the width as needed */
+    width: 30%; 
 }
