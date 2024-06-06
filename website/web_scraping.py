@@ -8,7 +8,6 @@ import time
 from . import models, init
 from datetime import datetime
 
-
 def scrape(id):
     user_id = id
     user = models.User.query.get(user_id)
@@ -33,19 +32,16 @@ def scrape(id):
     positions_number = len(div_elements)
     print('positions: ' + str(positions_number))
 
-
     '''AVERAGE POSITION COVERAGE TIME'''
     paragraph_elements = driver.find_elements(By.XPATH, ".//p[contains(@class, 'css-ng92tm e1wnkr790')]")
 
     days_list = []
 
     for paragraph_element in paragraph_elements:
-
         paragraph_text = paragraph_element.text
-        
 
         if "hace" in paragraph_text:
-            days_text = paragraph_text.split(" ")[1]  
+            days_text = paragraph_text.split(" ")[1]
             if days_text.isdigit():
                 days = int(days_text)
                 days_list.append(days)
@@ -58,30 +54,27 @@ def scrape(id):
     '''NUMBER OF RATINGS'''
     div_element = driver.find_element(By.XPATH, "//div[contains(@class, 'css-104u4ae eu4oa1w0')]")
     ratings_number = div_element.text
-    ratings_number = float(ratings_number.replace('.', '').replace(',', '.'))  #
-    
+    ratings_number = float(ratings_number.replace('.', '').replace(',', '.'))
 
     '''BRAND SENTIMENT'''
     ratings_dict = {}
 
     div_elements = driver.find_elements(By.XPATH, "//div[contains(@class, 'css-1gkra49 eu4oa1w0')]")
     for div_element in div_elements:
-
         rating_span = div_element.find_element(By.XPATH, ".//span[contains(@class, 'css-1qdoj65 e1wnkr790')]")
         topic_span = div_element.find_element(By.XPATH, ".//span[contains(@class, 'css-1lp75au e1wnkr790')]")
-        
 
         rating_text = rating_span.text
         topic_text = topic_span.text
 
-        ratings_dict[topic_text] = float(rating_text)
+        
+        ratings_dict[topic_text] = float(rating_text.replace(',', '.'))
 
     worklife_balance_rating = ratings_dict.get("Conciliación")
     salary_rating = ratings_dict.get("Compensación y beneficios")
     work_stability_rating = ratings_dict.get("Estabilidad laboral/Desarrollo profesional")
     management_rating = ratings_dict.get("Gestión")
     work_culture_rating = ratings_dict.get("Cultura")
-
 
     new_scrape = models.Scraping(
         kallosusers_id=user_id,
@@ -96,9 +89,8 @@ def scrape(id):
         timestamp=datetime.now()
     )
 
-
     init.db.session.add(new_scrape)
-
     init.db.session.commit()
+
 
     
