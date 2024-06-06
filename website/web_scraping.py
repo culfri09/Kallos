@@ -1,4 +1,3 @@
-# Automated selenium test for onboarding
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -93,4 +92,3 @@ def scrape(id):
     init.db.session.commit()
 
 
-    

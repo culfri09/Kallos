@@ -139,26 +139,18 @@
                 <br>
                 <h2 class="title" style="margin-left: 40px;">Benchmarking</h2>
                 <p class="subtitle" style="margin-left: 40px;">Here, you can view your employer branding dashboards and  the benchmarking of the competitors you listed.</p>
+                <br>   
                 <br>
-                <div class="chart-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                    {{ radar_chart_html | safe }}
+                <div class="row">
+                    {% for competitor, chart in charts %}
+                        <div class="chart-container">
+                            <h3 class="subtitle">{{ competitor }}</h3>
+                            {{ chart|safe }}
+                        </div>
+                    {% endfor %}
                 </div>
-                <div class="chart-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                    {{ line_graph_html | safe }}
-                </div>    
-                <div class="chart-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                    {{ stacked_bar_chart_html | safe }}
-                </div>    
-                <div class="chart-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                    {{ gauge_chart_html | safe }}
-                </div>    
-                <div class="chart-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                    {{ bar_chart_html | safe }}
-                </div>   
-                <div class="chart-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                    {{ horizontal_bar_chart_html | safe }}
-                </div>                                                   
             </div>
+        </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

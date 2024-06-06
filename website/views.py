@@ -8,6 +8,7 @@ from plotly.offline import plot
 import chart_studio.tools as tls
 from website.dash import create_charts
 from website.kpi import analyze_kpi
+from website.benchmarking import benchmarking
 
 
 # Define route for the landing page
@@ -56,7 +57,8 @@ def tutorial_page():
 @views.route('/benchmarking')
 @login_required
 def benchmarking_page():
-    return render_template('benchmarking.html')
+    charts = benchmarking()
+    return render_template('benchmarking.html', charts=charts)
 
 @views.route('/analyze_kpi', methods=['GET'])
 def analyze_kpi_endpoint():
