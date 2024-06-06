@@ -3,12 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Surveys</title>
+    <title>Benchmarking</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/text.css') }}">
     <link rel="icon" href="imgs/favicon.ico ">
     <style>
+        @keyframes sweep-in {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .sweep-in {
+            animation: sweep-in 0.5s ease-out;
+        }
+        
         .survey-card {
             background-color: white;
             border-radius: 10px;
@@ -16,14 +31,43 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin: 20px 40px;
         }
-        .survey-card .subtitle {
-            margin-bottom: 20px;
+        
+        ul.timeline {
+            list-style-type: none;
+            position: relative;
         }
-        .survey-card input {
-            margin-bottom: 20px;
+        
+        ul.timeline:before {
+            content: ' ';
+            background: #d4d9df;
+            display: inline-block;
+            position: absolute;
+            left: 29px;
+            width: 2px;
+            height: 100%;
+            z-index: 400;
         }
-        .hidden {
-            display: none;
+        
+        ul.timeline > li {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+        
+        .chart-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: calc(47% - 40px); 
+            height: 410px;
+            margin: 0 20px 40px 20px;
+            float: left; 
+            overflow: hidden; 
+        }
+        
+        #polar-chart-container canvas {
+            width: 300px !important;
+            height: 300px !important;
         }
     </style>
 </head>
@@ -47,15 +91,14 @@
                         </li>
                         <br>
                         <li>
-                            <a href="/my_surveys" class="nav-link px-0 align-middle custom-hover">
-                                <img src="{{ url_for('static', filename='images/Surveys_Hover.png') }}" alt="" width="20" height="25" style="margin-right: 10px;">
-                                <span class="ms-1 d-none d-sm-inline title orange-text">My Surveys</span>
+                            <a href="/my_surveys" class="nav-link px-0 align-middle dash-hover">
+                                <img src="{{ url_for('static', filename='images/Surveys_Icon.png') }}" alt="" width="20" height="25" style="margin-right: 10px;">
+                                <span class="ms-1 d-none d-sm-inline title">My Surveys</span>
                             </a>
-                            <br>
                             <br>
                             <a href="/bank_questions" class="nav-link px-0 align-middle dash-hover">
                                 <img src="{{ url_for('static',  filename='images/Questions_Icon.png') }}" alt="" width="25" height="25" style="margin-right: 10px;">
-                                <span class="ms-1 d-none d-sm-inline title">My Answers</span>
+                                <span class="ms-1 d-none d-sm-inline title ">My Answers</span>
                             </a>
                         </li>
                         <br>
@@ -65,9 +108,9 @@
                                 <span class="ms-1 d-none d-sm-inline title">Recommendations</span>
                             </a>
                             <br>
-                            <a href="/benchmarking" class="nav-link px-0 align-middle dash-hover">
-                                <img src="{{ url_for('static', filename='images/Benchmarking_Icon.png') }}" alt="" width="25" height="25" style="margin-right: 10px;">
-                                <span class="ms-1 d-none d-sm-inline title">Benchmarking</span>
+                            <a href="/benchmarking" class="nav-link px-0 align-middle custom-hover">
+                                <img src="{{ url_for('static', filename='images/Benchmarking_Hover.png') }}" alt="" width="25" height="25" style="margin-right: 10px;">
+                                <span class="ms-1 d-none d-sm-inline title orange-text">Benchmarking</span>
                             </a>
                             <br>
                             <a href="#" class="nav-link px-0 align-middle dash-hover">
@@ -92,39 +135,33 @@
                     </div>
                 </div>
             </div>
-            <div class="col py-3 bg-light "  style=" box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <div class="col py-3 bg-light " style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                 <br>
-                <h2 class="title" style="margin-left: 40px;">Surveys</h2>
-                <p class="subtitle" style="margin-left: 40px;">Revisit, update, or answer any surveys you may have missed during your initial sign-up.</p>
+                <h2 class="title" style="margin-left: 40px;">Benchmarking</h2>
+                <p class="subtitle" style="margin-left: 40px;">Here, you can view your employer branding dashboards and  the benchmarking of the competitors you listed.</p>
                 <br>
-                <form method="POST" action="/changed_surveys_submission">
-                <div class="survey-card">
-                    {% for survey in surveys %}
-                            <p class="subtitle" style="margin-left: 10px;">If you don't have this survey readily available, please provide your estimated eNPS score on a scale of 1 to 10
-                 </p>
-                            <input style="width: 90%;" class="form-control subtitle" type="number" id="npsMetric" name="npsMetric" style="margin-left: 10px;" value="{{ survey.enps }}">
-                            <br>
-                            <p class="subtitle" style="margin-left: 10px;">If you don't have this survey readily available, please provide your estimated candidate experience score on a scale of 1 to 10
-                 </p>
-                            <input style="width: 90%;" class="form-control subtitle" type="number" id="candidateMetric" name="candidateMetric" style="margin-left: 10px;" value="{{ survey.candidate_rate }}">
-                            <br><p class="subtitle" style="margin-left: 10px;">If you don't have this survey readily available, please provide your estimated retention score on a scale of 1 to 10
-                 </p>
-                            <input style="width: 90%;" class="form-control subtitle" type="number" id="retentionMetric" name="retentionMetric" style="margin-left: 10px;" value="{{ survey.retention_rate }}">
-                            <br><p class="subtitle" style="margin-left: 10px;">If you don't have this survey readily available, please provide your estimated workplace enviornment score on a scale of 1 to 10
-                 </p>     
-                 <input style="width: 90%;" class="form-control subtitle" type="number" id="workplaceEnvironmentMetric" name="workplaceEnvironmentMetric" style="margin-left: 10px;" value="{{ survey.workplace_rate }}">           
-                    <br> 
-                <div class="text-center">
-                    <button type="submit" class="btn btn-outline-primary custom-hero-signup-btn px-4 gap-3">Submit</button>                     
-                    {% endfor %}
-                    <br>
+                <div class="chart-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    {{ radar_chart_html | safe }}
                 </div>
-                <br>
+                <div class="chart-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    {{ line_graph_html | safe }}
+                </div>    
+                <div class="chart-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    {{ stacked_bar_chart_html | safe }}
+                </div>    
+                <div class="chart-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    {{ gauge_chart_html | safe }}
+                </div>    
+                <div class="chart-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    {{ bar_chart_html | safe }}
+                </div>   
+                <div class="chart-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    {{ horizontal_bar_chart_html | safe }}
+                </div>                                                   
             </div>
-        </form>
         </div>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

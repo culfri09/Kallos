@@ -53,6 +53,11 @@ def privacy_policy_page():
 def tutorial_page():
     return render_template('tutorial.html')
 
+@views.route('/benchmarking')
+@login_required
+def benchmarking_page():
+    return render_template('benchmarking.html')
+
 @views.route('/analyze_kpi', methods=['GET'])
 def analyze_kpi_endpoint():
     result = analyze_kpi()
