@@ -253,18 +253,17 @@ def create_gauge_chart(development):
         height=400
     )
 
-    # Convert the chart to HTML
+    # Converts the chart to HTML
     chart_html = pio.to_html(fig, full_html=False)
 
     return chart_html
 
 def create_stacked_bar_chart(channels,positions_number,average_days):
-    # Ensure positions_number and average_days are lists
+    # Ensures positions_number and average_days are lists
     positions = [positions_number] * len(channels)
     
-    # Creating the grouped bar chart
     fig = go.Figure(data=[
-        go.Bar(name='Number of Positions', x=channels, y=positions, marker_color='#fad9c7', width=0.05),  # Set Positions color to light orange and adjust bar width
+        go.Bar(name='Number of Positions', x=channels, y=positions, marker_color='#fad9c7', width=0.05),  
        # go.Bar(name='Average Days to Fill', x=channels, y=[average_days], marker_color='#F07837', width=0.4)  # Set Days to Fill color to orange and adjust bar width
         go.Bar(name='Average Days to Fill', x=channels, y=[], marker_color='#F07837', width=0.4)
     ])
@@ -274,57 +273,56 @@ def create_stacked_bar_chart(channels,positions_number,average_days):
         title=dict(
             text='Recruitment',
             font=dict(
-                family="'Poppins', sans-serif",  # Font family
-                size=20,  # Font size
+                family="'Poppins', sans-serif", 
+                size=20,  
             ),
-            x=0.5,  # Adjust the margin left (0.5 means centered)
-            y=0.9,  # Adjust the vertical position of the title
-            xanchor='center',  # Set anchor point for x-coordinate
-            yanchor='top',  # Set anchor point for y-coordinate
+            x=0.5,  
+            y=0.9,  
+            xanchor='center',  
+            yanchor='top',  
         ),
         barmode='group',
-        width=600,  # Adjust the overall width
-        height=400,  # Adjust the overall height
+        width=600,  
+        height=400,  
         font=dict(
-            family="'Poppins', sans-serif"  # Set the overall font family
+            family="'Poppins', sans-serif"  
         ),
         legend=dict(
-            orientation='h',  # horizontal orientation
-            yanchor='bottom',  # align to the bottom
-            y=1.02,  # position just above the graph
-            xanchor='center',  # center horizontally
-            x=0.5  # center of the graph
+            orientation='h',  
+            yanchor='bottom',  
+            y=1.02,  
+            xanchor='center', 
+            x=0.5  
         ),
-        plot_bgcolor='white',  # Set background color to white
+        plot_bgcolor='white',  
         xaxis=dict(
-            gridcolor='#f3f5f6',  # Set grid color to light grey
+            gridcolor='#f3f5f6',  
         ),
         yaxis=dict(
-            gridcolor='#f3f5f6',  # Set grid color to light grey
+            gridcolor='#f3f5f6',  
         )
     )
 
-    # Convert the chart to HTML
+    # Converts the chart to HTML
     chart_html = pio.to_html(fig, full_html=False)
 
     return chart_html
 
 def create_bar_chart(investment, employer_brand_familiarity):
- # Data for the bar chart
     data = [
         go.Bar(
             x=["Very Familiar", "Familiar", "Not Very Familiar"],
             y=[0, employer_brand_familiarity, 0],
             name='Familiarity',
-            marker=dict(color='#fad9c7', line=dict(color="orange", width=1)),  # Orange color with border
-            width=0.1  # Set the width of the bars
+            marker=dict(color='#fad9c7', line=dict(color="orange", width=1)), 
+            width=0.1  
         ),
         go.Bar(
             x=["Very Familiar", "Familiar", "Not Very Familiar"],
             y=[0, investment, 0],
             name='Investment',
-            marker=dict(color='#F07837', line=dict(color="darkorange", width=1)),  # Orange color with border
-            width=0.1  # Set the width of the bars
+            marker=dict(color='#F07837', line=dict(color="darkorange", width=1)),  
+            width=0.1  
         )
     ]
 
@@ -333,62 +331,56 @@ def create_bar_chart(investment, employer_brand_familiarity):
         title=dict(
             text='Employer Branding',
             font=dict(
-                family="'Poppins', sans-serif",  # Font family
-                size=20,  # Font size
+                family="'Poppins', sans-serif",  
+                size=20,  
             ),
-            x=0.5,  # Adjust the margin left (0.5 means centered)
-            y=0.9,  # Adjust the vertical position of the title
-            xanchor='center',  # Set anchor point for x-coordinate
-            yanchor='top',  # Set anchor point for y-coordinate
+            x=0.5,  
+            y=0.9,  
+            xanchor='center',  
+            yanchor='top',  
          ),
-        plot_bgcolor='white',  # Set background color to white
-        xaxis_showgrid=False,  # Hide x-axis gridlines
-        yaxis_showgrid=True,  # Show y-axis gridlines
-        yaxis_gridcolor="rgba(0,0,0,0.05)",  # Set y-axis gridline color
+        plot_bgcolor='white', 
+        xaxis_showgrid=False,  
+        yaxis_showgrid=True,  #
+        yaxis_gridcolor="rgba(0,0,0,0.05)",  
         font=dict(
-            family="'Poppins', sans-serif"  # Set the overall font family
+            family="'Poppins', sans-serif"  
         ),
         width=550, 
         height=350,
         legend=dict(
-            orientation='h',  # horizontal orientation
-            y=0.95,  # Adjust the vertical position of the legend (0.95 means below the chart)
-            x=0.5,   # Center the legend horizontally
-            xanchor='center',  # Set anchor point for x-coordinate
-            yanchor='bottom',  # Set anchor point for y-coordinate
-            traceorder="normal"  # Align legend items horizontally
+            orientation='h',  
+            y=0.95,  
+            x=0.5,   
+            xanchor='center', 
+            yanchor='bottom',  
+            traceorder="normal"  
         )
     )
 
-    # Create the figure
     fig = go.Figure(data=data, layout=layout)
 
-    # Convert the chart to HTML
     chart_html = pio.to_html(fig, full_html=False)
 
     return chart_html
 
 
 def create_horizontal_bar_chart(leadership_diversity, demographic_breakdown):
-   # Create a grouped bar chart
     fig = go.Figure()
 
-    # Add bar for leadership position percentage
     fig.add_trace(go.Bar(
         x=[leadership_diversity],
         y=['Leadership'],
         name='Leadership',
-        orientation='h',  # Horizontal bar
+        orientation='h',  
         marker=dict(color='#fad9c7'),
         width=0.2
     ))
-
-    # Add bars for diversity breakdown
     fig.add_trace(go.Bar(
         x=[0] * len(demographic_breakdown),
         y=demographic_breakdown,
         name='Diversity Breakdown',
-        orientation='h',  # Horizontal bar
+        orientation='h',  
         marker=dict(color='#F07837'),
         width=0.2
     ))
@@ -398,8 +390,8 @@ def create_horizontal_bar_chart(leadership_diversity, demographic_breakdown):
         title=dict(
             text='Diversity in Leadership Positions',
             font=dict(
-                family="'Poppins', sans-serif",  # Font family
-                size=20,  # Font size
+                family="'Poppins', sans-serif", 
+                size=20,  
             ),
             x=0.5,  
             y=0.9,  
@@ -407,28 +399,27 @@ def create_horizontal_bar_chart(leadership_diversity, demographic_breakdown):
             yanchor='top',  
         ),
         barmode='group',
-        width=600,  # Adjust the overall width
-        height=400,  # Adjust the overall height
+        width=600,  
+        height=400, 
         font=dict(
-            family="'Poppins', sans-serif"  # Set the overall font family
+            family="'Poppins', sans-serif"  
         ),
         legend=dict(
-            orientation='h',  # horizontal orientation
-            yanchor='bottom',  # align to the bottom
-            y=1.02,  # position just above the graph
-            xanchor='center',  # center horizontally
-            x=0.5  # center of the graph
+            orientation='h',  
+            yanchor='bottom',  
+            y=1.02,  
+            xanchor='center', 
+            x=0.5  
         ),
-        plot_bgcolor='white',  # Set background color to white
+        plot_bgcolor='white',  
         xaxis=dict(
-            gridcolor='#f3f5f6',  # Set grid color to light grey
+            gridcolor='#f3f5f6',  
         ),
         yaxis=dict(
-            gridcolor='#f3f5f6',  # Set grid color to light grey
+            gridcolor='#f3f5f6',  
         )
     )
 
-    # Convert the chart to HTML
     chart_html = pio.to_html(fig, full_html=False)
 
     return chart_html

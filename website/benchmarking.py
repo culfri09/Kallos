@@ -1,5 +1,6 @@
-# benchmarking.py
-
+"""
+This module performs the benchmarking.
+"""
 from flask_login import current_user
 from . import models
 from selenium import webdriver
@@ -68,7 +69,7 @@ def benchmarking():
 
     for competitor in competitors:
         driver.get(f'https://es.indeed.com/cmp/{competitor}')
-        time.sleep(2)  # Wait for the page to load
+        time.sleep(2)  
 
         ratings_dict = {}
 
