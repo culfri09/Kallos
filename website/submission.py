@@ -44,6 +44,17 @@ def submit_answers():
     )
 
     development_metric=completion.choices[0].message.content
+    filtered_chars = []
+
+    for char in development_metric:
+        # Verificamos si el caracter es un dígito o el símbolo de porcentaje
+        if char.isdigit() or char == '%':
+            filtered_chars.append(char)
+        else:
+            filtered_chars.append(' ')
+
+    # Convertimos la lista de caracteres filtrados de nuevo a una cadena
+    development_metric = ''.join(filtered_chars)
 
     # Gets the ID of the currently logged-in user
     user_id = current_user.id

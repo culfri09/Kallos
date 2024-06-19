@@ -52,16 +52,22 @@ def create_charts():
                 workplace_rate
             )
 
-            if user_answers:
-                development = user_answers.development
-                if development is not None:
-                    # Converts percentage string to float
-                    development = float(development.strip('%').rstrip('.').strip())  # Remove '%' symbol and convert to float
-                    # Ensures development is within 0-100 range (assuming it's a percentage)
-                    development = max(0, min(development, 100))
+        if user_answers:
+            development = user_answers.development
+            if development is not None:
+                # Remove '%' symbol and convert to float
+                development = development.strip('%')
+                try:
+                    development = float(development)
+                except ValueError:
+                    # Handle the case where development cannot be converted to float
+                    development = 0.0  # Default value or appropriate error handling
+                
+                # Ensures development is within 0-100 range (assuming it's a percentage)
+                development = max(0, min(development, 100))
 
-                    # Creates donut chart for development
-                    gauge_chart_html = create_gauge_chart(development)
+                # Creates donut chart for development
+                gauge_chart_html = create_gauge_chart(development)
 
                 investment = user_answers.investment
                 employer_brand_familiarity = user_answers.employer_brand_familiarity
